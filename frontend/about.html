@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__logo"><a href="index.html">DEV<span>.</span></a></div>
+    <ul class="nav__links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="stack.html">Stack</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="experience.html">Experience</a></li>
+    </ul>
+    <a href="contact.html" class="nav__cta">Email Me</a>
+    <button class="nav__burger" id="burger">&#9776;</button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="projects.html" onclick="closeMobile()">Projects</a></li>
+      <li><a href="stack.html" onclick="closeMobile()">Stack</a></li>
+      <li><a href="about.html" onclick="closeMobile()">About</a></li>
+      <li><a href="experience.html" onclick="closeMobile()">Experience</a></li>
+      <li><a href="contact.html" onclick="closeMobile()">Email Me</a></li>
+    </ul>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="section about page-section">
+    <div class="container about__inner">
+      <div class="about__left">
+        <div class="about__avatar">
+          <div class="about__avatar-placeholder">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="30" r="18" fill="#c8f04d" opacity="0.4"/>
+              <ellipse cx="40" cy="72" rx="28" ry="16" fill="#c8f04d" opacity="0.2"/>
+            </svg>
+          </div>
+        </div>
+        <p class="about__bio">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+        </p>
+      </div>
+      <div class="about__right">
+        <h2 class="section__title" style="text-align:left;">About Me</h2>
+        <div class="about__items">
+          <div class="about__item">
+            <span class="about__icon">🗺️</span>
+            <div>
+              <strong>My Journey</strong>
+              <p>How I got into development and what drives me forward.</p>
+            </div>
+          </div>
+          <div class="about__item">
+            <span class="about__icon">🎯</span>
+            <div>
+              <strong>My Focus</strong>
+              <p>Building fast, accessible, and beautiful web experiences.</p>
+            </div>
+          </div>
+          <div class="about__item">
+            <span class="about__icon">💡</span>
+            <div>
+              <strong>Soft Skills</strong>
+              <p>Collaboration, problem-solving, and clear communication.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__links">
+        <a href="#" target="_blank">LinkedIn</a>
+        <a href="#" target="_blank">GitHub</a>
+        <a href="#" target="_blank">Resume PDF</a>
+      </div>
+      <p class="footer__copy">&copy; 2026 Your Name. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    function closeMobile() { mobileMenu.classList.remove('open'); }
+  </script>
+</body>
+</html>
