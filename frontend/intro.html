@@ -4,369 +4,368 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Portfolio — Intro</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:      #0a0a0a;
-      --accent:  #c8f04d;
-      --text:    #e8e8e8;
-      --muted:   #555;
+      --bg: #0a0a0a;
+      --accent: #c8f04d;
+      --text: #e8e8e8;
+      --muted: #555555;
     }
 
     html, body {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       background: var(--bg);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       overflow: hidden;
     }
 
-    /* ── NOISE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── GRID LINES ── */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 80px 80px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── GLOW BLOB ── */
-    .blob {
+    /* GRID BACKGROUND */
+    .grid-bg {
       position: fixed;
-      width: 700px; height: 700px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(200,240,77,0.07) 0%, transparent 65%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -60%);
-      pointer-events: none;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 70px 70px;
       z-index: 0;
-      animation: breathe 6s ease-in-out infinite;
-    }
-    @keyframes breathe {
-      0%, 100% { transform: translate(-50%, -60%) scale(1); }
-      50%       { transform: translate(-50%, -60%) scale(1.12); }
+      pointer-events: none;
     }
 
-    /* ── CORNER MARKS ── */
+    /* GREEN GLOW */
+    .glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,240,77,0.10) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* CORNER BRACKETS */
     .corner {
       position: fixed;
-      width: 22px; height: 22px;
-      z-index: 2;
+      width: 20px;
+      height: 20px;
+      z-index: 3;
     }
-    .corner--tl { top: 28px; left: 28px; border-top: 1px solid var(--muted); border-left: 1px solid var(--muted); }
-    .corner--tr { top: 28px; right: 28px; border-top: 1px solid var(--muted); border-right: 1px solid var(--muted); }
-    .corner--bl { bottom: 28px; left: 28px; border-bottom: 1px solid var(--muted); border-left: 1px solid var(--muted); }
-    .corner--br { bottom: 28px; right: 28px; border-bottom: 1px solid var(--muted); border-right: 1px solid var(--muted); }
+    .corner.tl { top: 24px; left: 24px; border-top: 1px solid #333; border-left: 1px solid #333; }
+    .corner.tr { top: 24px; right: 24px; border-top: 1px solid #333; border-right: 1px solid #333; }
+    .corner.bl { bottom: 24px; left: 24px; border-bottom: 1px solid #333; border-left: 1px solid #333; }
+    .corner.br { bottom: 24px; right: 24px; border-bottom: 1px solid #333; border-right: 1px solid #333; }
 
-    /* ── TOP BAR ── */
+    /* TOP BAR */
     .topbar {
       position: fixed;
       top: 0; left: 0; right: 0;
+      padding: 24px 40px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 28px 40px;
-      z-index: 2;
-    }
-    .topbar__year {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-    .topbar__tag {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    /* ── INTRO STAGE ── */
-    #intro {
-      position: fixed; inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-      text-align: center;
-      padding: 40px;
-    }
-
-    .presents-label {
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 28px;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeUp 0.8s ease 0.3s forwards;
-    }
-
-    .intro__name {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(3rem, 10vw, 8rem);
-      font-weight: 800;
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-      margin-bottom: 12px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.9s ease 0.5s forwards;
-    }
-    .intro__name span { color: var(--accent); }
-
-    .intro__role {
-      font-size: clamp(0.85rem, 2vw, 1.1rem);
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 56px;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeUp 0.8s ease 0.75s forwards;
-    }
-
-    /* ── START BUTTON ── */
-    .start-btn {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 18px 44px;
-      border: 1px solid rgba(200,240,77,0.35);
-      border-radius: 60px;
-      background: transparent;
-      color: var(--accent);
-      font-family: 'Syne', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      cursor: pointer;
-      overflow: hidden;
-      transition: border-color 0.3s, color 0.3s;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 1s forwards;
-    }
-    .start-btn::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: var(--accent);
-      transform: translateX(-101%);
-      transition: transform 0.4s cubic-bezier(0.77,0,0.18,1);
-      border-radius: inherit;
-    }
-    .start-btn:hover::before { transform: translateX(0); }
-    .start-btn:hover { color: #0a0a0a; border-color: var(--accent); }
-    .start-btn span { position: relative; z-index: 1; }
-    .start-btn svg { position: relative; z-index: 1; transition: transform 0.3s; }
-    .start-btn:hover svg { transform: translateX(4px); }
-
-    /* ── BOTTOM HINT ── */
-    .scroll-hint {
-      position: fixed;
-      bottom: 36px; left: 50%; transform: translateX(-50%);
+      z-index: 3;
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
-      z-index: 2;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 1.4s forwards;
     }
 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── LOADER OVERLAY ── */
-    #loader {
-      position: fixed; inset: 0;
-      background: var(--bg);
+    /* ===== INTRO SCREEN ===== */
+    #intro-screen {
+      position: fixed;
+      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 10;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-    }
-    #loader.visible {
-      opacity: 1;
-      pointer-events: all;
+      text-align: center;
+      padding: 40px;
+      z-index: 2;
     }
 
-    .loader__line-wrap {
-      width: min(480px, 80vw);
-      margin-bottom: 28px;
+    .label-presents {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .loader__track {
+
+    .big-name {
+      font-size: clamp(3.5rem, 12vw, 9rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .big-name .accent { color: var(--accent); }
+
+    .role-text {
+      font-size: clamp(0.7rem, 1.5vw, 0.95rem);
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 60px;
+    }
+
+    /* START BUTTON */
+    .start-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 48px;
+      border-radius: 100px;
+      border: 1px solid rgba(200, 240, 77, 0.4);
+      background: transparent;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      overflow: hidden;
+      transition: color 0.35s ease, border-color 0.35s ease;
+    }
+    .start-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      border-radius: inherit;
+      transform: translateX(-105%);
+      transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+    }
+    .start-btn:hover::after { transform: translateX(0); }
+    .start-btn:hover { color: #0a0a0a; border-color: var(--accent); }
+    .btn-text { position: relative; z-index: 1; }
+    .btn-arrow {
+      position: relative;
+      z-index: 1;
+      width: 18px;
+      height: 18px;
+      transition: transform 0.3s ease;
+    }
+    .start-btn:hover .btn-arrow { transform: translateX(5px); }
+
+    /* BOTTOM HINT */
+    .hint {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 3;
+      white-space: nowrap;
+    }
+
+    /* PULSE DOT */
+    .pulse-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.7); }
+    }
+
+    /* ===== LOADER SCREEN ===== */
+    #loader-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+    #loader-screen.show {
+      display: flex;
+    }
+
+    .loader-number {
+      font-size: clamp(5rem, 20vw, 13rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--text);
+      margin-bottom: 40px;
+    }
+    .loader-number .pct-sign {
+      font-size: 0.35em;
+      color: var(--accent);
+      vertical-align: super;
+      margin-left: 4px;
+    }
+
+    .loader-bar-wrap {
+      width: min(500px, 78vw);
+    }
+    .loader-bar-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .loader-track {
       width: 100%;
       height: 1px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.07);
       position: relative;
-      overflow: hidden;
     }
-    .loader__fill {
+    .loader-fill {
       position: absolute;
       top: 0; left: 0;
       height: 100%;
       width: 0%;
       background: var(--accent);
-      transition: width 0.05s linear;
+      transition: width 0.04s linear;
     }
-
-    .loader__meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .loader__label {
+    .loader-status {
+      margin-top: 20px;
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--muted);
+      text-align: center;
     }
-    .loader__pct {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(4rem, 14vw, 10rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 16px;
-    }
-    .loader__pct span { color: var(--accent); font-size: 0.4em; vertical-align: super; }
 
-    .loader__status {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
+    /* FADE OUT */
+    @keyframes fadeOut {
+      to { opacity: 0; }
+    }
+    .fade-out {
+      animation: fadeOut 0.7s ease forwards;
     }
   </style>
 </head>
 <body>
 
-  <!-- Decorative -->
-  <div class="blob"></div>
-  <div class="corner corner--tl"></div>
-  <div class="corner corner--tr"></div>
-  <div class="corner corner--bl"></div>
-  <div class="corner corner--br"></div>
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
 
-  <!-- Top bar -->
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
   <div class="topbar">
-    <span class="topbar__year">© 2026</span>
-    <span class="topbar__tag">Portfolio</span>
+    <span>© 2026</span>
+    <span>Portfolio</span>
   </div>
 
-  <!-- Intro stage -->
-  <div id="intro">
-    <p class="presents-label">Cedric Designs Presents</p>
-    <h1 class="intro__name">Your<br/><span>Name.</span></h1>
-    <p class="intro__role">Full-Stack Developer &amp; Creative Technologist</p>
+  <!-- INTRO SCREEN -->
+  <div id="intro-screen">
+    <p class="label-presents">
+      <span class="pulse-dot"></span>
+      Cedric Designs Presents
+    </p>
+    <h1 class="big-name">
+      Your<br/>
+      <span class="accent">Name.</span>
+    </h1>
+    <p class="role-text">Full-Stack Developer &amp; Creative Technologist</p>
     <button class="start-btn" onclick="startExperience()">
-      <span>Start Experience</span>
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <span class="btn-text">Start Experience</span>
+      <svg class="btn-arrow" viewBox="0 0 18 18" fill="none">
+        <path d="M3.5 9H14.5M10.5 5L14.5 9L10.5 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
   </div>
 
-  <!-- Bottom hint -->
-  <p class="scroll-hint">Press to begin</p>
+  <p class="hint">Click to begin your journey</p>
 
-  <!-- Loader overlay -->
-  <div id="loader">
-    <div class="loader__pct" id="pctDisplay">0<span>%</span></div>
-    <div class="loader__line-wrap">
-      <div class="loader__meta">
-        <span class="loader__label">Loading experience</span>
-        <span class="loader__label" id="pctSmall">0%</span>
+  <!-- LOADER SCREEN -->
+  <div id="loader-screen">
+    <div class="loader-number" id="loader-number">0<span class="pct-sign">%</span></div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar-top">
+        <span>Loading experience</span>
+        <span id="loader-pct-small">0%</span>
       </div>
-      <div class="loader__track">
-        <div class="loader__fill" id="loaderFill"></div>
+      <div class="loader-track">
+        <div class="loader-fill" id="loader-fill"></div>
       </div>
     </div>
-    <p class="loader__status" id="loaderStatus">Initialising…</p>
+    <p class="loader-status" id="loader-status">Initialising…</p>
   </div>
 
   <script>
-    const statuses = [
+    var statusMessages = [
       'Initialising…',
       'Loading assets…',
       'Preparing animations…',
-      'Almost there…',
+      'Almost ready…',
       'Welcome.'
     ];
 
     function startExperience() {
-      const loader   = document.getElementById('loader');
-      const fill     = document.getElementById('loaderFill');
-      const pctBig   = document.getElementById('pctDisplay');
-      const pctSmall = document.getElementById('pctSmall');
-      const status   = document.getElementById('loaderStatus');
+      document.getElementById('intro-screen').style.display = 'none';
+      document.querySelector('.hint').style.display = 'none';
+      document.getElementById('loader-screen').classList.add('show');
 
-      loader.classList.add('visible');
+      var progress = 0;
+      var loaderFill   = document.getElementById('loader-fill');
+      var loaderNumber = document.getElementById('loader-number');
+      var loaderSmall  = document.getElementById('loader-pct-small');
+      var loaderStatus = document.getElementById('loader-status');
 
-      let current = 0;
-      const target = 100;
-      const duration = 3200; // ms total
-      const interval = 30;   // tick every 30ms
-      const steps = duration / interval;
-      const increment = target / steps;
+      var timer = setInterval(function() {
+        var speed = 0.55;
+        if (progress < 15) speed = 0.35;
+        else if (progress > 85) speed = 0.22;
 
-      const timer = setInterval(() => {
-        current = Math.min(current + increment + Math.random() * 0.8, 100);
-        const rounded = Math.floor(current);
+        progress += speed + (Math.random() * 0.45);
+        if (progress > 100) progress = 100;
 
-        fill.style.width = rounded + '%';
-        pctBig.innerHTML = rounded + '<span>%</span>';
-        pctSmall.textContent = rounded + '%';
+        var rounded = Math.floor(progress);
 
-        // update status text at key milestones
-        if (rounded < 20)       status.textContent = statuses[0];
-        else if (rounded < 45)  status.textContent = statuses[1];
-        else if (rounded < 70)  status.textContent = statuses[2];
-        else if (rounded < 92)  status.textContent = statuses[3];
-        else                    status.textContent = statuses[4];
+        loaderFill.style.width = rounded + '%';
+        loaderNumber.innerHTML = rounded + '<span class="pct-sign">%</span>';
+        loaderSmall.textContent = rounded + '%';
 
-        if (current >= 100) {
+        if (rounded < 20)      loaderStatus.textContent = statusMessages[0];
+        else if (rounded < 45) loaderStatus.textContent = statusMessages[1];
+        else if (rounded < 72) loaderStatus.textContent = statusMessages[2];
+        else if (rounded < 93) loaderStatus.textContent = statusMessages[3];
+        else                   loaderStatus.textContent = statusMessages[4];
+
+        if (progress >= 100) {
           clearInterval(timer);
-          fill.style.width = '100%';
-          pctBig.innerHTML = '100<span>%</span>';
-          pctSmall.textContent = '100%';
-          status.textContent = 'Welcome.';
+          loaderFill.style.width = '100%';
+          loaderNumber.innerHTML = '100<span class="pct-sign">%</span>';
+          loaderSmall.textContent = '100%';
+          loaderStatus.textContent = 'Welcome.';
 
-          // brief pause then navigate to home
-          setTimeout(() => {
-            loader.style.transition = 'opacity 0.7s ease';
-            loader.style.opacity = '0';
-            setTimeout(() => {
+          setTimeout(function() {
+            document.getElementById('loader-screen').classList.add('fade-out');
+            setTimeout(function() {
               window.location.href = 'index.html';
             }, 700);
-          }, 500);
+          }, 600);
         }
-      }, interval);
+      }, 28);
     }
   </script>
 </body>
