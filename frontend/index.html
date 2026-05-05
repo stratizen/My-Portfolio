@@ -315,6 +315,12 @@
  
 
   <script>
+
+    // If user has already seen the intro this session, skip straight to homepage
+    if (sessionStorage.getItem('introSeen')) {
+      window.location.replace('homepage.html');
+    }
+    
     var statusMessages = [
       'Initialising…',
       'Loading assets…',
