@@ -6,12 +6,310 @@
   <title>Projects — Portfolio</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── CARD CLICKABLE CURSOR ── */
+    .project-card {
+      cursor: pointer;
+      position: relative;
+    }
+    .project-card__img {
+      position: relative;
+      overflow: hidden;
+    }
+    /* Actual image inside card */
+    .project-card__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .project-card:hover .project-card__img img {
+      transform: scale(1.05);
+    }
+    /* View overlay on hover */
+    .project-card__img .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .project-card:hover .project-card__img .overlay {
+      opacity: 1;
+    }
+    .overlay__label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #c8f04d;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(200,240,77,0.5);
+      padding: 10px 22px;
+      border-radius: 50px;
+    }
+
+    /* ── PROJECT MODAL ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Close button */
+    .modal__close {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px 20px 0;
+      background: #111;
+      z-index: 10;
+    }
+    .modal__close button {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #e8e8e8;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      line-height: 1;
+    }
+    .modal__close button:hover {
+      background: rgba(200,240,77,0.1);
+      border-color: rgba(200,240,77,0.4);
+      color: #c8f04d;
+    }
+
+    /* Image gallery */
+    .modal__gallery {
+      padding: 0 24px;
+    }
+    .gallery__main {
+      width: 100%;
+      height: 320px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1a1a1a;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .gallery__main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery__main .no-img {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .gallery__main .no-img svg {
+      opacity: 0.2;
+    }
+
+    /* Thumbnail strip */
+    .gallery__thumbs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .gallery__thumb {
+      width: 72px;
+      height: 54px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      flex-shrink: 0;
+      background: #1a1a1a;
+    }
+    .gallery__thumb.active {
+      border-color: #c8f04d;
+    }
+    .gallery__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Nav arrows on main image */
+    .gallery__arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(10,10,10,0.6);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #e8e8e8;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      z-index: 5;
+    }
+    .gallery__arrow:hover {
+      background: rgba(200,240,77,0.15);
+      border-color: rgba(200,240,77,0.5);
+      color: #c8f04d;
+    }
+    .gallery__arrow.prev { left: 12px; }
+    .gallery__arrow.next { right: 12px; }
+
+    /* Modal body */
+    .modal__body {
+      padding: 24px;
+    }
+    .modal__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .modal__title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #e8e8e8;
+      letter-spacing: -0.02em;
+    }
+    .modal__links {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .modal__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .modal__link--live {
+      background: #c8f04d;
+      color: #0a0a0a;
+      border: 1px solid #c8f04d;
+    }
+    .modal__link--live:hover { opacity: 0.85; }
+    .modal__link--github {
+      background: transparent;
+      color: #e8e8e8;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .modal__link--github:hover {
+      border-color: rgba(200,240,77,0.4);
+      color: #c8f04d;
+    }
+
+    .modal__section {
+      margin-bottom: 20px;
+    }
+    .modal__section h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    .modal__section p {
+      font-size: 0.92rem;
+      color: #aaa;
+      line-height: 1.75;
+    }
+    .modal__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Scrollbar styling for modal */
+    .modal::-webkit-scrollbar { width: 4px; }
+    .modal::-webkit-scrollbar-track { background: transparent; }
+    .modal::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+    /* Image upload hint inside modal */
+    .upload-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 <body>
 
   <!-- NAV -->
   <nav class="nav">
-    <div class="nav__logo"><a href="homepage.html" class="home-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Home</span></a></div>
+    <div class="nav__logo"><a href="homepage.html" class="home-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Home</span>
+    </a></div>
     <ul class="nav__links">
       <li><a href="projects.html" class="active">Projects</a></li>
       <li><a href="stack.html">Stack</a></li>
@@ -33,16 +331,26 @@
     </ul>
   </div>
 
-  <!-- PROJECTS -->
+  <!-- PROJECTS GRID -->
   <section class="section projects page-section">
     <div class="container">
       <h2 class="section__title">Selected Projects</h2>
       <div class="projects__grid">
 
-        <div class="project-card">
-          <div class="project-card__img"></div>
+        <!-- CARD 1 -->
+        <div class="project-card" onclick="openModal('p1')">
+          <div class="project-card__img">
+            <!-- Replace src with your image path e.g. src="images/project1.jpg" -->
+            <img src="" alt="Project 1" id="card-img-p1" onerror="this.style.display='none'"/>
+            <div class="overlay">
+              <span class="overlay__label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                View Project
+              </span>
+            </div>
+          </div>
           <div class="project-card__body">
-            <h3>Project Title</h3>
+            <h3>Project Title One</h3>
             <p><span>Problem</span> Short description of the problem solved.</p>
             <p><span>Solution</span> What you built to solve it.</p>
             <p><span>Result</span> Impact or outcome achieved.</p>
@@ -54,10 +362,19 @@
           </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-card__img"></div>
+        <!-- CARD 2 -->
+        <div class="project-card" onclick="openModal('p2')">
+          <div class="project-card__img">
+            <img src="" alt="Project 2" id="card-img-p2" onerror="this.style.display='none'"/>
+            <div class="overlay">
+              <span class="overlay__label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                View Project
+              </span>
+            </div>
+          </div>
           <div class="project-card__body">
-            <h3>Project Title</h3>
+            <h3>Project Title Two</h3>
             <p><span>Problem</span> Short description of the problem solved.</p>
             <p><span>Solution</span> What you built to solve it.</p>
             <p><span>Result</span> Impact or outcome achieved.</p>
@@ -69,17 +386,26 @@
           </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-card__img"></div>
+        <!-- CARD 3 -->
+        <div class="project-card" onclick="openModal('p3')">
+          <div class="project-card__img">
+            <img src="" alt="Project 3" id="card-img-p3" onerror="this.style.display='none'"/>
+            <div class="overlay">
+              <span class="overlay__label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                View Project
+              </span>
+            </div>
+          </div>
           <div class="project-card__body">
-            <h3>Project Title</h3>
+            <h3>Project Title Three</h3>
             <p><span>Problem</span> Short description of the problem solved.</p>
             <p><span>Solution</span> What you built to solve it.</p>
             <p><span>Result</span> Impact or outcome achieved.</p>
             <div class="project-card__tags">
               <span class="tag">React</span>
-              <span class="tag">Tailwind</span>
-              <span class="tag">GSAP</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">PostgreSQL</span>
             </div>
           </div>
         </div>
@@ -87,6 +413,69 @@
       </div>
     </div>
   </section>
+
+  <!-- ===== PROJECT MODAL ===== -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+    <div class="modal" id="modal">
+
+      <div class="modal__close">
+        <button onclick="closeModal()" title="Close">&#x2715;</button>
+      </div>
+
+      <!-- Image Gallery -->
+      <div class="modal__gallery">
+        <div class="gallery__main" id="galleryMain">
+          <div class="no-img" id="noImgMsg">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M3 15l5-5 4 4 3-3 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/></svg>
+            Add image paths in the project data below
+          </div>
+          <img id="galleryMainImg" src="" alt="" style="display:none;"/>
+          <button class="gallery__arrow prev" id="prevBtn" onclick="prevImage()" style="display:none;">&#8592;</button>
+          <button class="gallery__arrow next" id="nextBtn" onclick="nextImage()" style="display:none;">&#8594;</button>
+        </div>
+        <div class="gallery__thumbs" id="galleryThumbs"></div>
+        <p class="upload-hint" id="uploadHint">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 16V8M8 12l4-4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 20h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          To add images: place your image files in an <strong style="color:#555">&nbsp;images/&nbsp;</strong> folder, then update the src paths in the project data
+        </p>
+      </div>
+
+      <!-- Project Info -->
+      <div class="modal__body">
+        <div class="modal__header">
+          <h2 class="modal__title" id="modalTitle">Project Title</h2>
+          <div class="modal__links">
+            <a href="#" class="modal__link modal__link--live" id="modalLive" target="_blank">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="currentColor" stroke-width="2"/><path d="M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Live Site
+            </a>
+            <a href="#" class="modal__link modal__link--github" id="modalGithub" target="_blank">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        <div class="modal__section">
+          <h4>Problem</h4>
+          <p id="modalProblem"></p>
+        </div>
+        <div class="modal__section">
+          <h4>Solution</h4>
+          <p id="modalSolution"></p>
+        </div>
+        <div class="modal__section">
+          <h4>Result</h4>
+          <p id="modalResult"></p>
+        </div>
+        <div class="modal__section">
+          <h4>Tech Stack</h4>
+          <div class="modal__tags" id="modalTags"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -102,10 +491,177 @@
 
   <script src="script.js"></script>
   <script>
+    /* ================================================
+       PROJECT DATA — edit this to add your info
+       For images: put files in an images/ folder
+       e.g. images: ['images/proj1-screen1.jpg', 'images/proj1-screen2.jpg']
+    ================================================ */
+    var projects = {
+      p1: {
+        title: '2nd Generation Leadership Program',
+        problem:  'Describe the problem or challenge this project addressed. What pain point were you solving for users?',
+        solution: 'Preserve the Legacy. Drive Innovation. Build For The Future',
+        result:   'Share the measurable outcome' ,
+        tags:     ['React', 'Tailwind', 'GSAP'],
+        liveUrl:  '#',
+        githubUrl:'#',
+        // ADD YOUR IMAGES HERE — put files in an images/ folder next to your html files
+        // Example: images: ['images/p1-hero.jpg', 'images/p1-screen2.jpg', 'images/p1-mobile.jpg']
+        images:   []
+      
+          
+        
+      },
+      p2: {
+        title: 'Project Title Two',
+        problem:  'Describe the problem or challenge this project addressed. What pain point were you solving?',
+        solution: 'Explain your approach and the key technical decisions you made during development.',
+        result:   'Share the measurable outcome — users, performance gains, or business impact.',
+        tags:     ['Next.js', 'Tailwind', 'GSAP'],
+        liveUrl:  '#',
+        githubUrl:'#',
+        images:   []
+      },
+      p3: {
+        title: 'Project Title Three',
+        problem:  'Describe the problem or challenge this project addressed.',
+        solution: 'Explain what you built and the technical approach you took.',
+        result:   'Share the measurable outcome of the project.',
+        tags:     ['React', 'Node.js', 'PostgreSQL'],
+        liveUrl:  '#',
+        githubUrl:'#',
+        images:   []
+      }
+    };
+
+    /* ================================================
+       MODAL LOGIC — no need to edit below this line
+    ================================================ */
+    var currentImages = [];
+    var currentIndex  = 0;
+
+    function openModal(id) {
+      var p = projects[id];
+      if (!p) return;
+
+      // Fill text content
+      document.getElementById('modalTitle').textContent    = p.title;
+      document.getElementById('modalProblem').textContent  = p.problem;
+      document.getElementById('modalSolution').textContent = p.solution;
+      document.getElementById('modalResult').textContent   = p.result;
+      document.getElementById('modalLive').href            = p.liveUrl;
+      document.getElementById('modalGithub').href          = p.githubUrl;
+
+      // Tags
+      var tagsEl = document.getElementById('modalTags');
+      tagsEl.innerHTML = '';
+      p.tags.forEach(function(t) {
+        var span = document.createElement('span');
+        span.className = 'tag tag--glow';
+        span.textContent = t;
+        tagsEl.appendChild(span);
+      });
+
+      // Gallery
+      currentImages = p.images || [];
+      currentIndex  = 0;
+      buildGallery();
+
+      // Show modal
+      document.getElementById('modalBackdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function buildGallery() {
+      var mainImg   = document.getElementById('galleryMainImg');
+      var noImg     = document.getElementById('noImgMsg');
+      var thumbsEl  = document.getElementById('galleryThumbs');
+      var prevBtn   = document.getElementById('prevBtn');
+      var nextBtn   = document.getElementById('nextBtn');
+      var hint      = document.getElementById('uploadHint');
+
+      thumbsEl.innerHTML = '';
+
+      if (currentImages.length === 0) {
+        mainImg.style.display = 'none';
+        noImg.style.display   = 'flex';
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        hint.style.display    = 'flex';
+        return;
+      }
+
+      noImg.style.display   = 'none';
+      hint.style.display    = 'none';
+      mainImg.style.display = 'block';
+      mainImg.src           = currentImages[0];
+
+      // Show arrows only if multiple images
+      if (currentImages.length > 1) {
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+      } else {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+      }
+
+      // Build thumbnails
+      currentImages.forEach(function(src, i) {
+        var thumb = document.createElement('div');
+        thumb.className = 'gallery__thumb' + (i === 0 ? ' active' : '');
+        thumb.innerHTML = '<img src="' + src + '" alt="Screenshot ' + (i+1) + '" />';
+        thumb.addEventListener('click', function() { setImage(i); });
+        thumbsEl.appendChild(thumb);
+      });
+    }
+
+    function setImage(index) {
+      currentIndex = index;
+      document.getElementById('galleryMainImg').src = currentImages[index];
+      var thumbs = document.querySelectorAll('.gallery__thumb');
+      thumbs.forEach(function(t, i) {
+        t.classList.toggle('active', i === index);
+      });
+    }
+
+    function prevImage() {
+      var newIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+      setImage(newIndex);
+    }
+
+    function nextImage() {
+      var newIndex = (currentIndex + 1) % currentImages.length;
+      setImage(newIndex);
+    }
+
+    function closeModal() {
+      document.getElementById('modalBackdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target === document.getElementById('modalBackdrop')) closeModal();
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Burger menu
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
     function closeMobile() { mobileMenu.classList.remove('open'); }
+
+    // Refresh → show intro
+    window.addEventListener('load', function() {
+      var navEntries = performance.getEntriesByType('navigation');
+      if (navEntries.length > 0 && navEntries[0].type === 'reload') {
+        sessionStorage.removeItem('introSeen');
+        window.location.href = 'intro.html';
+      }
+    });
   </script>
 </body>
 </html>
