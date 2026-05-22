@@ -8,8 +8,8 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0a0a;
-      --accent: #c8f04d;
+      --bg: #c4c4c4;
+      --accent: #00aa91;
       --text: #e8e8e8;
       --muted: #555555;
     }
@@ -56,10 +56,7 @@
       height: 20px;
       z-index: 3;
     }
-    .corner.tl { top: 24px; left: 24px; border-top: 1px solid #333; border-left: 1px solid #333; }
-    .corner.tr { top: 24px; right: 24px; border-top: 1px solid #333; border-right: 1px solid #333; }
-    .corner.bl { bottom: 24px; left: 24px; border-bottom: 1px solid #333; border-left: 1px solid #333; }
-    .corner.br { bottom: 24px; right: 24px; border-bottom: 1px solid #333; border-right: 1px solid #333; }
+    
 
     /* TOP BAR */
     .topbar {
@@ -187,6 +184,7 @@
     }
 
     /* ===== LOADER SCREEN ===== */
+    
     #loader-screen {
       position: fixed;
       inset: 0;
@@ -271,8 +269,7 @@
   <div class="corner br"></div>
 
   <div class="topbar">
-    <span>© 2026</span>
-    <span>Portfolio</span>
+    
   </div>
 
   <!-- INTRO SCREEN -->
@@ -282,7 +279,7 @@
       WELCOME TO
     </p>
     <h1 class="big-name">
-      CEDRIC<br/>
+      CED<br/>
       <span class="accent">DESIGNS.</span>
     </h1>
     <p class="role-text">UI/UX Designer &amp; Creative Technologist</p>
@@ -381,7 +378,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-  <script src="script.js"></script>  ← your script.js comes AFTER gsap
+  <script src="script.js"></script>  
 
 </body>
 </html>

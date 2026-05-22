@@ -8,12 +8,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #0a0a0a;
-  --bg2:       #111111;
-  --bg3:       #161616;
+  --bg:        #d3d3d3;
+  --bg2:       #333333;
+  --bg3:       #333333;
   --accent:    #00aa91;
   --accent2:   #333333;
-  --text:      #e8e8e8;
+  --text:      #000000;
   --muted:     #888;
   --border:    rgba(255,255,255,0.08);
   --card-bg:   #141414;
@@ -83,7 +83,7 @@ img { display: block; max-width: 100%; }
 
 .btn--primary {
   background: var(--accent);
-  color: #0a0a0a;
+  color: #d3d3d3;
   border: 2px solid var(--accent);
 }
 .btn--primary:hover {
@@ -178,6 +178,8 @@ img { display: block; max-width: 100%; }
   font-size: 1.5rem;
   cursor: pointer;
 }
+
+
 
 /* Mobile menu */
 .mobile-menu {
