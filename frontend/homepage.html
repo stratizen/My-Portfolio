@@ -3,17 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio — Next.js Developer</title>
+  <title>Ced Designs — Motion Graphic & Creative Portfolio</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    /* Premium Interactive Cursor Additions inspired by Lusion */
+    .custom-cursor {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--accent);
+      background: transparent;
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9999;
+      will-change: width, height, transform, background;
+      mix-blend-mode: difference;
+    }
+    
+    .custom-cursor-glow {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(0,170,145,0.15) 0%, transparent 70%);
+      position: fixed;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9998;
+      will-change: transform;
+    }
+
+    /* Kinetic Overlays & Layout Masks */
+    .char-container {
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .project-card__img {
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .project-card__img video,
+    .project-card__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1);
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .project-card:hover .project-card__img video,
+    .project-card:hover .project-card__img img {
+      transform: scale(1.08);
+    }
+
+    /* Target Magnetic Pull zones */
+    .magnetic-wrap {
+      display: inline-block;
+      position: relative;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <div class="custom-cursor" id="jCursor"></div>
+  <div class="custom-cursor-glow" id="jCursorGlow"></div>
+
   <nav class="nav">
-    <div class="nav__logo">
-      <a href="homepage.html" class="home-btn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="nav__logo magnetic-wrap">
+      <a href="index.html?skipIntro=true" class="home-btn target-magnetic">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 4px;">
           <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Home</span>
@@ -21,21 +82,23 @@
     </div>
 
     <div class="nav__logo">
-  
-   <img src="images/logo1.jpeg" alt="Logo" style="height: 90px; width: auto;"/>
-    
+      <img src="images/logo1.jpeg" alt="Ced Designs Logo" style="height: 60px; width: auto; mix-blend-mode: screen;"/>
     </div>
+
     <ul class="nav__links">
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="stack.html">Stack</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="experience.html">Experience</a></li>
+      <li class="magnetic-wrap"><a href="projects.html" class="target-magnetic">Projects</a></li>
+      <li class="magnetic-wrap"><a href="stack.html" class="target-magnetic">Stack</a></li>
+      <li class="magnetic-wrap"><a href="about.html" class="target-magnetic">About</a></li>
+      <li class="magnetic-wrap"><a href="experience.html" class="target-magnetic">Experience</a></li>
     </ul>
-    <a href="contact.html" class="nav__cta">Email Me</a>
+
+    <div class="magnetic-wrap">
+      <a href="contact.html" class="nav__cta target-magnetic">Email Me</a>
+    </div>
     <button class="nav__burger" id="burger">&#9776;</button>
   </nav>
 
-  <!-- MOBILE MENU -->
+
   <div class="mobile-menu" id="mobileMenu">
     <ul>
 
@@ -47,74 +110,81 @@
     </ul>
   </div>
 
-  <!-- HERO -->
+
   <section class="hero" id="home">
     <div class="hero__bg-grid"></div>
     <div class="hero__content">
-      <div class="hero__tag">Available for hire</div>
-      <h1 class="hero__heading">
+      <div class="hero__tag" style="opacity: 0; transform: translateY(20px);">Available for hire</div>
+      <h1 class="hero__heading reveal-text">
         Ced Designs <br/>
-        <span>We dont follow trends</span><br/>
+        <span>We don't follow trends</span><br/>
         We are trend setters
       </h1>
-      <p class="hero__sub">
-        
+      <p class="hero__sub" style="opacity: 0;">
+        Specializing in high-end motion design & premium interactive front-end environments. Creating motion frameworks that define modern web aesthetics.
       </p>
       <div class="hero__cta">
-        <a href="projects.html" class="btn btn--primary">View My Work</a>
-        <a href="contact.html" class="btn btn--outline">Get in Touch</a>
+        <div class="magnetic-wrap"><a href="projects.html" class="btn btn--primary target-magnetic">View My Work</a></div>
+        <div class="magnetic-wrap"><a href="contact.html" class="btn btn--outline target-magnetic">Get in Touch</a></div>
       </div>
     </div>
     <div class="hero__accent"></div>
   </section>
 
-  <!-- PROJECTS -->
+
   <section class="section projects" id="projects">
     <div class="container">
-      <h2 class="section__title">Selected Projects</h2>
+      <h2 class="section__title scroll-reveal">Selected Projects</h2>
       <div class="projects__grid">
 
-        <div class="project-card">
-          <div class="project-card__img"></div>
-          <div class="project-card__body">
-            <h3>Project Title</h3>
-            <p><span>Problem</span> Short description of the problem solved.</p>
-            <p><span>Solution</span> What you built to solve it.</p>
-            <p><span>Result</span> Impact or outcome achieved.</p>
-            <div class="project-card__tags">
-              <span class="tag">React</span>
-              <span class="tag">Tailwind</span>
-              <span class="tag">GSAP</span>
-            </div>
+        <div class="project-card reveal-card">
+          <div class="project-card__img">
+            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #161616, #00aa91); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: rgba(255,255,255,0.05);">⬡</div>
           </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-card__img"></div>
           <div class="project-card__body">
-            <h3>Project Title</h3>
-            <p><span>Problem</span> Short description of the problem solved.</p>
-            <p><span>Solution</span> What you built to solve it.</p>
-            <p><span>Result</span> Impact or outcome achieved.</p>
+            <h3>Kinetic Interface Motion</h3>
+            <p><span>Problem</span> Static websites fail to hold attention spans in competitive marketplaces.</p>
+            <p><span>Solution</span> Built fully reactive UI environments with optimized 3D web rendering tracks.</p>
+            <p><span>Result</span> Lifted session dwell-times by over 45% through interactive storytelling mechanics.</p>
             <div class="project-card__tags">
               <span class="tag">Next.js</span>
-              <span class="tag">Tailwind</span>
               <span class="tag">GSAP</span>
+              <span class="tag">Motion Graphic</span>
             </div>
           </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-card__img"></div>
+        <div class="project-card reveal-card">
+          <div class="project-card__img">
+            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #111111, #333333); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: rgba(255,255,255,0.05);">⬡</div>
+          </div>
           <div class="project-card__body">
-            <h3>Project Title</h3>
-            <p><span>Problem</span> Short description of the problem solved.</p>
-            <p><span>Solution</span> What you built to solve it.</p>
-            <p><span>Result</span> Impact or outcome achieved.</p>
+            <h3>Dynamic Branding Engine</h3>
+            <p><span>Problem</span> Graphic assets lack consistency when scaling across modern viewport parameters.</p>
+            <p><span>Solution</span> Programmed modular vector arrays and algorithmic kinetic typography systems.</p>
+            <p><span>Result</span> Established a future-proof visual language deployed internationally.</p>
             <div class="project-card__tags">
               <span class="tag">React</span>
+              <span class="tag">SVG Animation</span>
               <span class="tag">Tailwind</span>
-              <span class="tag">GSAP</span>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal-card">
+          <div class="project-card__img">
+            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #00aa91, #121212); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: rgba(255,255,255,0.05);">⬡</div>
+          </div>
+          <div class="project-card__body">
+            <h3>3D Webflow Simulator</h3>
+            <p><span>Problem</span> Creative agencies struggle to model complex lighting properties natively on mobile devices.</p>
+            <p><span>Solution</span> Scripted hardware-accelerated shaders processing viewport positions instantly.</p>
+            <p><span>Result</span> Generated zero-latency interactive particle states running inside any browser matrix.</p>
+            <div class="project-card__tags">
+              <span class="tag">WebGL</span>
+              <span class="tag">GSAP 3D</span>
+              <span class="tag">Next.js</span>
             </div>
           </div>
         </div>
@@ -123,82 +193,64 @@
     </div>
   </section>
 
-  <!-- TECH STACK -->
+
   <section class="section stack" id="stack">
     <div class="container">
-      <h2 class="section__title">Tech Stack</h2>
+      <h2 class="section__title scroll-reveal">Tech Stack</h2>
       <div class="stack__grid">
-        <div class="stack__row">
-          <span class="stack__label">Frontend</span>
+        <div class="stack__row reveal-row">
+          <span class="stack__label">Creative Development</span>
           <div class="stack__tags">
             <span class="tag tag--glow">React</span>
             <span class="tag tag--glow">Next.js</span>
+            <span class="tag tag--glow">GSAP Motion</span>
+            <span class="tag tag--glow">WebGL / Shaders</span>
+          </div>
+        </div>
+        <div class="stack__row reveal-row">
+          <span class="stack__label">Core Engineering</span>
+          <div class="stack__tags">
             <span class="tag tag--glow">TypeScript</span>
             <span class="tag tag--glow">Node.js</span>
-          </div>
-        </div>
-        <div class="stack__row">
-          <span class="stack__label">Backend</span>
-          <div class="stack__tags">
-            <span class="tag tag--glow">React</span>
-            <span class="tag tag--glow">Tethmet</span>
-            <span class="tag tag--glow">Node.js</span>
             <span class="tag tag--glow">PostgreSQL</span>
-          </div>
-        </div>
-        <div class="stack__row">
-          <span class="stack__label">Design/Tools</span>
-          <div class="stack__tags">
-            <span class="tag tag--glow">Figma</span>
-            <span class="tag tag--glow">Vercels</span>
-            <span class="tag tag--glow">Git</span>
-            <span class="tag tag--glow">Vercel</span>
+            <span class="tag tag--glow">Tailwind Engine</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
+
   <section class="section about" id="about">
     <div class="container about__inner">
-      <div class="about__left">
+      <div class="about__left reveal-left">
         <div class="about__avatar">
           <div class="about__avatar-placeholder">
             <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="40" cy="30" r="18" fill="#c8f04d" opacity="0.4"/>
-              <ellipse cx="40" cy="72" rx="28" ry="16" fill="#c8f04d" opacity="0.2"/>
+              <circle cx="40" cy="30" r="18" fill="#00aa91" opacity="0.4"/>
+              <ellipse cx="40" cy="72" rx="28" ry="16" fill="#00aa91" opacity="0.2"/>
             </svg>
           </div>
         </div>
         <p class="about__bio">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+          I bridge the gap between abstract fine art and high-performance frontend engineering. My goal is to build sites that serve as unforgettable sensory interactions for users.
         </p>
       </div>
-      <div class="about__right">
+      <div class="about__right reveal-right">
         <h2 class="section__title" style="text-align:left;">About Me</h2>
         <div class="about__items">
           <div class="about__item">
             <span class="about__icon">🗺️</span>
             <div>
-              <strong>My Journey</strong>
-              <p>How I got into development and what drives me forward.</p>
+              <strong>The Motion Ideation</strong>
+              <p>Translating initial structural concepts into dynamic vectors that manipulate spatial depths gracefully.</p>
             </div>
           </div>
           <div class="about__item">
             <span class="about__icon">🎯</span>
             <div>
-              <strong>My Focus</strong>
-              <p>Building fast, accessible, and beautiful web experiences.</p>
-            </div>
-          </div>
-          <div class="about__item">
-            <span class="about__icon">💡</span>
-            <div>
-              <strong>Soft Skills</strong>
-              <p>Collaboration, problem-solving, and clear communication.</p>
+              <strong>The Technical Priority</strong>
+              <p>Ensuring fluid frame rates (steady 60fps) across computing setups through efficient garbage collection script methods.</p>
             </div>
           </div>
         </div>
@@ -206,78 +258,150 @@
     </div>
   </section>
 
-  <!-- EXPERIENCE & EDUCATION -->
-  <section class="section experience" id="experience">
-    <div class="container">
-      <h2 class="section__title">Experience &amp; Education</h2>
-      <div class="timeline">
 
-        <div class="timeline__item timeline__item--left">
-          <div class="timeline__card">
-            <h4>Role Title</h4>
-            <span class="timeline__org">Company / Institution Name</span>
-            <span class="timeline__date">2018 – 2023</span>
-            <p>Achievement summary and line consectetuer summary of what was accomplished.</p>
-          </div>
-        </div>
-
-        <div class="timeline__item timeline__item--right">
-          <div class="timeline__card">
-            <h4>Role Title</h4>
-            <span class="timeline__org">Company / Institution Name</span>
-            <span class="timeline__date">2018 – 2023</span>
-            <p>Achievement summary and line consectetuer summary of what was accomplished.</p>
-          </div>
-        </div>
-
-        <div class="timeline__item timeline__item--left">
-          <div class="timeline__card">
-            <h4>Role Title</h4>
-            <span class="timeline__org">Company / Institution Name</span>
-            <span class="timeline__date">2016 – 2018</span>
-            <p>Achievement summary and line consectetuer summary of what was accomplished.</p>
-          </div>
-        </div>
-
-        <div class="timeline__item timeline__item--right">
-          <div class="timeline__card">
-            <h4>Role Title</h4>
-            <span class="timeline__org">Company / Institution Name</span>
-            <span class="timeline__date">2016 – 2018</span>
-            <p>Achievement summary and line consectetuer summary of what was accomplished.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT / FOOTER -->
   <footer class="footer" id="contact">
     <div class="container footer__inner">
-      <div class="footer__cta">
-        <h2>Let's Work Together</h2>
-        <p>Open to freelance projects and full-time roles.</p>
-        <a href="mailto:you@email.com" class="btn btn--primary">Email Me</a>
+      <div class="footer__cta scroll-reveal">
+        <h2>Let's Outpace Trends Together</h2>
+        <p>Currently accepting selective inquiries for freelance, creative design consultation, and agency roles.</p>
+        <div class="magnetic-wrap"><a href="mailto:ced@designs.com" class="btn btn--primary target-magnetic">Email Me</a></div>
       </div>
       <div class="footer__links">
         <a href="#" target="_blank">LinkedIn</a>
         <a href="#" target="_blank">GitHub</a>
-        <a href="#" target="_blank">Resume PDF</a>
+        <a href="#" target="_blank">Showreel Play</a>
       </div>
-      <p class="footer__copy">&copy; 2026 Your Name. All rights reserved.</p>
+      <p class="footer__copy">&copy; 2026 Ced Designs. Crafted via GSAP Kinetic Frameworks.</p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
   <script>
+    // Register GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Mobile Navigation Controls
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
     function closeMobile() { mobileMenu.classList.remove('open'); }
+
+    /* ==========================================================
+       1. LUSION KINETIC LIQUID CURSOR TRACKING
+       ========================================================== */
+    const cursor = document.getElementById('jCursor');
+    const glow = document.getElementById('jCursorGlow');
+
+    // Quick setters for instant hardware translation performance
+    const cursorX = gsap.quickTo(cursor, "x", { duration: 0.2, ease: "power3.out" });
+    const cursorY = gsap.quickTo(cursor, "y", { duration: 0.2, ease: "power3.out" });
+    const glowX = gsap.quickTo(glow, "x", { duration: 0.6, ease: "power2.out" });
+    const glowY = gsap.quickTo(glow, "y", { duration: 0.6, ease: "power2.out" });
+
+    window.addEventListener('mousemove', (e) => {
+      cursorX(e.clientX);
+      cursorY(e.clientY);
+      glowX(e.clientX);
+      glowY(e.clientY);
+    });
+
+    // Expand pointer loop on project elements for immediate sensory interaction
+    document.querySelectorAll('.project-card__img').forEach(zone => {
+      zone.addEventListener('mouseenter', () => {
+        gsap.to(cursor, { scale: 3, backgroundColor: 'rgba(0,170,145,0.1)', duration: 0.3 });
+      });
+      zone.addEventListener('mouseleave', () => {
+        gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 });
+      });
+    });
+
+    /* ==========================================================
+       2. REACTION DRIVEN MAGNETIC ENGINE BUTTONS
+       ========================================================== */
+    document.querySelectorAll('.magnetic-wrap').forEach(wrapper => {
+      const target = wrapper.querySelector('.target-magnetic') || wrapper.children[0];
+      
+      wrapper.addEventListener('mousemove', (e) => {
+        const rect = wrapper.getBoundingClientRect();
+        // Calculate gravitational coordinate drift points
+        const relX = e.clientX - rect.left - rect.width / 2;
+        const relY = e.clientY - rect.top - rect.height / 2;
+
+        gsap.to(target, {
+          x: relX * 0.4,
+          y: relY * 0.4,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+
+      wrapper.addEventListener('mouseleave', () => {
+        gsap.to(target, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+      });
+    });
+
+    /* ==========================================================
+       3. ENGINE TIMELINE HERO TEXT REVEAL
+       ========================================================== */
+    const heroTl = gsap.timeline();
+
+    heroTl.to(".hero__tag", { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
+          .from(".hero__heading", { 
+            backgroundPositionX: "100%", 
+            clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)",
+            clipPath: "inset(0 0 100% 0)",
+            y: 50,
+            opacity: 0,
+            duration: 1, 
+            ease: "power4.out" 
+          }, "-=0.3")
+          .to(".hero__sub", { opacity: 1, duration: 0.8 }, "-=0.5")
+          .from(".hero__cta .magnetic-wrap", { opacity: 0, y: 15, stagger: 0.15, duration: 0.5 }, "-=0.4");
+
+    /* ==========================================================
+       4. SCROLLTRIGGER DRIVEN TIMELINES (SCROLL-BASED ACTION)
+       ========================================================== */
+    
+    // Project Cards Reveal
+    gsap.from(".reveal-card", {
+      scrollTrigger: {
+        trigger: ".projects__grid",
+        start: "top 80%",
+        toggleActions: "play none none none"
+      },
+      y: 80,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 1,
+      ease: "power3.out"
+    });
+
+    // Row Stack Reveal
+    gsap.from(".reveal-row", {
+      scrollTrigger: {
+        trigger: ".stack__grid",
+        start: "top 85%"
+      },
+      scaleX: 0.9,
+      opacity: 0,
+      stagger: 0.15,
+      duration: 0.8,
+      ease: "power2.out"
+    });
+
+    // Split Layout About Section Reveal
+    gsap.from(".reveal-left", {
+      scrollTrigger: { trigger: ".about__inner", start: "top 75%" },
+      x: -50, opacity: 0, duration: 1, ease: "power2.out"
+    });
+
+    gsap.from(".reveal-right", {
+      scrollTrigger: { trigger: ".about__inner", start: "top 75%" },
+      x: 50, opacity: 0, duration: 1, ease: "power2.out"
+    });
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="script.js"></script>
+  
 </body>
 </html>
