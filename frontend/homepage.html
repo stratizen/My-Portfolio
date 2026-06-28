@@ -11,15 +11,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet"/>
 
   <style>
     :root {
       --primary: #0b57d0;
       --accent: #00aa91;
-      --bg-dark: #0a0a0a;
+      --bg-dark: #060909;
+      --card-bg: #0c1111;
       --bg-light: #ffffff;
       --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-display: 'Syne', sans-serif;
     }
 
     body {
@@ -80,13 +82,14 @@
       border: 1px solid #e2e8f0;
       border-radius: 16px;
       background: #ffffff;
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.3s;
     }
 
     .project-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-      border-color: #cbd5e1;
+      border-color: var(--accent);
     }
 
     .tag-pill {
@@ -101,14 +104,358 @@
     }
 
     .project-card:hover .tag-pill {
-      border-color: var(--primary);
-      color: var(--primary);
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0, 170, 145, 0.02);
     }
 
     /* Magnetic Elements Wrapper */
     .magnetic-wrap {
       display: inline-block;
       position: relative;
+    }
+
+    /* ── IMMERSIVE PROJECT SLIDING MODAL ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 5, 5, 0.94);
+      backdrop-filter: blur(15px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal {
+      background: #070b0b;
+      border: 1px solid rgba(0, 170, 145, 0.15);
+      box-shadow: 0 0 60px rgba(0, 170, 145, 0.1);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 900px;
+      max-height: 92vh;
+      overflow-y: auto;
+      position: relative;
+      color: #e8e8e8;
+      transform: translateY(40px) scale(0.96);
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .modal-backdrop.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    /* Close button */
+    .modal__close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+    }
+
+    .modal__close button {
+      background: rgba(3, 5, 5, 0.8);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e8e8e8;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .modal__close button:hover {
+      background: rgba(0, 170, 145, 0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: rotate(90deg);
+    }
+
+    /* Image Gallery & Slider System */
+    .modal__gallery {
+      padding: 40px 40px 10px;
+      position: relative;
+    }
+
+    .gallery__viewport {
+      width: 100%;
+      height: clamp(260px, 45vh, 420px);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #020404;
+      position: relative;
+      perspective: 1000px;
+      touch-action: pan-y; 
+    }
+
+    .gallery__track {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .gallery__slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate3d(0, 0, -100px);
+      transition: opacity 0.5s, transform 0.5s, visibility 0.5s;
+      z-index: 1;
+    }
+
+    .gallery__slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+      z-index: 2;
+    }
+
+    .gallery__slide img,
+    .gallery__slide svg {
+      max-width: 85%;
+      max-height: 85%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      transition: transform 0.1s ease-out;
+    }
+
+    /* Slider Navigation Arrows */
+    .gallery__arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(6, 9, 9, 0.75);
+      border: 1px solid rgba(0, 170, 145, 0.2);
+      color: #e8e8e8;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      z-index: 10;
+    }
+
+    .gallery__arrow:hover {
+      background: var(--accent);
+      color: #030505;
+      border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(0, 170, 145, 0.4);
+    }
+
+    .gallery__arrow.prev { left: 16px; }
+    .gallery__arrow.next { right: 16px; }
+
+    /* Responsive Scrollable Thumbnail Strip */
+    .gallery__thumbs {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding: 4px 4px 12px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 170, 145, 0.3) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .gallery__thumbs::-webkit-scrollbar {
+      height: 4px;
+    }
+    .gallery__thumbs::-webkit-scrollbar-thumb {
+      background: rgba(0, 170, 145, 0.3);
+      border-radius: 20px;
+    }
+
+    .gallery__thumb {
+      width: 70px;
+      height: 88px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #0a0d0d;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    .gallery__thumb:hover {
+      opacity: 0.8;
+      transform: translateY(-2px);
+    }
+
+    .gallery__thumb.active {
+      border-color: var(--accent);
+      opacity: 1;
+      box-shadow: 0 0 10px rgba(0, 170, 145, 0.3);
+    }
+
+    .gallery__thumb svg,
+    .gallery__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal__body {
+      padding: 24px 40px 40px;
+    }
+
+    .modal__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .modal__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .modal__links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .modal__link--live {
+      background: var(--accent);
+      color: #030505;
+      border: 1px solid var(--accent);
+    }
+
+    .modal__link--live:hover {
+      box-shadow: 0 0 15px rgba(0, 170, 145, 0.35);
+      opacity: 0.9;
+    }
+
+    .modal__link--github {
+      background: transparent;
+      color: #e8e8e8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal__link--github:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .modal__grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+    }
+
+    .modal__section {
+      margin-bottom: 24px;
+    }
+
+    .modal__section h4 {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .modal__section p {
+      font-size: 14px;
+      color: #99aba7;
+      line-height: 1.8;
+    }
+
+    .modal__meta-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 24px;
+      border-radius: 12px;
+      height: fit-content;
+    }
+
+    .modal__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Modal Scrollbar */
+    .modal::-webkit-scrollbar { width: 6px; }
+    .modal::-webkit-scrollbar-track { background: transparent; }
+    .modal::-webkit-scrollbar-thumb { background: rgba(0, 170, 145, 0.3); border-radius: 3px; }
+
+    @media (min-width: 769px) {
+      .gallery__thumbs {
+        justify-content: center;
+        overflow-x: visible;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal__grid { grid-template-columns: 1fr; gap: 30px; }
+      .modal__gallery { padding: 30px 16px 10px; }
+      
+      .gallery__arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 14px;
+      }
+      .gallery__arrow.prev { left: 10px; }
+      .gallery__arrow.next { right: 10px; }
+
+      .modal__body { padding: 20px 20px 30px; }
     }
   </style>
 </head>
@@ -130,11 +477,13 @@
 
       <!-- Main Desktop Navigation -->
       <nav class="hidden md:flex items-center gap-8">
-        <a href="#projects" class="font-semibold text-sm hover:text-blue-600 transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-blue-600">Work</a>
-        <a href="#about" class="font-medium text-sm text-gray-600 hover:text-blue-600 transition-colors">About</a>
-        <a href="#contact" class="font-medium text-sm text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
-        <a href="resume.pdf" target="_blank" class="magnetic-wrap">
-          <span class="target-magnetic px-5 py-2.5 bg-black hover:bg-blue-600 text-white rounded-full text-xs font-semibold tracking-wide transition-all duration-300">Resume</span>
+        <a href="projects.html" class="font-medium text-sm text-gray-600 hover:text-blue-600 transition-colors">Work</a>
+        <a href="experience.html" class="font-medium text-sm text-gray-600 hover:text-blue-600 transition-colors">Experience</a>
+        <a href="resume.html" class="font-medium text-sm text-gray-600 hover:text-blue-600 transition-colors">Resume</a>
+        <a href="contact.html" class="font-medium text-sm text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+        <a href="about.html" class="font-medium text-sm text-gray-600 hover:text-blue-600 transition-colors">About</a>
+        <a href="contact.html" class="magnetic-wrap">
+          <span class="target-magnetic px-5 py-2.5 bg-black hover:bg-blue-600 text-white rounded-full text-xs font-semibold tracking-wide transition-all duration-300">Email Me</span>
         </a>
       </nav>
 
@@ -148,10 +497,12 @@
   <!-- Mobile Overlay Menu -->
   <div class="fixed inset-0 bg-black text-white z-40 hidden flex-col justify-center items-center gap-8 text-2xl font-bold transition-all duration-500" id="mobileMenu">
     <button class="absolute top-6 right-6 text-3xl focus:outline-none" id="closeMenu">&times;</button>
-    <a href="#projects" class="hover:text-blue-500 transition-colors" onclick="toggleMenu()">Work</a>
-    <a href="#about" class="hover:text-blue-500 transition-colors" onclick="toggleMenu()">About</a>
-    <a href="#contact" class="hover:text-blue-500 transition-colors" onclick="toggleMenu()">Contact</a>
-    <a href="resume.pdf" class="px-8 py-3 bg-blue-600 text-white rounded-full text-lg font-medium" onclick="toggleMenu()">Resume</a>
+    <a href="projects.html" class="hover:text-blue-500 transition-colors" onclick="toggleMenu()">Work</a>
+    <a href="experience.html" class="hover:text-blue-500 transition-colors" onclick="toggleMenu()">Experience</a>
+    <a href="resume.html" class="hover:text-blue-500 transition-colors" onclick="toggleMenu()">Resume</a>
+    <a href="contact.html" class="hover:text-blue-500 transition-colors" onclick="toggleMenu()">Contact</a>
+    <a href="about.html" class="hover:text-blue-500 transition-colors" onclick="toggleMenu()">About</a>
+  
   </div>
 
   <!-- Hero Section -->
@@ -164,7 +515,7 @@
       <!-- Hero Top Typography Row -->
       <div class="relative z-20 mt-4 md:mt-8">
         <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none uppercase">
-          <span class="text-blue-600">CED K.</span> • GRAPHIC <br>
+          <span class="text-blue-600">CED A.</span> • GRAPHIC <br>
           <span class="text-white opacity-95">DESIGN & MOTION.</span>
         </h1>
       </div>
@@ -192,12 +543,12 @@
         </p>
         
         <div class="flex gap-4">
-          <a href="#projects" class="magnetic-wrap">
+          <a href="projects.html" class="magnetic-wrap">
             <span class="target-magnetic px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 block">
               Discover Projects
             </span>
           </a>
-          <a href="#contact" class="magnetic-wrap">
+          <a href="contact.html" class="magnetic-wrap">
             <span class="target-magnetic px-6 py-3.5 bg-transparent border border-white/20 hover:border-white/60 hover:bg-white/5 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 block">
               Inquire Now
             </span>
@@ -214,7 +565,7 @@
       <h2 class="text-2xl md:text-3xl font-black tracking-tight uppercase text-black">
         Featured Projects
       </h2>
-      <a href="#all-work" class="magnetic-wrap">
+      <a href="projects.html" class="magnetic-wrap">
         <span class="target-magnetic px-6 py-3 bg-black text-white hover:bg-blue-600 rounded-full text-xs font-bold transition-all duration-300">
           View All Work
         </span>
@@ -224,128 +575,86 @@
     <!-- Redesigned Grid to match high-fidelity card visualization -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       
-      <!-- Project Card 1: VOLTA REBRAND -->
-      <div class="project-card p-6 flex flex-col md:flex-row gap-6">
+      <!-- Project Card 1: SWISS TYPE -->
+      <div class="project-card p-6 flex flex-col md:flex-row gap-6" onclick="openModal('p1')">
         <!-- Visual Panel Left Side -->
         <div class="w-full md:w-1/2 aspect-video md:aspect-square rounded-xl overflow-hidden bg-black flex flex-col items-center justify-center p-6 relative group">
           <!-- Dynamic gradient brand mesh background -->
-          <div class="absolute inset-0 bg-gradient-to-tr from-blue-900 via-black to-slate-900 opacity-60 transition-opacity group-hover:opacity-80"></div>
+          <div class="absolute inset-0 bg-gradient-to-tr from-emerald-950 via-black to-slate-900 opacity-60 transition-opacity group-hover:opacity-80"></div>
           
-          <!-- Geometric Volta Icon -->
+          <!-- Swiss Type Minimal Graphic Representative -->
           <div class="relative z-10 text-center flex flex-col items-center gap-2">
-            <svg class="w-20 h-20 text-blue-500 filter drop-shadow-[0_0_20px_rgba(59,130,246,0.4)] animate-pulse" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M50 15L85 35V75L50 95L15 75V35L50 15Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
-              <path d="M50 15V95" stroke="currentColor" stroke-width="2"/>
-              <path d="M15 35L85 75" stroke="currentColor" stroke-width="2"/>
-              <path d="M85 35L15 75" stroke="currentColor" stroke-width="2"/>
+            <svg class="w-16 h-16 text-emerald-500 filter drop-shadow-[0_0_25px_rgba(0,170,145,0.45)]" viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="3" stroke-dasharray="6 8"/>
             </svg>
-            <div class="font-black text-white tracking-widest text-xl mt-2 uppercase">VOLTA</div>
+            <div class="font-black text-white tracking-widest text-lg mt-2 uppercase">SWISS TYPE</div>
           </div>
         </div>
         
         <!-- Content Side -->
         <div class="w-full md:w-1/2 flex flex-col justify-between py-2">
           <div>
-            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">Volta Rebrand</h3>
+            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">Swiss Type</h3>
             <p class="text-gray-600 text-sm leading-relaxed mb-4">
-              Comprehensive brand identity design and visual concepts established for a decentralized clean-energy infrastructure network.
+              Swiss grid principles, stark typographic scales, and optical balance tailored to establish dynamic digital layout systems.
             </p>
           </div>
           <div class="flex flex-wrap gap-2">
-            <span class="tag-pill">Clean</span>
-            <span class="tag-pill">Brand</span>
-            <span class="tag-pill">Visuals</span>
+            <span class="tag-pill">Typography</span>
+            <span class="tag-pill">Posters</span>
+            <span class="tag-pill">Swiss Grid</span>
           </div>
         </div>
       </div>
 
-      <!-- Project Card 2: NEXUS APP UI -->
-      <div class="project-card p-6 flex flex-col md:flex-row gap-6">
+      <!-- Project Card 2: MOTION SYS -->
+      <div class="project-card p-6 flex flex-col md:flex-row gap-6" onclick="openModal('p2')">
         <!-- Visual Panel Left Side -->
-        <div class="w-full md:w-1/2 aspect-video md:aspect-square rounded-xl overflow-hidden bg-[#1e40af] flex flex-col items-center justify-center p-6 relative group">
-          <!-- Mobile Application Preview Mock -->
-          <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 to-blue-700 opacity-90"></div>
-          <div class="relative z-10 w-[140px] aspect-[9/19] bg-slate-900 rounded-3xl border-4 border-slate-800 p-2 shadow-2xl flex flex-col justify-between transform group-hover:scale-105 transition-transform duration-500">
-            <div class="w-12 h-1 bg-slate-800 mx-auto rounded-full mb-2"></div>
-            <div class="flex-grow flex flex-col gap-1.5 p-1">
-              <div class="w-full h-8 bg-blue-600/30 rounded-lg flex items-center justify-center"><div class="w-6 h-1.5 bg-blue-400 rounded"></div></div>
-              <div class="w-full h-12 bg-white/5 rounded-lg p-1 flex flex-col gap-1">
-                <div class="w-8 h-1 bg-white/20 rounded"></div>
-                <div class="w-10 h-1 bg-white/20 rounded"></div>
-              </div>
-              <div class="w-full h-12 bg-white/5 rounded-lg p-1 flex flex-col gap-1">
-                <div class="w-8 h-1 bg-white/20 rounded"></div>
-                <div class="w-10 h-1 bg-white/20 rounded"></div>
-              </div>
-            </div>
-            <div class="w-4 h-4 bg-slate-800 rounded-full mx-auto mt-2"></div>
-          </div>
+        <div class="w-full md:w-1/2 aspect-video md:aspect-square rounded-xl overflow-hidden bg-zinc-950 flex flex-col items-center justify-center p-6 relative group">
+          <div class="absolute inset-0 bg-gradient-to-br from-teal-900 to-black opacity-90"></div>
+          <svg class="w-16 h-16 text-emerald-500 filter drop-shadow-[0_0_20px_rgba(0,170,145,0.4)]" viewBox="0 0 100 100" fill="none">
+            <polygon points="50,15 85,75 15,75" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+          </svg>
         </div>
         
         <!-- Content Side -->
         <div class="w-full md:w-1/2 flex flex-col justify-between py-2">
           <div>
-            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">Nexus App UI</h3>
+            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">Motion Sys</h3>
             <p class="text-gray-600 text-sm leading-relaxed mb-4">
-              Modern digital interface design, design system tokenization, and dynamic high-fidelity prototyping applied across unified iOS and Android ecosystems.
+              High-impact kinetic typography timelines, structural animation maps, and touch-interactive sequential vector layouts.
             </p>
           </div>
           <div class="flex flex-wrap gap-2">
-            <span class="tag-pill">UI/UX</span>
-            <span class="tag-pill">Mobile</span>
-            <span class="tag-pill">Systems</span>
+            <span class="tag-pill">GSAP</span>
+            <span class="tag-pill">Motion</span>
+            <span class="tag-pill">Kinetic</span>
           </div>
         </div>
       </div>
 
-      <!-- Project Card 3: DYNAMIC TYPOGRAPHY -->
-      <div class="project-card p-6 flex flex-col md:flex-row gap-6">
+      <!-- Project Card 3: 3D DIMENSIONS -->
+      <div class="project-card p-6 flex flex-col md:flex-row gap-6" onclick="openModal('p3')">
         <!-- Visual Panel Left Side -->
         <div class="w-full md:w-1/2 aspect-video md:aspect-square rounded-xl overflow-hidden bg-zinc-900 flex flex-col items-center justify-center p-6 relative group">
-          <div class="font-extrabold text-white/5 text-7xl absolute left-2 select-none uppercase">KINETIC</div>
+          <div class="font-extrabold text-white/5 text-6xl absolute left-2 select-none uppercase">MESH</div>
           <div class="relative z-10 text-white font-bold tracking-tight text-center">
-            <div class="text-xs tracking-widest text-blue-500 uppercase">Interactive</div>
-            <div class="text-xl uppercase mt-1">ENGINE TYPE</div>
+            <div class="text-xs tracking-widest text-teal-400 uppercase">3D Space</div>
+            <div class="text-xl uppercase mt-1">POLY MESH</div>
           </div>
         </div>
         
         <!-- Content Side -->
         <div class="w-full md:w-1/2 flex flex-col justify-between py-2">
           <div>
-            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">Kinetic Layouts</h3>
+            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">3D Dimensions</h3>
             <p class="text-gray-600 text-sm leading-relaxed mb-4">
-              Interactive typography simulators utilizing specialized GSAP timeline triggers to build fluid browser typography animations.
+              Real-time hardware-accelerated vertex shaders and tactile visual elements designed in high-performance WebGL formats.
             </p>
           </div>
           <div class="flex flex-wrap gap-2">
-            <span class="tag-pill">Motion</span>
-            <span class="tag-pill">SVG</span>
-            <span class="tag-pill">Creative</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project Card 4: WEBGL SHADERS -->
-      <div class="project-card p-6 flex flex-col md:flex-row gap-6">
-        <!-- Visual Panel Left Side -->
-        <div class="w-full md:w-1/2 aspect-video md:aspect-square rounded-xl overflow-hidden bg-slate-950 flex flex-col items-center justify-center p-6 relative group">
-          <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.3)_0%,transparent_70%)] animate-pulse"></div>
-          <div class="relative z-10 w-24 h-24 border border-blue-500/30 rounded-full flex items-center justify-center">
-            <div class="w-16 h-16 border-2 border-dashed border-blue-400 rounded-full animate-spin"></div>
-          </div>
-        </div>
-        
-        <!-- Content Side -->
-        <div class="w-full md:w-1/2 flex flex-col justify-between py-2">
-          <div>
-            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">3D Shader Assets</h3>
-            <p class="text-gray-600 text-sm leading-relaxed mb-4">
-              Hardware-accelerated fragment and vertex shaders designed inside custom WebGL render environments for immersive design assets.
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="tag-pill">WebGL</span>
             <span class="tag-pill">Three.js</span>
+            <span class="tag-pill">WebGL</span>
             <span class="tag-pill">Shaders</span>
           </div>
         </div>
@@ -436,6 +745,77 @@
     </div>
   </section>
 
+  <!-- ===== PROJECT SLIDING MODAL BACKDROP ===== -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+    <div class="modal" id="modal">
+
+      <div class="modal__close">
+        <button onclick="closeModal()" title="Close">&#x2715;</button>
+      </div>
+
+      <!-- Image/Poster Gallery with Interactive Parallax Canvas Track -->
+      <div class="modal__gallery">
+        <div class="gallery__viewport" id="galleryViewport">
+          <div class="gallery__track" id="galleryTrack">
+            <!-- Dynamic posters generated by JS -->
+          </div>
+
+          <!-- Slider Arrow Controls -->
+          <button class="gallery__arrow prev" id="prevBtn" onclick="prevImage()">&#8592;</button>
+          <button class="gallery__arrow next" id="nextBtn" onclick="nextImage()">&#8594;</button>
+        </div>
+        
+        <!-- Interactive Navigation Thumbnails -->
+        <div class="gallery__thumbs" id="galleryThumbs"></div>
+      </div>
+
+      <!-- Project Info Grid -->
+      <div class="modal__body">
+        <div class="modal__header">
+          <h2 class="modal__title" id="modalTitle">Project Title</h2>
+          <div class="modal__links">
+            <a href="#" class="modal__link modal__link--live" id="modalLive" target="_blank">
+              Live Demo
+            </a>
+            <a href="#" class="modal__link modal__link--github" id="modalGithub" target="_blank">
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        <div class="modal__grid">
+          <div>
+            <div class="modal__section">
+              <h4>The Challenge</h4>
+              <p id="modalProblem"></p>
+            </div>
+            <div class="modal__section">
+              <h4>The Solution</h4>
+              <p id="modalSolution"></p>
+            </div>
+            <div class="modal__section">
+              <h4>Result & Impact</h4>
+              <p id="modalResult"></p>
+            </div>
+          </div>
+
+          <div class="modal__meta-box">
+            <div class="modal__section">
+              <h4>Project Meta</h4>
+              <p class="text-xs mb-2">Medium: Interactive Digital Vector</p>
+              <p class="text-xs">Framerate: Steady 60fps Canvas</p>
+            </div>
+            <div class="modal__section mb-0">
+              <h4>Technologies</h4>
+              <div class="modal__tags" id="modalTags"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Footer section with Contact Triggers -->
   <footer class="bg-black text-white py-20 px-6 md:px-12 border-t border-zinc-900" id="contact">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
@@ -447,7 +827,7 @@
         <p class="text-gray-400 text-sm leading-relaxed mb-6">
           Currently taking selective inquiries for creative projects, design systems consulting, and progressive visual brand strategies.
         </p>
-        <a href="mailto:ced@designs.com" class="magnetic-wrap inline-block">
+        <a href="contact.html" class="magnetic-wrap inline-block">
           <span class="target-magnetic px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 block">
             Email Me Directly
           </span>
@@ -458,9 +838,9 @@
         <div>
           <strong class="text-gray-500 block uppercase tracking-wider text-xs mb-2">Connect</strong>
           <div class="flex gap-4 text-white font-medium">
-            <a href="#" class="hover:text-blue-500 transition-colors">LinkedIn</a>
-            <a href="#" class="hover:text-blue-500 transition-colors">GitHub</a>
-            <a href="#" class="hover:text-blue-500 transition-colors">Instagram</a>
+            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="hover:text-blue-500 transition-colors">LinkedIn</a>
+            <a href="https://github.com/yourusername" target="_blank" class="hover:text-blue-500 transition-colors">GitHub</a>
+            <a href="https://instagram.com/yourhandle" target="_blank" class="hover:text-blue-500 transition-colors">Instagram</a>
           </div>
         </div>
         <div>
@@ -479,7 +859,6 @@
       <p>Crafted with Three.js & Tailwind Graphics.</p>
     </div>
   </footer>
-  
 
   <script>
     // Register GSAP plugins
@@ -524,7 +903,7 @@
     });
 
     // Handle hovering state triggers on clickables
-    document.querySelectorAll('a, button, .project-card, .magnetic-wrap').forEach(el => {
+    document.querySelectorAll('a, button, .project-card, .magnetic-wrap, .gallery__arrow').forEach(el => {
       el.addEventListener('mouseenter', () => {
         gsap.to(cursor, { scale: 2.2, backgroundColor: '#00aa91', duration: 0.3 });
         gsap.to(cursorOutline, { scale: 1.5, borderColor: '#00aa91', duration: 0.3 });
@@ -707,6 +1086,198 @@
       duration: 1,
       ease: "power3.out"
     });
+
+
+    /* ==========================================================
+       6. INTERACTIVE SLIDESHOW MODAL GALLERY ENGINE
+       ========================================================== */
+    const posterSVGs = {
+      p1: [
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#090e0e"/><circle cx="200" cy="250" r="130" fill="none" stroke="#00aa91" stroke-width="8" stroke-dasharray="10 15"/><text x="50%" y="260" font-family="Syne" font-size="34" font-weight="900" fill="#fff" text-anchor="middle">SWISS TYPE</text></svg>`,
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#090e0e"/><rect x="80" y="100" width="240" height="300" fill="none" stroke="#00aa91" stroke-width="3"/><text x="50%" y="260" font-family="Syne" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">GRID SYSTEM</text></svg>`
+      ],
+      p2: [
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#050808"/><polygon points="200,80 340,380 60,380" fill="none" stroke="#00aa91" stroke-width="4"/><text x="50%" y="430" font-family="Syne" font-size="24" font-weight="800" fill="#fff" text-anchor="middle">MOTION SYS</text></svg>`,
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#050808"/><circle cx="200" cy="250" r="120" fill="none" stroke="#00aa91" stroke-width="2" stroke-dasharray="8 8"/><text x="50%" y="260" font-family="Syne" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">KINETIC TYPE</text></svg>`
+      ],
+      p3: [
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#070a0a"/><circle cx="200" cy="250" r="110" fill="none" stroke="#00aa91" stroke-width="4"/><circle cx="200" cy="250" r="50" fill="#00aa91"/></svg>`,
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#070a0a"/><line x1="50" y1="250" x2="350" y2="250" stroke="#00aa91" stroke-width="3"/><circle cx="200" cy="250" r="90" fill="none" stroke="#fff" stroke-width="1"/></svg>`
+      ]
+    };
+
+    const projectsData = {
+      p1: {
+        title: 'Swiss Type',
+        problem: 'Traditional layout compositions lose visual weight and balance when scaling into modular digital screens.',
+        solution: 'Drafted responsive vector compositions scaling Swiss grids and high-impact typographic alignment elements.',
+        result: 'Exhibited internationally, proving highly memorable across physical poster installations and digital portfolios.',
+        tags: ['Swiss Typography', 'Layout Art', 'Grids'],
+        liveUrl: 'projects.html',
+        githubUrl: 'https://github.com',
+        images: posterSVGs.p1
+      },
+      p2: {
+        title: 'Motion Sys',
+        problem: 'Static illustrations and graphics often fail to tell a brand\'s narrative dynamically.',
+        solution: 'Programmed kinetic micro-interaction states, custom easing paths, and sequential narrative frames.',
+        result: 'Achieved over 45% lift in viewer dwell-time across commercial launch showreels.',
+        tags: ['GSAP Animation', 'Kinetic Text', 'After Effects'],
+        liveUrl: 'projects.html',
+        githubUrl: 'https://github.com',
+        images: posterSVGs.p2
+      },
+      p3: {
+        title: '3D Dimensions',
+        problem: 'Flat websites miss the visual tactile feel that luxury design campaigns often require.',
+        solution: 'Created custom low-polygon interactive meshes inside WebGL environments driven by hardware shaders.',
+        result: 'Formed high-performance, real-time responsive shapes rendering elegantly on both mobile and desktop viewports.',
+        tags: ['Three.js', 'WebGL Shaders', '3D Modeling'],
+        liveUrl: 'projects.html',
+        githubUrl: 'https://github.com',
+        images: posterSVGs.p3
+      }
+    };
+
+    let currentImages = [];
+    let currentIndex = 0;
+
+    const track = document.getElementById('galleryTrack');
+    const thumbsEl = document.getElementById('galleryThumbs');
+    const viewport = document.getElementById('galleryViewport');
+
+    function openModal(id) {
+      const p = projectsData[id];
+      if (!p) return;
+
+      document.getElementById('modalTitle').textContent = p.title;
+      document.getElementById('modalProblem').textContent = p.problem;
+      document.getElementById('modalSolution').textContent = p.solution;
+      document.getElementById('modalResult').textContent = p.result;
+      document.getElementById('modalLive').href = p.liveUrl;
+      document.getElementById('modalGithub').href = p.githubUrl;
+
+      // Build Tags
+      const tagsEl = document.getElementById('modalTags');
+      tagsEl.innerHTML = '';
+      p.tags.forEach(t => {
+        const span = document.createElement('span');
+        span.className = 'tag-pill text-xs border-emerald-500/20 text-emerald-400 bg-emerald-500/5';
+        span.textContent = t;
+        tagsEl.appendChild(span);
+      });
+
+      // Assemble Slideshow Gallery
+      currentImages = p.images || [];
+      currentIndex = 0;
+      buildInteractiveGallery();
+
+      // Show Backdrop and Lock Body Scroll
+      document.getElementById('modalBackdrop').style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('modalBackdrop').classList.add('open');
+      }, 20);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function buildInteractiveGallery() {
+      track.innerHTML = '';
+      thumbsEl.innerHTML = '';
+      if (currentImages.length === 0) return;
+
+      currentImages.forEach((svgCode, i) => {
+        // Build view slide
+        const slide = document.createElement('div');
+        slide.className = 'gallery__slide' + (i === 0 ? ' active' : '');
+        slide.innerHTML = svgCode;
+        track.appendChild(slide);
+
+        // Build thumbnail indicator
+        const thumb = document.createElement('div');
+        thumb.className = 'gallery__thumb' + (i === 0 ? ' active' : '');
+        thumb.innerHTML = svgCode;
+        thumb.addEventListener('click', () => setImage(i));
+        thumbsEl.appendChild(thumb);
+      });
+
+      setupHoverTilt();
+      setupTouchSwipe();
+    }
+
+    function setImage(index) {
+      if (index === currentIndex) return;
+      const slides = document.querySelectorAll('.gallery__slide');
+      const thumbs = document.querySelectorAll('.gallery__thumb');
+
+      slides.forEach(s => s.classList.remove('active'));
+      thumbs.forEach(t => t.classList.remove('active'));
+
+      slides[index].classList.add('active');
+      thumbs[index].classList.add('active');
+      thumbs[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+
+      // Run sliding GSAP transition
+      gsap.fromTo(slides[index], 
+        { opacity: 0, scale: 0.9, x: index > currentIndex ? 100 : -100 },
+        { opacity: 1, scale: 1, x: 0, duration: 0.5, ease: "power3.out" }
+      );
+      currentIndex = index;
+    }
+
+    function prevImage() {
+      setImage((currentIndex - 1 + currentImages.length) % currentImages.length);
+    }
+
+    function nextImage() {
+      setImage((currentIndex + 1) % currentImages.length);
+    }
+
+    function closeModal() {
+      document.getElementById('modalBackdrop').classList.remove('open');
+      setTimeout(() => {
+        document.getElementById('modalBackdrop').style.display = 'none';
+      }, 400);
+      document.body.style.overflow = '';
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target === document.getElementById('modalBackdrop')) closeModal();
+    }
+
+    // Capture escape keys and arrow binds
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+      if (document.getElementById('modalBackdrop').classList.contains('open')) {
+        if (e.key === 'ArrowLeft') prevImage();
+        if (e.key === 'ArrowRight') nextImage();
+      }
+    });
+
+    /* ==========================================================
+       7. HOVER TILT & TOUCH SWIPE PARALLAX MECHANICS
+       ========================================================== */
+    function setupHoverTilt() {
+      viewport.addEventListener('mousemove', (e) => {
+        const rect = viewport.getBoundingClientRect();
+        const tiltX = ((e.clientY - rect.top - rect.height/2) / (rect.height/2)) * -12;
+        const tiltY = ((e.clientX - rect.left - rect.width/2) / (rect.width/2)) * 12;
+        gsap.to(track, { rotateX: tiltX, rotateY: tiltY, duration: 0.3, ease: "power2.out", transformPerspective: 1000 });
+      });
+
+      viewport.addEventListener('mouseleave', () => {
+        gsap.to(track, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "power3.out" });
+      });
+    }
+
+    let touchStartX = 0, touchEndX = 0;
+    function setupTouchSwipe() {
+      viewport.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, { passive: true });
+      viewport.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 50) nextImage();
+        if (touchEndX > touchStartX + 50) prevImage();
+      }, { passive: true });
+    }
   </script>
 </body>
 </html>

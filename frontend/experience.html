@@ -3,21 +3,337 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Experience — Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <title>Experience — Ced Designs</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <style>
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    :root {
+      --bg: #060909;
+      --card-bg: #0c1111;
+      --accent: #00aa91;
+      --text: #e8e8e8;
+      --muted: #556c68;
+      --font-display: 'Syne', sans-serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 80px 80px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* NAV BAR */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 6%;
+      background: rgba(6, 9, 9, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 170, 145, 0.1);
+      z-index: 100;
+    }
+
+    .nav__logo a {
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav__logo a svg {
+      color: var(--accent);
+    }
+
+    .nav__links {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+    }
+
+    .nav__links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav__links a:hover, .nav__links a.active {
+      color: var(--accent);
+    }
+
+    .nav__cta {
+      text-decoration: none;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border: 1px solid rgba(0, 170, 145, 0.3);
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .nav__cta:hover {
+      background: rgba(0, 170, 145, 0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(0,170,145,0.2);
+    }
+
+    .nav__burger {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: #030505;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(-100%);
+      transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .mobile-menu.open {
+      transform: translateY(0);
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--accent);
+    }
+
+    /* EXPERIENCE SECTION */
+    .experience {
+      position: relative;
+      padding: 140px 6% 80px;
+      z-index: 10;
+    }
+
+    .section__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+
+    .section__title span {
+      color: var(--accent);
+    }
+
+    /* TIMELINE STYLES */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 31px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(0, 170, 145, 0.15);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 50px;
+      padding-left: 80px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 20px;
+      top: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--accent);
+      z-index: 2;
+      box-shadow: 0 0 10px rgba(0, 170, 145, 0.4);
+    }
+
+    .timeline-content {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 30px;
+      border-radius: 16px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .timeline-item:hover .timeline-content {
+      border-color: rgba(0, 170, 145, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .timeline-year {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 6px;
+      display: inline-block;
+    }
+
+    .timeline-role {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .timeline-company {
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .timeline-desc {
+      font-size: 14px;
+      color: #99aba7;
+      line-height: 1.7;
+    }
+
+    /* FOOTER */
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 40px 6%;
+      z-index: 10;
+      position: relative;
+    }
+
+    .footer__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer__links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer__links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+
+    .footer__links a:hover {
+      color: var(--accent);
+    }
+
+    .footer__copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      .nav__links, .nav__cta { display: none; }
+      .nav__burger { display: block; }
+      .experience { padding: 100px 4% 60px; }
+      .timeline::before { left: 16px; }
+      .timeline-item { padding-left: 45px; }
+      .timeline-dot { left: 5px; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <div class="grid-bg"></div>
+
+  <!-- NAVIGATION -->
   <nav class="nav">
-    <div class="nav__logo"><a href="index.html">Home<span>.</span></a></div>
+    <div class="nav__logo">
+      <a href="index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>CED DESIGNS</span>
+      </a>
+    </div>
+    
     <ul class="nav__links">
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="stack.html">Stack</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Work</a></li>
       <li><a href="experience.html" class="active">Experience</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
+
     <a href="contact.html" class="nav__cta">Email Me</a>
     <button class="nav__burger" id="burger">&#9776;</button>
   </nav>
@@ -25,53 +341,56 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="projects.html" onclick="closeMobile()">Projects</a></li>
-      <li><a href="stack.html" onclick="closeMobile()">Stack</a></li>
-      <li><a href="about.html" onclick="closeMobile()">About</a></li>
+      <li><a href="projects.html" onclick="closeMobile()">Work</a></li>
       <li><a href="experience.html" onclick="closeMobile()">Experience</a></li>
-      <li><a href="contact.html" onclick="closeMobile()">Email Me</a></li>
+      <li><a href="resume.html" onclick="closeMobile()">Resume</a></li>
+      <li><a href="contact.html" onclick="closeMobile()">Contact</a></li>
     </ul>
   </div>
 
-  <!-- EXPERIENCE & EDUCATION -->
-  <section class="section experience page-section">
+  <!-- MAIN EXPERIENCE SECTION -->
+  <section class="section experience">
     <div class="container">
-      <h2 class="section__title">Experience &amp; Education</h2>
+      <h2 class="section__title">Professional <span>Experience</span></h2>
+      
       <div class="timeline">
 
-        <div class="timeline__item timeline__item--left">
-          <div class="timeline__card">
-            <h4>Role Title</h4>
-            <span class="timeline__org">Company / Institution Name</span>
-            <span class="timeline__date">2018 – 2023</span>
-            <p>Achievement summary and line consectetuer summary of what was accomplished.</p>
+        <!-- TIMELINE ITEM 1 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-year">2024 — Present</span>
+            <h3 class="timeline-role">Lead Creative Technologist</h3>
+            <div class="timeline-company">Aura Interactive Studios</div>
+            <p class="timeline-desc">
+              Directing creative layouts, WebGL shaders, and typography systems. Managing spatial UI design guidelines for modern mobile and browser viewports. Facilitating responsive interface transformations across team sprints.
+            </p>
           </div>
         </div>
 
-        <div class="timeline__item timeline__item--right">
-          <div class="timeline__card">
-            <h4>Role Title</h4>
-            <span class="timeline__org">Company / Institution Name</span>
-            <span class="timeline__date">2018 – 2023</span>
-            <p>Achievement summary and line consectetuer summary of what was accomplished.</p>
+        <!-- TIMELINE ITEM 2 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-year">2021 — 2024</span>
+            <h3 class="timeline-role">Senior Graphic &amp; Motion Designer</h3>
+            <div class="timeline-company">Nexus Branding Agency</div>
+            <p class="timeline-desc">
+              Produced award-winning print and poster designs (Swiss grids, optical composition tracks). Scripted vector kinetics and brand reveal sequences using GSAP and After Effects modules.
+            </p>
           </div>
         </div>
 
-        <div class="timeline__item timeline__item--left">
-          <div class="timeline__card">
-            <h4>Role Title</h4>
-            <span class="timeline__org">Company / Institution Name</span>
-            <span class="timeline__date">2016 – 2018</span>
-            <p>Achievement summary and line consectetuer summary of what was accomplished.</p>
-          </div>
-        </div>
-
-        <div class="timeline__item timeline__item--right">
-          <div class="timeline__card">
-            <h4>Role Title</h4>
-            <span class="timeline__org">Company / Institution Name</span>
-            <span class="timeline__date">2016 – 2018</span>
-            <p>Achievement summary and line consectetuer summary of what was accomplished.</p>
+        <!-- TIMELINE ITEM 3 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-year">2019 — 2021</span>
+            <h3 class="timeline-role">Junior Interactive Designer</h3>
+            <div class="timeline-company">Vortex Labs</div>
+            <p class="timeline-desc">
+              Drafted brand mockups, responsive vector layouts, and static poster guidelines. Transitioned assets successfully from raw visual templates into high-performance web assets.
+            </p>
           </div>
         </div>
 
@@ -83,26 +402,20 @@
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__links">
-        <a href="#" target="_blank">LinkedIn</a>
-        <a href="#" target="_blank">GitHub</a>
-        <a href="#" target="_blank">Resume PDF</a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+        <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
       </div>
-      <p class="footer__copy">&copy; 2026 Your Name. All rights reserved.</p>
+      <p class="footer__copy">&copy; 2026 Ced Designs. Crafted with Interactive Kinetic Frameworks.</p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
   <script>
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
     function closeMobile() { mobileMenu.classList.remove('open'); }
   </script>
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-  <script src="script.js"></script>  ← your script.js comes AFTER gsap
 
 </body>
 </html>

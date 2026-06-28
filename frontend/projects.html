@@ -3,181 +3,452 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Projects — Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <title>Projects — Ced Designs</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  
   <style>
-    /* ── CARD CLICKABLE CURSOR ── */
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    :root {
+      --bg: #ffffff; /* Deep slate teal-black background */
+      --card-bg: #0c1111;
+      --accent: #00aa91; /* Signature Teal */
+      --text: #e8e8e8;
+      --muted: #556c68;
+      --font-display: 'Plus Jakarta Sans', sans-serif;
+      --font-sans: 'Syne', sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+    }
+
+    /* GRID BACKGROUND */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 80px 80px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* NAV BAR - Cleaned up to match homepage design */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 6%;
+      background: rgba(6, 9, 9, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 170, 145, 0.1);
+      z-index: 100;
+    }
+
+    .nav__logo a {
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .nav__logo a svg {
+      color: var(--accent);
+      transition: transform 0.3s ease;
+    }
+
+    .nav__logo a:hover svg {
+      transform: scale(1.15) rotate(-10deg);
+    }
+
+    .nav__links {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+    }
+
+    .nav__links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav__links a:hover, .nav__links a.active {
+      color: var(--accent);
+    }
+
+    .nav__cta {
+      text-decoration: none;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border: 1px solid rgba(0, 170, 145, 0.3);
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .nav__cta:hover {
+      background: rgba(0, 170, 145, 0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(0,170,145,0.2);
+    }
+
+    .nav__burger {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: #030505;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(-100%);
+      transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .mobile-menu.open {
+      transform: translateY(0);
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--accent);
+    }
+
+    /* PROJECTS GRID */
+    .projects {
+      position: relative;
+      padding: 140px 6% 80px;
+      z-index: 10;
+    }
+
+    .section__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+
+    .section__title span {
+      color: var(--accent);
+    }
+
+    .projects__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 40px;
+    }
+
+    /* CARD CLICKABLE CURSOR & HOVER TRICKS */
     .project-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      overflow: hidden;
       cursor: pointer;
       position: relative;
+      transition: border-color 0.3s, transform 0.3s ease;
     }
+
+    .project-card:hover {
+      border-color: rgba(0, 170, 145, 0.25);
+      transform: translateY(-4px);
+    }
+
     .project-card__img {
       position: relative;
+      aspect-ratio: 4 / 5;
       overflow: hidden;
+      background: #0d1212;
     }
-    /* Actual image inside card */
+
+    /* Actual visual graphic / vector */
+    .project-card__img svg, 
     .project-card__img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.4s ease;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     }
+
+    .project-card:hover .project-card__img svg,
     .project-card:hover .project-card__img img {
       transform: scale(1.05);
     }
+
     /* View overlay on hover */
     .project-card__img .overlay {
       position: absolute;
       inset: 0;
-      background: rgba(10,10,10,0.55);
+      background: rgba(3, 5, 5, 0.75);
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      backdrop-filter: blur(4px);
+      transition: opacity 0.4s ease;
     }
+
     .project-card:hover .project-card__img .overlay {
       opacity: 1;
     }
+
     .overlay__label {
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: #c8f04d;
-      font-size: 13px;
+      gap: 10px;
+      color: var(--accent);
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      border: 1px solid rgba(200,240,77,0.5);
-      padding: 10px 22px;
+      border: 1px solid rgba(0, 170, 145, 0.5);
+      background: rgba(0, 170, 145, 0.05);
+      padding: 12px 24px;
       border-radius: 50px;
+      transition: background 0.3s, transform 0.3s;
     }
 
-    /* ── PROJECT MODAL ── */
+    .project-card:hover .overlay__label {
+      transform: scale(1.05);
+      background: rgba(0, 170, 145, 0.15);
+    }
+
+    .project-card__body {
+      padding: 24px;
+    }
+
+    .project-card__body h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .project-card__body p {
+      font-size: 13px;
+      color: #99aba7;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .project-card__body p span {
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      display: inline-block;
+      width: 65px;
+    }
+
+    .project-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: #b0c4c0;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .tag--glow {
+      border-color: rgba(0, 170, 145, 0.15);
+      color: var(--accent);
+      background: rgba(0, 170, 145, 0.02);
+    }
+
+    /* ── HIGH PERFORMANCE SLIDER PROJECT MODAL ── */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(8px);
+      background: rgba(3, 5, 5, 0.94);
+      backdrop-filter: blur(15px);
       z-index: 200;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
+
     .modal-backdrop.open {
       display: flex;
+      opacity: 1;
     }
 
     .modal {
-      background: #111;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
+      background: #070b0b;
+      border: 1px solid rgba(0, 170, 145, 0.15);
+      box-shadow: 0 0 60px rgba(0, 170, 145, 0.1);
+      border-radius: 20px;
       width: 100%;
-      max-width: 860px;
+      max-width: 900px;
       max-height: 90vh;
       overflow-y: auto;
       position: relative;
-      animation: modalIn 0.35s cubic-bezier(0.22,1,0.36,1);
+      transform: translateY(40px) scale(0.96);
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    @keyframes modalIn {
-      from { opacity: 0; transform: translateY(30px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+
+    .modal-backdrop.open .modal {
+      transform: translateY(0) scale(1);
     }
 
     /* Close button */
     .modal__close {
-      position: sticky;
-      top: 0;
-      display: flex;
-      justify-content: flex-end;
-      padding: 16px 20px 0;
-      background: #111;
+      position: absolute;
+      top: 20px;
+      right: 20px;
       z-index: 10;
     }
+
     .modal__close button {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #e8e8e8;
-      width: 38px;
-      height: 38px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      font-size: 18px;
+      font-size: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s, border-color 0.2s;
-      line-height: 1;
+      transition: all 0.3s;
     }
+
     .modal__close button:hover {
-      background: rgba(200,240,77,0.1);
-      border-color: rgba(200,240,77,0.4);
-      color: #c8f04d;
+      background: rgba(0, 170, 145, 0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: rotate(90deg);
     }
 
-    /* Image gallery */
+    /* Image Gallery & Slider System */
     .modal__gallery {
-      padding: 0 24px;
+      padding: 40px 40px 10px;
     }
-    .gallery__main {
+
+    .gallery__viewport {
       width: 100%;
-      height: 320px;
-      border-radius: 12px;
+      height: 420px;
+      border-radius: 14px;
       overflow: hidden;
-      background: #1a1a1a;
-      margin-bottom: 12px;
+      background: #020404;
       position: relative;
+      perspective: 1000px;
     }
-    .gallery__main img {
+
+    /* Interactive Tiltable & Sliding Container */
+    .gallery__track {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .gallery__main .no-img {
-      width: 100%;
-      height: 100%;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #333;
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .gallery__main .no-img svg {
-      opacity: 0.2;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    /* Thumbnail strip */
-    .gallery__thumbs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .gallery__thumb {
-      width: 72px;
-      height: 54px;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: border-color 0.2s;
-      flex-shrink: 0;
-      background: #1a1a1a;
-    }
-    .gallery__thumb.active {
-      border-color: #c8f04d;
-    }
-    .gallery__thumb img {
+    .gallery__slide {
+      position: absolute;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      opacity: 0;
+      visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate3d(0, 0, -100px);
+      transition: opacity 0.5s, transform 0.5s, visibility 0.5s;
+      z-index: 1;
+    }
+
+    .gallery__slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+      z-index: 2;
+    }
+
+    .gallery__slide img,
+    .gallery__slide svg {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      transition: transform 0.1s ease-out; /* Smooth hover trailing */
     }
 
     /* Nav arrows on main image */
@@ -185,97 +456,167 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(10,10,10,0.6);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #e8e8e8;
-      width: 38px;
-      height: 38px;
+      background: rgba(6, 9, 9, 0.75);
+      border: 1px solid rgba(0, 170, 145, 0.2);
+      color: var(--text);
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s, border-color 0.2s;
-      z-index: 5;
+      transition: all 0.3s;
+      z-index: 10;
     }
+
     .gallery__arrow:hover {
-      background: rgba(200,240,77,0.15);
-      border-color: rgba(200,240,77,0.5);
-      color: #c8f04d;
+      background: var(--accent);
+      color: #030505;
+      border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(0, 170, 145, 0.4);
     }
-    .gallery__arrow.prev { left: 12px; }
-    .gallery__arrow.next { right: 12px; }
+
+    .gallery__arrow.prev { left: 24px; }
+    .gallery__arrow.next { right: 24px; }
+
+    /* Thumbnail strip */
+    .gallery__thumbs {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .gallery__thumb {
+      width: 80px;
+      height: 100px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #0a0d0d;
+      opacity: 0.5;
+    }
+
+    .gallery__thumb:hover {
+      opacity: 0.8;
+      transform: translateY(-2px);
+    }
+
+    .gallery__thumb.active {
+      border-color: var(--accent);
+      opacity: 1;
+      box-shadow: 0 0 10px rgba(0, 170, 145, 0.3);
+    }
+
+    .gallery__thumb svg,
+    .gallery__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
     /* Modal body */
     .modal__body {
-      padding: 24px;
+      padding: 30px 40px 40px;
     }
+
     .modal__header {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 20px;
     }
+
     .modal__title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.6rem;
+      font-family: var(--font-display);
+      font-size: 2rem;
       font-weight: 800;
-      color: #e8e8e8;
+      color: #fff;
       letter-spacing: -0.02em;
     }
+
     .modal__links {
       display: flex;
-      gap: 10px;
-      flex-shrink: 0;
+      gap: 12px;
     }
+
     .modal__link {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 8px 18px;
+      gap: 8px;
+      padding: 10px 22px;
       border-radius: 50px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.3s;
     }
+
     .modal__link--live {
-      background: #c8f04d;
-      color: #0a0a0a;
-      border: 1px solid #c8f04d;
+      background: var(--accent);
+      color: #030505;
+      border: 1px solid var(--accent);
     }
-    .modal__link--live:hover { opacity: 0.85; }
+
+    .modal__link--live:hover {
+      box-shadow: 0 0 15px rgba(0, 170, 145, 0.35);
+      opacity: 0.9;
+    }
+
     .modal__link--github {
       background: transparent;
-      color: #e8e8e8;
-      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
+
     .modal__link--github:hover {
-      border-color: rgba(200,240,77,0.4);
-      color: #c8f04d;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .modal__grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
     }
 
     .modal__section {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
+
     .modal__section h4 {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-display);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #555;
-      margin-bottom: 8px;
+      color: var(--muted);
+      margin-bottom: 10px;
     }
+
     .modal__section p {
-      font-size: 0.92rem;
-      color: #aaa;
-      line-height: 1.75;
+      font-size: 14px;
+      color: #99aba7;
+      line-height: 1.8;
     }
+
+    .modal__meta-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 24px;
+      border-radius: 12px;
+      height: fit-content;
+    }
+
     .modal__tags {
       display: flex;
       flex-wrap: wrap;
@@ -283,39 +624,85 @@
     }
 
     /* Scrollbar styling for modal */
-    .modal::-webkit-scrollbar { width: 4px; }
+    .modal::-webkit-scrollbar { width: 6px; }
     .modal::-webkit-scrollbar-track { background: transparent; }
-    .modal::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+    .modal::-webkit-scrollbar-thumb { background: rgba(0, 170, 145, 0.3); border-radius: 3px; }
 
-    /* Image upload hint inside modal */
-    .upload-hint {
-      display: inline-flex;
+    /* FOOTER */
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 40px 6%;
+      z-index: 10;
+      position: relative;
+    }
+
+    .footer__inner {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      color: #444;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: 8px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer__links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer__links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+
+    .footer__links a:hover {
+      color: var(--accent);
+    }
+
+    .footer__copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* RESPONSIVENESS */
+    @media (max-width: 768px) {
+      .nav__links, .nav__cta { display: none; }
+      .nav__burger { display: block; }
+      .modal__grid { grid-template-columns: 1fr; gap: 20px; }
+      .modal__gallery { padding: 30px 16px 10px; }
+      .gallery__viewport { height: 300px; }
+      .modal__body { padding: 20px 20px 30px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- BACKGROUND ARCHITECTURE -->
+  <div class="grid-bg"></div>
+
+  <!-- NAVIGATION -->
   <nav class="nav">
-    <div class="nav__logo"><a href="homepage.html" class="home-btn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span>Home</span>
-    </a></div>
+    <div class="nav__logo">
+      <a href="index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>CED DESIGNS</span>
+      </a>
+    </div>
+    
     <ul class="nav__links">
-      <li><a href="projects.html" class="active">Projects</a></li>
-      <li><a href="stack.html">Stack</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active">Work</a></li>
       <li><a href="experience.html">Experience</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html">About</a></li>
+      
     </ul>
+
     <a href="contact.html" class="nav__cta">Email Me</a>
     <button class="nav__burger" id="burger">&#9776;</button>
   </nav>
@@ -323,89 +710,108 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="projects.html" onclick="closeMobile()">Projects</a></li>
-      <li><a href="stack.html" onclick="closeMobile()">Stack</a></li>
-      <li><a href="about.html" onclick="closeMobile()">About</a></li>
+      <li><a href="projects.html" onclick="closeMobile()">Work</a></li>
       <li><a href="experience.html" onclick="closeMobile()">Experience</a></li>
-      <li><a href="contact.html" onclick="closeMobile()">Email Me</a></li>
+      <li><a href="resume.html" onclick="closeMobile()">Resume</a></li>
+      <li><a href="contact.html" onclick="closeMobile()">Contact</a></li>
+      <li><a href="about.html" onclick="closeMobile()">About</a></li>
+
     </ul>
   </div>
 
-  <!-- PROJECTS GRID -->
-  <section class="section projects page-section">
+  <!-- MAIN PROJECTS SECTION -->
+  <section class="section projects">
     <div class="container">
-      <h2 class="section__title">Selected Projects</h2>
+      <h2 class="section__title">Poster &amp; Design <span>Collections</span></h2>
+      
       <div class="projects__grid">
 
-        <!-- CARD 1 -->
+        <!-- CARD 1: GRAPHICS & POSTERS (p1) -->
         <div class="project-card" onclick="openModal('p1')">
           <div class="project-card__img">
-            <!-- Replace src with your image path e.g. src="images/project1.jpg" -->
-            <img src="" alt="Project 1" id="card-img-p1" onerror="this.style.display='none'"/>
+            <svg viewBox="0 0 400 500">
+              <rect width="100%" height="100%" fill="#090e0e"/>
+              <circle cx="200" cy="250" r="130" fill="none" stroke="#00aa91" stroke-width="8" stroke-dasharray="10 15"/>
+              <text x="50%" y="260" font-family="Syne" font-size="34" font-weight="900" fill="#fff" text-anchor="middle">SWISS TYPE</text>
+              <line x1="50" y1="50" x2="350" y2="50" stroke="#00aa91" stroke-width="2"/>
+              <line x1="50" y1="450" x2="350" y2="450" stroke="#00aa91" stroke-width="2"/>
+              <text x="55" y="80" font-family="Plus Jakarta Sans" font-size="10" fill="#556c68" letter-spacing="3">EDITION 01 // POSTER ART</text>
+            </svg>
             <div class="overlay">
               <span class="overlay__label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
-                View Project
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                View Poster Series
               </span>
             </div>
           </div>
           <div class="project-card__body">
-            <h3>Dynamic Branding Engine</h3>
-            <p><span>Problem</span> Graphic assets lack consistency when scaling across modern viewport parameters.</p>
-            <p><span>Solution</span> Programmed modular vector arrays and algorithmic kinetic typography systems..</p>
-            <p><span>Result</span> Established a future-proof visual language deployed internationally.</p>
+            <h3>Graphic / Posters</h3>
+            <p><span>Problem</span> Standard graphical layouts struggle to maintain balanced visual weights across print formats.</p>
+            <p><span>Solution</span> Created visual layouts utilizing Swiss grid principles, optical alignments, and stark typographic ratios.</p>
+            <p><span>Result</span> A curated series of Swiss Typographic posters exhibited in international design galleries.</p>
             <div class="project-card__tags">
-              <span class="tag">React</span>
-              <span class="tag">Tailwind</span>
-              <span class="tag">GSAP</span>
+              <span class="tag">Poster Art</span>
+              <span class="tag">Typography</span>
+              <span class="tag">Swiss Design</span>
             </div>
           </div>
         </div>
 
-        <!-- CARD 2 -->
+        <!-- CARD 2: MOTION GRAPHIC (p2) -->
         <div class="project-card" onclick="openModal('p2')">
           <div class="project-card__img">
-            <img src="" alt="Project 2" id="card-img-p2" onerror="this.style.display='none'"/>
+            <svg viewBox="0 0 400 500">
+              <rect width="100%" height="100%" fill="#050808"/>
+              <polygon points="200,80 340,380 60,380" fill="none" stroke="#00aa91" stroke-width="4" opacity="0.3"/>
+              <polygon points="200,120 310,360 90,360" fill="none" stroke="#00aa91" stroke-width="2"/>
+              <text x="50%" y="420" font-family="Syne" font-size="28" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="4">MOTION SYS</text>
+              <circle cx="200" cy="220" r="10" fill="#00aa91"/>
+            </svg>
             <div class="overlay">
               <span class="overlay__label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
-                View Project
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                View Motion Pieces
               </span>
             </div>
           </div>
           <div class="project-card__body">
-            <h3>Kinetic Interface Motion</h3>
-            <p><span>Problem</span> Static websites fail to hold attention spans in competitive marketplaces.</p>
-            <p><span>Solution</span> Built fully reactive UI environments with optimized 3D web rendering tracks.</p>
-            <p><span>Result</span> Lifted session dwell-times by over 45% through interactive storytelling mechanics.</p>
+            <h3>Motion Graphic</h3>
+            <p><span>Problem</span> Static illustrations and graphics often fail to tell a brand's narrative dynamically.</p>
+            <p><span>Solution</span> Programmed kinetic micro-interaction states, custom easing paths, and sequential narrative frames.</p>
+            <p><span>Result</span> Built immersive storytelling vectors boosting brand session retention averages significantly.</p>
             <div class="project-card__tags">
-              <span class="tag">Next.js</span>
-              <span class="tag">Tailwind</span>
-              <span class="tag">GSAP</span>
+              <span class="tag">Motion Design</span>
+              <span class="tag">Kinetic Type</span>
+              <span class="tag">SVG Animation</span>
             </div>
           </div>
         </div>
 
-        <!-- CARD 3 -->
+        <!-- CARD 3: 3D (p3) -->
         <div class="project-card" onclick="openModal('p3')">
           <div class="project-card__img">
-            <img src="" alt="Project 3" id="card-img-p3" onerror="this.style.display='none'"/>
+            <svg viewBox="0 0 400 500">
+              <rect width="100%" height="100%" fill="#070a0a"/>
+              <path d="M100 150 Q 200 400 300 150" fill="none" stroke="#00aa91" stroke-width="3"/>
+              <path d="M100 350 Q 200 100 300 350" fill="none" stroke="#00aa91" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="50%" y="80" font-family="Syne" font-size="24" font-weight="800" fill="#fff" text-anchor="middle">3D DIMENSIONS</text>
+            </svg>
             <div class="overlay">
               <span class="overlay__label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
-                View Project
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                View 3D Assets
               </span>
             </div>
           </div>
           <div class="project-card__body">
-            <h3>Dynamic Branding Engine</h3>
-            <p><span>Problem</span> Graphic assets lack consistency when scaling across modern viewport parameters.</p>
-            <p><span>Solution</span> Programmed modular vector arrays and algorithmic kinetic typography systems.</p>
-            <p><span>Result</span> Established a future-proof visual language deployed internationally.</p>
+            <h3>3D</h3>
+            <p><span>Problem</span> Traditional flat interfaces do not offer sensory depth or tactile engagement.</p>
+            <p><span>Solution</span> Sculpted mathematical web-optimized polygons combined with hardware-accelerated vertex shaders.</p>
+            <p><span>Result</span> Rendered smooth, latency-free interactive models that react in real-time to user navigation.</p>
             <div class="project-card__tags">
-              <span class="tag">React</span>
-              <span class="tag">Node.js</span>
-              <span class="tag">PostgreSQL</span>
+              <span class="tag">WebGL</span>
+              <span class="tag">Three.js</span>
+              <span class="tag">3D Modeling</span>
             </div>
           </div>
         </div>
@@ -422,58 +828,69 @@
         <button onclick="closeModal()" title="Close">&#x2715;</button>
       </div>
 
-      <!-- Image Gallery -->
+      <!-- Image/Poster Gallery with Interactive Parallax Canvas Track -->
       <div class="modal__gallery">
-        <div class="gallery__main" id="galleryMain">
-          <div class="no-img" id="noImgMsg">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M3 15l5-5 4 4 3-3 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/></svg>
-            Add image paths in the project data below
+        <div class="gallery__viewport" id="galleryViewport">
+          
+          <div class="gallery__track" id="galleryTrack">
+            <!-- Slides are dynamically generated by JS for absolute precision -->
           </div>
-          <img id="galleryMainImg" src="" alt="" style="display:none;"/>
-          <button class="gallery__arrow prev" id="prevBtn" onclick="prevImage()" style="display:none;">&#8592;</button>
-          <button class="gallery__arrow next" id="nextBtn" onclick="nextImage()" style="display:none;">&#8594;</button>
+
+          <!-- Slider Arrow Controls -->
+          <button class="gallery__arrow prev" id="prevBtn" onclick="prevImage()">&#8592;</button>
+          <button class="gallery__arrow next" id="nextBtn" onclick="nextImage()">&#8594;</button>
         </div>
+        
+        <!-- Interactive Navigation Thumbnails -->
         <div class="gallery__thumbs" id="galleryThumbs"></div>
-        <p class="upload-hint" id="uploadHint">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 16V8M8 12l4-4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 20h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          To add images: place your image files in an <strong style="color:#555">&nbsp;images/&nbsp;</strong> folder, then update the src paths in the project data
-        </p>
       </div>
 
-      <!-- Project Info -->
+      <!-- Project Info Grid -->
       <div class="modal__body">
         <div class="modal__header">
           <h2 class="modal__title" id="modalTitle">Project Title</h2>
           <div class="modal__links">
-            <a href="#" class="modal__link modal__link--live" id="modalLive" target="_blank">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="currentColor" stroke-width="2"/><path d="M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-              Live Site
+            <a href="https://behance.net" class="modal__link modal__link--live" id="modalLive" target="_blank">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6M10 14L21 3" stroke-linecap="round"/></svg>
+              Live Project
             </a>
-            <a href="#" class="modal__link modal__link--github" id="modalGithub" target="_blank">
+            <a href="https://github.com" class="modal__link modal__link--github" id="modalGithub" target="_blank">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-              GitHub
+              Source Code
             </a>
           </div>
         </div>
 
-        <div class="modal__section">
-          <h4>Problem</h4>
-          <p id="modalProblem"></p>
-        </div>
-        <div class="modal__section">
-          <h4>Solution</h4>
-          <p id="modalSolution"></p>
-        </div>
-        <div class="modal__section">
-          <h4>Result</h4>
-          <p id="modalResult"></p>
-        </div>
-        <div class="modal__section">
-          <h4>Tech Stack</h4>
-          <div class="modal__tags" id="modalTags"></div>
-        </div>
-      </div>
+        <div class="modal__grid">
+          <div>
+            <div class="modal__section">
+              <h4>Problem</h4>
+              <p id="modalProblem"></p>
+            </div>
+            <div class="modal__section">
+              <h4>Solution</h4>
+              <p id="modalSolution"></p>
+            </div>
+            <div class="modal__section">
+              <h4>Result</h4>
+              <p id="modalResult"></p>
+            </div>
+          </div>
 
+          <div class="modal__meta-box">
+            <div class="modal__section">
+              <h4>Specifications</h4>
+              <p style="font-size: 13px; margin-bottom: 12px; color: #fff;">Medium: Screenprint &amp; Digital</p>
+              <p style="font-size: 13px; color: #fff;">Dimensions: 50 x 70 cm</p>
+            </div>
+            <div class="modal__section" style="margin-bottom:0;">
+              <h4>Tech Stack</h4>
+              <div class="modal__tags" id="modalTags"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -481,85 +898,95 @@
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__links">
-        <a href="#" target="_blank">LinkedIn</a>
-        <a href="#" target="_blank">GitHub</a>
-        <a href="#" target="_blank">Resume PDF</a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+        <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
       </div>
-      <p class="footer__copy">&copy; 2026 Your Name. All rights reserved.</p>
+      <p class="footer__copy">&copy; 2026 Ced Designs. Crafted with Interactive Kinetic Frameworks.</p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- GSAP ENGINE -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
   <script>
     /* ================================================
-       PROJECT DATA — edit this to add your info
-       For images: put files in an images/ folder
-       e.g. images: ['images/proj1-screen1.jpg', 'images/proj1-screen2.jpg']
-    ================================================ */
+       MOCK POSTER GRAPHICS SYSTEM (INLINE SVG)
+       Allows immediate high-fidelity rendering
+       ================================================ */
+    const posterSVGs = {
+      p1: [
+        `<svg class="p1-image.jpeg" viewBox="0 0 400 500" style="width:200%; height:100%;"><rect width="100%" height="100%" fill="#090e0e"/><circle cx="200" cy="250" r="130" fill="none" stroke="#00aa91" stroke-width="8" stroke-dasharray="10 15"/><text x="50%" y="260" font-family="Syne" font-size="34" font-weight="900" fill="#fff" text-anchor="middle">SWISS TYPE</text></svg>`,
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#090e0e"/><rect x="80" y="100" width="240" height="300" fill="none" stroke="#00aa91" stroke-width="3"/><text x="50%" y="260" font-family="Syne" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">GRID DISTORTION</text></svg>`,
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#090e0e"/><path d="M50 100 L350 400 M350 100 L50 400" stroke="#00aa91" stroke-width="4"/><text x="50%" y="260" font-family="Syne" font-size="30" font-weight="800" fill="#fff" text-anchor="middle">STRUCTURE</text></svg>`
+      ],
+      p2: [
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#050808"/><polygon points="200,80 340,380 60,380" fill="none" stroke="#00aa91" stroke-width="4"/><text x="50%" y="430" font-family="Syne" font-size="24" font-weight="800" fill="#fff" text-anchor="middle">CINEMATIC NOIR</text></svg>`,
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#050808"/><line x1="200" y1="50" x2="200" y2="450" stroke="#00aa91" stroke-width="2"/><circle cx="200" cy="250" r="80" fill="none" stroke="#fff" stroke-width="1"/></svg>`,
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#050808"/><circle cx="200" cy="250" r="120" fill="none" stroke="#00aa91" stroke-width="2" stroke-dasharray="8 8"/><text x="50%" y="260" font-family="Syne" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">SHADOW PLAYS</text></svg>`
+      ],
+      p3: [
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#070a0a"/><circle cx="200" cy="250" r="110" fill="none" stroke="#00aa91" stroke-width="4"/><circle cx="200" cy="250" r="50" fill="#00aa91"/></svg>`,
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#070a0a"/><line x1="50" y1="250" x2="350" y2="250" stroke="#00aa91" stroke-width="3"/><circle cx="200" cy="250" r="90" fill="none" stroke="#fff" stroke-width="1"/></svg>`,
+        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#070a0a"/><text x="50%" y="260" font-family="Syne" font-size="32" font-weight="900" fill="#fff" text-anchor="middle">CELESTIAL</text></svg>`
+      ]
+    };
+
     var projects = {
       p1: {
-        title: 'Project Title One',
-        problem:  'Describe the problem or challenge this project addressed. What pain point were you solving for users?',
-        solution: 'Explain what you built, the approach you took, and the key technical decisions you made.',
-        result:   'Share the measurable outcome — e.g. reduced load time by 40%, 500+ users onboarded, client revenue increased.',
-        tags:     ['React', 'Tailwind', 'GSAP'],
-        liveUrl:  '#',
-        githubUrl:'#',
-        // ADD YOUR IMAGES HERE — put files in an images/ folder next to your html files
-        // Example: images: ['images/p1-hero.jpg', 'images/p1-screen2.jpg', 'images/p1-mobile.jpg']
-        images:   [
-          'images/p1-image.jpeg',
-          'images/p1-image2.jpeg',
-          'images/p1-image3.jpeg',
-          'images/p1-image4.jpeg',
-          'images/p1-image5.jpeg',
-          'images/p1-image6.jpeg',
-          'images/p1-image7.jpeg',
-          'images/p1-image8.jpeg'
-
-        ]
+        title: 'Graphic / Posters',
+        problem: 'Traditional layout compositions lose visual weight and balance when scaling into modular digital screens.',
+        solution: 'Drafted responsive vector compositions scaling Swiss grids and high-impact typographic alignment elements.',
+        result: 'Exhibited internationally, proving highly memorable across physical poster installations and digital portfolios.',
+        tags: ['Swiss Typography', 'Layout Art', 'Grids'],
+        liveUrl: 'https://behance.net',
+        githubUrl: 'https://github.com',
+        images: posterSVGs.p1
       },
       p2: {
-        title: 'Project Title Two',
-        problem:  'Describe the problem or challenge this project addressed. What pain point were you solving?',
-        solution: 'Explain your approach and the key technical decisions you made during development.',
-        result:   'Share the measurable outcome — users, performance gains, or business impact.',
-        tags:     ['Next.js', 'Tailwind', 'GSAP'],
-        liveUrl:  '#',
-        githubUrl:'#',
-        images:   []
+        title: 'p2- Motion Graphic',
+        problem: 'Static graphics struggle to keep high attention spans in fast-paced social feeds.',
+        solution: 'Developed dynamic kinetic typographies, fluid CSS-ease motion frameworks, and SVG-track paths.',
+        result: 'Achieved over 45% lift in viewer dwell-time across commercial launch showreels.',
+        tags: ['GSAP Animation', 'Kinetic Text', 'After Effects'],
+        liveUrl: 'https://behance.net',
+        githubUrl: 'https://github.com',
+        images: posterSVGs.p2
       },
       p3: {
-        title: 'Project Title Three',
-        problem:  'Describe the problem or challenge this project addressed.',
-        solution: 'Explain what you built and the technical approach you took.',
-        result:   'Share the measurable outcome of the project.',
-        tags:     ['React', 'Node.js', 'PostgreSQL'],
-        liveUrl:  '#',
-        githubUrl:'#',
-        images:   []
+        title: 'p3- 3D',
+        problem: 'Flat websites miss the visual tactile feel that luxury design campaigns often require.',
+        solution: 'Created custom low-polygon interactive meshes inside WebGL environments driven by hardware shaders.',
+        result: 'Formed high-performance, real-time responsive shapes rendering elegantly on both mobile and desktop viewports.',
+        tags: ['Three.js', 'WebGL Shaders', '3D Modeling'],
+        liveUrl: 'https://behance.net',
+        githubUrl: 'https://github.com',
+        images: posterSVGs.p3
       }
     };
 
     /* ================================================
-       MODAL LOGIC — no need to edit below this line
-    ================================================ */
+       SLIDING MODAL LOGIC + DYNAMIC HOVER TILT
+       ================================================ */
     var currentImages = [];
     var currentIndex  = 0;
+
+    const track = document.getElementById('galleryTrack');
+    const thumbsEl = document.getElementById('galleryThumbs');
+    const viewport = document.getElementById('galleryViewport');
 
     function openModal(id) {
       var p = projects[id];
       if (!p) return;
 
-      // Fill text content
-      document.getElementById('modalTitle').textContent    = p.title;
-      document.getElementById('modalProblem').textContent  = p.problem;
+      document.getElementById('modalTitle').textContent = p.title;
+      document.getElementById('modalProblem').textContent = p.problem;
       document.getElementById('modalSolution').textContent = p.solution;
-      document.getElementById('modalResult').textContent   = p.result;
-      document.getElementById('modalLive').href            = p.liveUrl;
-      document.getElementById('modalGithub').href          = p.githubUrl;
+      document.getElementById('modalResult').textContent = p.result;
+      document.getElementById('modalLive').href = p.liveUrl;
+      document.getElementById('modalGithub').href = p.githubUrl;
 
-      // Tags
+      // Render Tags
       var tagsEl = document.getElementById('modalTags');
       tagsEl.innerHTML = '';
       p.tags.forEach(function(t) {
@@ -569,66 +996,65 @@
         tagsEl.appendChild(span);
       });
 
-      // Gallery
+      // Prepare Dynamic Poster Slides
       currentImages = p.images || [];
       currentIndex  = 0;
-      buildGallery();
+      buildInteractiveGallery();
 
-      // Show modal
-      document.getElementById('modalBackdrop').classList.add('open');
+      // Launch Modal Frame
+      document.getElementById('modalBackdrop').style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('modalBackdrop').classList.add('open');
+      }, 20);
       document.body.style.overflow = 'hidden';
     }
 
-    function buildGallery() {
-      var mainImg   = document.getElementById('galleryMainImg');
-      var noImg     = document.getElementById('noImgMsg');
-      var thumbsEl  = document.getElementById('galleryThumbs');
-      var prevBtn   = document.getElementById('prevBtn');
-      var nextBtn   = document.getElementById('nextBtn');
-      var hint      = document.getElementById('uploadHint');
-
+    function buildInteractiveGallery() {
+      track.innerHTML = '';
       thumbsEl.innerHTML = '';
 
-      if (currentImages.length === 0) {
-        mainImg.style.display = 'none';
-        noImg.style.display   = 'flex';
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
-        hint.style.display    = 'flex';
-        return;
-      }
+      if (currentImages.length === 0) return;
 
-      noImg.style.display   = 'none';
-      hint.style.display    = 'none';
-      mainImg.style.display = 'block';
-      mainImg.src           = currentImages[0];
+      // Populate Main Slides with GSAP structures
+      currentImages.forEach(function(svgCode, i) {
+        var slide = document.createElement('div');
+        slide.className = 'gallery__slide' + (i === 0 ? ' active' : '');
+        slide.innerHTML = svgCode;
+        track.appendChild(slide);
 
-      // Show arrows only if multiple images
-      if (currentImages.length > 1) {
-        prevBtn.style.display = 'flex';
-        nextBtn.style.display = 'flex';
-      } else {
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
-      }
-
-      // Build thumbnails
-      currentImages.forEach(function(src, i) {
+        // Add corresponding Thumbnail Card
         var thumb = document.createElement('div');
         thumb.className = 'gallery__thumb' + (i === 0 ? ' active' : '');
-        thumb.innerHTML = '<img src="' + src + '" alt="Screenshot ' + (i+1) + '" />';
+        thumb.innerHTML = svgCode;
         thumb.addEventListener('click', function() { setImage(i); });
         thumbsEl.appendChild(thumb);
       });
+
+      setupHoverTilt();
     }
 
     function setImage(index) {
-      currentIndex = index;
-      document.getElementById('galleryMainImg').src = currentImages[index];
+      if (index === currentIndex) return;
+
+      var slides = document.querySelectorAll('.gallery__slide');
       var thumbs = document.querySelectorAll('.gallery__thumb');
-      thumbs.forEach(function(t, i) {
-        t.classList.toggle('active', i === index);
-      });
+
+      // sliding transitions with GSAP 
+      var prevSlide = slides[currentIndex];
+      var nextSlide = slides[index];
+
+      slides.forEach(s => s.classList.remove('active'));
+      thumbs.forEach(t => t.classList.remove('active'));
+
+      nextSlide.classList.add('active');
+      thumbs[index].classList.add('active');
+
+      gsap.fromTo(nextSlide, 
+        { opacity: 0, scale: 0.9, x: index > currentIndex ? 100 : -100 },
+        { opacity: 1, scale: 1, x: 0, duration: 0.5, ease: "power3.out" }
+      );
+
+      currentIndex = index;
     }
 
     function prevImage() {
@@ -643,6 +1069,9 @@
 
     function closeModal() {
       document.getElementById('modalBackdrop').classList.remove('open');
+      setTimeout(() => {
+        document.getElementById('modalBackdrop').style.display = 'none';
+      }, 400);
       document.body.style.overflow = '';
     }
 
@@ -650,31 +1079,51 @@
       if (e.target === document.getElementById('modalBackdrop')) closeModal();
     }
 
-    // Close on Escape key
+    // Keyboard controls
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft' && document.getElementById('modalBackdrop').classList.contains('open')) prevImage();
+      if (e.key === 'ArrowRight' && document.getElementById('modalBackdrop').classList.contains('open')) nextImage();
     });
 
-    // Burger menu
+    /* ================================================
+       HOVER PARALLAX / TILT SYSTEM FOR HIGH END LOOK
+       ================================================ */
+    function setupHoverTilt() {
+      viewport.addEventListener('mousemove', function(e) {
+        var rect = viewport.getBoundingClientRect();
+        var x = e.clientX - rect.left - rect.width/2;
+        var y = e.clientY - rect.top - rect.height/2;
+
+        // Subtle 3D tilting factors
+        var tiltX = (y / (rect.height/2)) * -12;
+        var tiltY = (x / (rect.width/2)) * 12;
+
+        gsap.to(track, {
+          rotateX: tiltX,
+          rotateY: tiltY,
+          duration: 0.3,
+          ease: "power2.out",
+          transformPerspective: 1000
+        });
+      });
+
+      viewport.addEventListener('mouseleave', function() {
+        gsap.to(track, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 0.6,
+          ease: "power3.out"
+        });
+      });
+    }
+
+    // Mobile Hamburger
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
     function closeMobile() { mobileMenu.classList.remove('open'); }
-
-    // Refresh → show intro
-    window.addEventListener('load', function() {
-      var navEntries = performance.getEntriesByType('navigation');
-      if (navEntries.length > 0 && navEntries[0].type === 'reload') {
-        sessionStorage.removeItem('introSeen');
-        window.location.href = 'intro.html';
-      }
-    });
   </script>
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-  <script src="script.js"></script>  ← your script.js comes AFTER gsap
 
 </body>
 </html>

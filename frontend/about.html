@@ -1,110 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About — Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Ced Designs</title>
+    <link rel="stylesheet" href="style.css"> <!-- Assumes your existing stylesheet -->
 </head>
 <body>
+  <style> 
+  /* ==========================================================================
+   Navigation Alignment Fix
+   ========================================================================== */
 
-  <!-- NAV -->
-  <nav class="nav">
-    <div class="nav__logo"><a href="homepage.html" class="home-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Home</span></a></div>
-    <ul class="nav__links">
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="stack.html">Stack</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="experience.html">Experience</a></li>
-    </ul>
-    <a href="contact.html" class="nav__cta">Email Me</a>
-    <button class="nav__burger" id="burger">&#9776;</button>
-  </nav>
+ /* Ensure the header distributes the logo and links to opposite sides */
+ .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background-color: transparent; /* Or match your homepage background */
+  }
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <ul>
-      <li><a href="projects.html" onclick="closeMobile()">Projects</a></li>
-      <li><a href="stack.html" onclick="closeMobile()">Stack</a></li>
-      <li><a href="about.html" onclick="closeMobile()">About</a></li>
-      <li><a href="experience.html" onclick="closeMobile()">Experience</a></li>
-      <li><a href="contact.html" onclick="closeMobile()">Email Me</a></li>
-    </ul>
-  </div>
+  /* Force the list items to align horizontally instead of stacking vertically */
+ .nav-links {
+    display: flex;
+    list-style: none; /* Removes standard bullet points */
+    margin: 0;
+    padding: 0;
+    gap: 2rem; /* Even spacing between navigation choices */
+ }
 
-  <!-- ABOUT -->
-  <section class="section about page-section">
-    <div class="container about__inner">
-      <div class="about__left">
-        <div class="about__avatar">
-          <div class="about__avatar-placeholder">
-            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="40" cy="30" r="18" fill="#c8f04d" opacity="0.4"/>
-              <ellipse cx="40" cy="72" rx="28" ry="16" fill="#c8f04d" opacity="0.2"/>
-            </svg>
-          </div>
-        </div>
-        <p class="about__bio">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-        </p>
-      </div>
-      <div class="about__right">
-        <h2 class="section__title" style="text-align:left;">About Me</h2>
-        <div class="about__items">
-          <div class="about__item">
-            <span class="about__icon">🗺️</span>
-            <div>
-              <strong>My Journey</strong>
-              <p>How I got into development and what drives me forward.</p>
+ /* Style the individual link items */
+ .nav-links li {
+    display: inline-block;
+ }
+
+ .nav-links a {
+    text-decoration: none;
+    color: #2d3748;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+ }
+
+ /* Clean logo layout placement */
+ .logo a {
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: #1a202c;
+ }
+
+ /* ==========================================================================
+   Ced Designs - About Page Styles
+   ========================================================================== */
+
+/* Layout Container */
+.about-container {
+    max-width: 900px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #2d3748;
+    line-height: 1.7;
+}
+
+/* Intro Header */
+.about-intro {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.about-intro h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #1a202c;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #1a202c 0%, #4a5568 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.about-intro .subtitle {
+    font-size: 1.25rem;
+    color: #718096;
+    font-weight: 400;
+}
+
+/* Subtle Divider */
+.section-divider {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 3rem auto;
+    width: 60%;
+}
+
+/* Content Blocks Grid/Stack */
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    margin-top: 4rem;
+}
+
+/* Individual Q&A Blocks */
+.about-block {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid #edf2f7;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Soft hover interaction to feel tactile and modern */
+.about-block:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.04);
+    border-color: #cbd5e0;
+}
+
+.about-block h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+/* Minimal accent line under the questions */
+.about-block h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 30px;
+    height: 2px;
+    background: #4a5568;
+    transition: width 0.3s ease;
+}
+
+.about-block:hover h2::after {
+    width: 50px;
+    background: #3182ce; /* Smooth accent color pop on hover */
+}
+
+.about-block p {
+    font-size: 1.05rem;
+    color: #4a5568;
+    text-align: justify;
+}
+
+/* Active Navigation State Link styling */
+.nav-links a.active {
+    color: #3182ce !important;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-container {
+        margin: 4rem auto;
+    }
+    
+    .about-intro h1 {
+        font-size: 2.5rem;
+    }
+    
+    .about-block {
+        padding: 1.75rem;
+    }
+}
+
+  </style>
+  
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo"><a href="index.html">Ced Designs</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Work</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="resume.html">Resume</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- About Section -->
+    <main class="about-container">
+        <section class="about-intro">
+            <h1>Nice to meet you.</h1>
+            <p class="subtitle">Discover the story, philosophy, and drive behind Ced Designs.</p>
+        </section>
+
+        <hr class="section-divider">
+
+        <section class="about-content">
+            <!-- Question 1 -->
+            <div class="about-block">
+                <h2>Who are you?</h2>
+                <p> I am a passionate designer and developer dedicated to crafting digital experiences that seamlessly blend functionality with aesthetic precision. Blending technical engineering principles with creative problem-solving, I build interfaces that don't just look good, but feel intuitive to navigate.</p>
             </div>
-          </div>
-          <div class="about__item">
-            <span class="about__icon">🎯</span>
-            <div>
-              <strong>My Focus</strong>
-              <p>Building fast, accessible, and beautiful web experiences.</p>
+
+            <!-- Question 2 -->
+            <div class="about-block">
+                <h2>What does Ced Designs do?</h2>
+                <p>Ced Designs is a digital creative studio specializing in full-stack UI/UX design, web development, and interactive systems. From conceptualizing user journeys to deploying robust, clean front-end frameworks, I transform complex technical requirements into elegant, high-performing digital realities.</p>
             </div>
-          </div>
-          <div class="about__item">
-            <span class="about__icon">💡</span>
-            <div>
-              <strong>Soft Skills</strong>
-              <p>Collaboration, problem-solving, and clear communication.</p>
+
+            <!-- Question 3 -->
+            <div class="about-block">
+                <h2>Why did you start it?</h2>
+                <p>I founded Ced Designs to bridge the gap between rigorous technical development and human-centered design. Too often, powerful systems feel rigid or frustrating to use. I wanted to create a space where data-driven logic and creative visual storytelling coexist to elevate user experiences.</p>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__links">
-        <a href="#" target="_blank">LinkedIn</a>
-        <a href="#" target="_blank">GitHub</a>
-        <a href="#" target="_blank">Resume PDF</a>
-      </div>
-      <p class="footer__copy">&copy; 2026 Your Name. All rights reserved.</p>
-    </div>
-  </footer>
+            <!-- Question 4 -->
+            <div class="about-block">
+                <h2>How do you approach design?</h2>
+                <p>My approach is iterative, structured, and deeply empathetic. I treat design like a system: understanding user needs, mapping out clean frameworks, and rigorously testing details. It’s about stripping away unnecessary noise to let the core purpose of a project shine through brilliantly.</p>
+            </div>
 
-  <script src="script.js"></script>
-  <script>
-    const burger = document.getElementById('burger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-    function closeMobile() { mobileMenu.classList.remove('open'); }
- 
-  </script>
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+            <!-- Question 5 -->
+            <div class="about-block">
+                <h2>Why should someone work with you?</h2>
+                <p>When you work with me, you get someone who speaks both the language of code and the language of design. I don't just deliver mockups—I understand how those decisions impact system architecture and overall performance. If you want a collaborative partner who values clean execution, structured milestones, and striking visuals, let's build something remarkable together.</p>
+            </div>
+        </section>
+    </main>
 
-  <script src="script.js"></script>  ← your script.js comes AFTER gsap
+    <footer>
+        <p>&copy; 2026 Ced Designs. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
