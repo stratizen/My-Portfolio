@@ -15,11 +15,11 @@
 
   <style>
     :root {
-      --primary: #0b57d0;
+      --primary: #00aa91;
       --accent: #00aa91;
       --bg-dark: #060909;
       --card-bg: #0c1111;
-      --bg-light: #ffffff;
+      --bg-light: #f7f7f7;
       --font-sans: 'Plus Jakarta Sans', sans-serif;
       --font-display: 'Syne', sans-serif;
     }
@@ -515,7 +515,7 @@
       <!-- Hero Top Typography Row -->
       <div class="relative z-20 mt-4 md:mt-8">
         <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none uppercase">
-          <span class="text-blue-600">CED A.</span> • GRAPHIC <br>
+          <span class="text-teal-600">CED A.</span> • GRAPHIC <br>
           <span class="text-white opacity-95">DESIGN & MOTION.</span>
         </h1>
       </div>
@@ -527,12 +527,7 @@
         
         <!-- Portrait Overlay Element (Positioned centered-bottom like visualization) -->
         <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[280px] sm:w-[380px] md:w-[420px] lg:w-[480px] aspect-[4/5] overflow-hidden pointer-events-auto select-none flex items-end">
-          <img 
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&h=1000&q=80" 
-            alt="Ced / Portrait Cutout" 
-            class="w-full object-cover filter grayscale contrast-125 mix-blend-lighten pointer-events-none opacity-90 transition-transform duration-500 transform hover:scale-[1.02]"
-            onerror="this.src='https://placehold.co/600x850/111111/ffffff?text=CED+K.+PORTRAIT'"
-          />
+
         </div>
       </div>
 
@@ -544,7 +539,7 @@
         
         <div class="flex gap-4">
           <a href="projects.html" class="magnetic-wrap">
-            <span class="target-magnetic px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 block">
+            <span class="target-magnetic px-6 py-3.5 bg-teal-600 hover:bg-teal-700 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 block">
               Discover Projects
             </span>
           </a>
@@ -566,116 +561,26 @@
         Featured Projects
       </h2>
       <a href="projects.html" class="magnetic-wrap">
-        <span class="target-magnetic px-6 py-3 bg-black text-white hover:bg-blue-600 rounded-full text-xs font-bold transition-all duration-300">
+        <span class="target-magnetic px-6 py-3 bg-black text-white hover:bg-teal-600 rounded-full text-xs font-bold transition-all duration-300">
           View All Work
         </span>
       </a>
     </div>
 
-    <!-- Redesigned Grid to match high-fidelity card visualization -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      
-      <!-- Project Card 1: SWISS TYPE -->
-      <div class="project-card p-6 flex flex-col md:flex-row gap-6" onclick="openModal('p1')">
-        <!-- Visual Panel Left Side -->
-        <div class="w-full md:w-1/2 aspect-video md:aspect-square rounded-xl overflow-hidden bg-black flex flex-col items-center justify-center p-6 relative group">
-          <!-- Dynamic gradient brand mesh background -->
-          <div class="absolute inset-0 bg-gradient-to-tr from-emerald-950 via-black to-slate-900 opacity-60 transition-opacity group-hover:opacity-80"></div>
-          
-          <!-- Swiss Type Minimal Graphic Representative -->
-          <div class="relative z-10 text-center flex flex-col items-center gap-2">
-            <svg class="w-16 h-16 text-emerald-500 filter drop-shadow-[0_0_25px_rgba(0,170,145,0.45)]" viewBox="0 0 100 100" fill="none">
-              <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="3" stroke-dasharray="6 8"/>
-            </svg>
-            <div class="font-black text-white tracking-widest text-lg mt-2 uppercase">SWISS TYPE</div>
-          </div>
-        </div>
-        
-        <!-- Content Side -->
-        <div class="w-full md:w-1/2 flex flex-col justify-between py-2">
-          <div>
-            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">Swiss Type</h3>
-            <p class="text-gray-600 text-sm leading-relaxed mb-4">
-              Swiss grid principles, stark typographic scales, and optical balance tailored to establish dynamic digital layout systems.
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="tag-pill">Typography</span>
-            <span class="tag-pill">Posters</span>
-            <span class="tag-pill">Swiss Grid</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project Card 2: MOTION SYS -->
-      <div class="project-card p-6 flex flex-col md:flex-row gap-6" onclick="openModal('p2')">
-        <!-- Visual Panel Left Side -->
-        <div class="w-full md:w-1/2 aspect-video md:aspect-square rounded-xl overflow-hidden bg-zinc-950 flex flex-col items-center justify-center p-6 relative group">
-          <div class="absolute inset-0 bg-gradient-to-br from-teal-900 to-black opacity-90"></div>
-          <svg class="w-16 h-16 text-emerald-500 filter drop-shadow-[0_0_20px_rgba(0,170,145,0.4)]" viewBox="0 0 100 100" fill="none">
-            <polygon points="50,15 85,75 15,75" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        
-        <!-- Content Side -->
-        <div class="w-full md:w-1/2 flex flex-col justify-between py-2">
-          <div>
-            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">Motion Sys</h3>
-            <p class="text-gray-600 text-sm leading-relaxed mb-4">
-              High-impact kinetic typography timelines, structural animation maps, and touch-interactive sequential vector layouts.
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="tag-pill">GSAP</span>
-            <span class="tag-pill">Motion</span>
-            <span class="tag-pill">Kinetic</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project Card 3: 3D DIMENSIONS -->
-      <div class="project-card p-6 flex flex-col md:flex-row gap-6" onclick="openModal('p3')">
-        <!-- Visual Panel Left Side -->
-        <div class="w-full md:w-1/2 aspect-video md:aspect-square rounded-xl overflow-hidden bg-zinc-900 flex flex-col items-center justify-center p-6 relative group">
-          <div class="font-extrabold text-white/5 text-6xl absolute left-2 select-none uppercase">MESH</div>
-          <div class="relative z-10 text-white font-bold tracking-tight text-center">
-            <div class="text-xs tracking-widest text-teal-400 uppercase">3D Space</div>
-            <div class="text-xl uppercase mt-1">POLY MESH</div>
-          </div>
-        </div>
-        
-        <!-- Content Side -->
-        <div class="w-full md:w-1/2 flex flex-col justify-between py-2">
-          <div>
-            <h3 class="text-xl font-bold uppercase tracking-tight text-black mb-2">3D Dimensions</h3>
-            <p class="text-gray-600 text-sm leading-relaxed mb-4">
-              Real-time hardware-accelerated vertex shaders and tactile visual elements designed in high-performance WebGL formats.
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="tag-pill">Three.js</span>
-            <span class="tag-pill">WebGL</span>
-            <span class="tag-pill">Shaders</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
 
   <!-- Tech Stack Grid Section -->
   <section class="py-16 px-4 md:px-12 bg-slate-50 border-t border-b border-slate-100">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-sm font-black tracking-widest text-blue-600 uppercase mb-8">
+      <h2 class="text-sm font-black tracking-widest text-teal-600 uppercase mb-8">
         Primary Technologies & Capabilities
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
           <h3 class="font-bold text-lg text-black mb-4 uppercase tracking-tight">Creative Development</h3>
           <div class="flex flex-wrap gap-3">
-            <span class="tag-pill text-blue-600 bg-blue-50 border-blue-100">WebGL / Shaders</span>
-            <span class="tag-pill text-blue-600 bg-blue-50 border-blue-100">GSAP Motion Framework</span>
-            <span class="tag-pill text-blue-600 bg-blue-50 border-blue-100">Three.js Engine</span>
+            <span class="tag-pill ">WebGL / Shaders</span>
+            <span class="tag-pill ">GSAP Motion Framework</span>
+            <span class="tag-pill ">Three.js Engine</span>
             <span class="tag-pill">SVG Animation</span>
             <span class="tag-pill">Figma Systems</span>
           </div>
@@ -700,21 +605,21 @@
       <!-- Portrait/Creative graphic placeholder left side -->
       <div class="w-full aspect-[4/3] sm:aspect-video lg:aspect-square bg-slate-900 rounded-3xl overflow-hidden relative shadow-lg">
         <img 
-          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&h=800&q=80" 
+          src="images/about me image 1.png " 
           alt="Ced Creative Portrait" 
           class="w-full h-full object-cover filter grayscale contrast-125 hover:scale-105 transition-transform duration-700"
           onerror="this.src='https://placehold.co/600x600/111111/ffffff?text=CED+K.+PORTRAIT'"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
         <div class="absolute bottom-6 left-6 text-white">
-          <p class="font-bold uppercase tracking-wider text-xs text-blue-500">Creative Director</p>
-          <p class="text-xl font-black tracking-tight mt-1">CED K.</p>
+          <p class="font-bold uppercase tracking-wider text-xs text-teal-500">Creative Designer</p>
+          <p class="text-xl font-black tracking-tight mt-1">CED A.</p>
         </div>
       </div>
 
       <!-- Copy Content Right Side -->
       <div class="flex flex-col gap-6">
-        <h2 class="text-sm font-black tracking-widest text-blue-600 uppercase">
+        <h2 class="text-sm font-black tracking-widest text-teal-600 uppercase">
           About Ced Designs
         </h2>
         <h3 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-black leading-tight">
@@ -727,14 +632,14 @@
         <!-- Dynamic Timeline Milestones -->
         <div class="flex flex-col gap-4 mt-4">
           <div class="flex gap-4 items-start">
-            <span class="text-blue-600 text-lg">💡</span>
+            <span class="text-teal-600 text-lg"></span>
             <div>
               <strong class="text-black block text-sm uppercase">Fluid Conceptualization</strong>
               <span class="text-gray-500 text-sm">Converting raw abstract vectors into elegant responsive dimensional environments.</span>
             </div>
           </div>
           <div class="flex gap-4 items-start">
-            <span class="text-blue-600 text-lg">⚡</span>
+            <span class="text-teal-600 text-lg"></span>
             <div>
               <strong class="text-black block text-sm uppercase">Technical Optimization</strong>
               <span class="text-gray-500 text-sm">Ensuring frame rate integrity (steady 60fps states) across modern device architectures.</span>
@@ -822,13 +727,13 @@
       <div class="max-w-xl">
         <h2 class="text-4xl font-black tracking-tight uppercase leading-none mb-4">
           Let's build <br>
-          <span class="text-blue-500">something notable.</span>
+          <span class="text-teal-500">something notable.</span>
         </h2>
         <p class="text-gray-400 text-sm leading-relaxed mb-6">
           Currently taking selective inquiries for creative projects, design systems consulting, and progressive visual brand strategies.
         </p>
         <a href="contact.html" class="magnetic-wrap inline-block">
-          <span class="target-magnetic px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 block">
+          <span class="target-magnetic px-8 py-4 bg-teal-600 hover:bg-blue-700 text-white rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 block">
             Email Me Directly
           </span>
         </a>

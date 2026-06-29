@@ -9,9 +9,9 @@
   
   <style>
     *, *::before, *::after { 
-      box-sizing: border-box; 
+      box-sizing: border-box;
       margin: 0; 
-      padding: 0; 
+      padding: 10; 
     }
 
     :root {
@@ -20,14 +20,14 @@
       --accent: #00aa91; /* Signature Teal */
       --text: #e8e8e8;
       --muted: #556c68;
-      --font-display: 'Plus Jakarta Sans', sans-serif;
-      --font-sans: 'Syne', sans-serif;
+      --font-display: 'Syne', sans-serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
     }
 
     html, body {
       width: 100%;
       height: 100%;
-      background: var(--bg);
+      background: var(--bg-light);
       color: var(--text);
       font-family: var(--font-sans);
       overflow-x: hidden;
@@ -62,7 +62,7 @@
     }
 
     .nav__logo a {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-weight: 800;
       color: #fff;
       text-decoration: none;
@@ -176,7 +176,7 @@
     }
 
     .section__title {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 900;
       line-height: 1;
@@ -729,14 +729,7 @@
         <!-- CARD 1: GRAPHICS & POSTERS (p1) -->
         <div class="project-card" onclick="openModal('p1')">
           <div class="project-card__img">
-            <svg viewBox="0 0 400 500">
-              <rect width="100%" height="100%" fill="#090e0e"/>
-              <circle cx="200" cy="250" r="130" fill="none" stroke="#00aa91" stroke-width="8" stroke-dasharray="10 15"/>
-              <text x="50%" y="260" font-family="Syne" font-size="34" font-weight="900" fill="#fff" text-anchor="middle">SWISS TYPE</text>
-              <line x1="50" y1="50" x2="350" y2="50" stroke="#00aa91" stroke-width="2"/>
-              <line x1="50" y1="450" x2="350" y2="450" stroke="#00aa91" stroke-width="2"/>
-              <text x="55" y="80" font-family="Plus Jakarta Sans" font-size="10" fill="#556c68" letter-spacing="3">EDITION 01 // POSTER ART</text>
-            </svg>
+           <img src="images/poster1-main.jpg" alt="" />
             <div class="overlay">
               <span class="overlay__label">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -760,13 +753,7 @@
         <!-- CARD 2: MOTION GRAPHIC (p2) -->
         <div class="project-card" onclick="openModal('p2')">
           <div class="project-card__img">
-            <svg viewBox="0 0 400 500">
-              <rect width="100%" height="100%" fill="#050808"/>
-              <polygon points="200,80 340,380 60,380" fill="none" stroke="#00aa91" stroke-width="4" opacity="0.3"/>
-              <polygon points="200,120 310,360 90,360" fill="none" stroke="#00aa91" stroke-width="2"/>
-              <text x="50%" y="420" font-family="Syne" font-size="28" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="4">MOTION SYS</text>
-              <circle cx="200" cy="220" r="10" fill="#00aa91"/>
-            </svg>
+            <img src="images/motion1-main.jpg" alt="" />
             <div class="overlay">
               <span class="overlay__label">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -790,12 +777,7 @@
         <!-- CARD 3: 3D (p3) -->
         <div class="project-card" onclick="openModal('p3')">
           <div class="project-card__img">
-            <svg viewBox="0 0 400 500">
-              <rect width="100%" height="100%" fill="#070a0a"/>
-              <path d="M100 150 Q 200 400 300 150" fill="none" stroke="#00aa91" stroke-width="3"/>
-              <path d="M100 350 Q 200 100 300 350" fill="none" stroke="#00aa91" stroke-width="1" stroke-dasharray="4 4"/>
-              <text x="50%" y="80" font-family="Syne" font-size="24" font-weight="800" fill="#fff" text-anchor="middle">3D DIMENSIONS</text>
-            </svg>
+           <img src="images/3d-main.jpg" alt="" />
             <div class="overlay">
               <span class="overlay__label">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -916,20 +898,21 @@
        ================================================ */
     const posterSVGs = {
       p1: [
-        `<svg class="p1-image.jpeg" viewBox="0 0 400 500" style="width:200%; height:100%;"><rect width="100%" height="100%" fill="#090e0e"/><circle cx="200" cy="250" r="130" fill="none" stroke="#00aa91" stroke-width="8" stroke-dasharray="10 15"/><text x="50%" y="260" font-family="Syne" font-size="34" font-weight="900" fill="#fff" text-anchor="middle">SWISS TYPE</text></svg>`,
-        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#090e0e"/><rect x="80" y="100" width="240" height="300" fill="none" stroke="#00aa91" stroke-width="3"/><text x="50%" y="260" font-family="Syne" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">GRID DISTORTION</text></svg>`,
-        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#090e0e"/><path d="M50 100 L350 400 M350 100 L50 400" stroke="#00aa91" stroke-width="4"/><text x="50%" y="260" font-family="Syne" font-size="30" font-weight="800" fill="#fff" text-anchor="middle">STRUCTURE</text></svg>`
-      ],
+       `<img src="images/p1-image.jpeg"   alt="Poster 1" />`,
+       `<img src="images/p1-image2.jpeg" alt="Poster 1 Detail" />`,
+       `<img src="images/p1-image3.jpeg" alt="Poster 1 Mockup" />`
+       ],
       p2: [
-        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#050808"/><polygon points="200,80 340,380 60,380" fill="none" stroke="#00aa91" stroke-width="4"/><text x="50%" y="430" font-family="Syne" font-size="24" font-weight="800" fill="#fff" text-anchor="middle">CINEMATIC NOIR</text></svg>`,
-        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#050808"/><line x1="200" y1="50" x2="200" y2="450" stroke="#00aa91" stroke-width="2"/><circle cx="200" cy="250" r="80" fill="none" stroke="#fff" stroke-width="1"/></svg>`,
-        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#050808"/><circle cx="200" cy="250" r="120" fill="none" stroke="#00aa91" stroke-width="2" stroke-dasharray="8 8"/><text x="50%" y="260" font-family="Syne" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">SHADOW PLAYS</text></svg>`
-      ],
+         `<img src="images/motion1-main.jpg"   alt="Motion Graphic 1" />`,
+         `<img src="images/motion1-frame2.jpg" alt="Motion Graphic Frame 2" />`,
+         `<img src="images/motion1-frame3.jpg" alt="Motion Graphic Frame 3" />`
+         ],
+        
       p3: [
-        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#070a0a"/><circle cx="200" cy="250" r="110" fill="none" stroke="#00aa91" stroke-width="4"/><circle cx="200" cy="250" r="50" fill="#00aa91"/></svg>`,
-        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#070a0a"/><line x1="50" y1="250" x2="350" y2="250" stroke="#00aa91" stroke-width="3"/><circle cx="200" cy="250" r="90" fill="none" stroke="#fff" stroke-width="1"/></svg>`,
-        `<svg class="slide-graphic" viewBox="0 0 400 500" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#070a0a"/><text x="50%" y="260" font-family="Syne" font-size="32" font-weight="900" fill="#fff" text-anchor="middle">CELESTIAL</text></svg>`
-      ]
+         `<img src="images/motion1-main.jpg"   alt="Motion Graphic 1" />`,
+         `<img src="images/motion1-frame2.jpg" alt="Motion Graphic Frame 2" />`,
+         `<img src="images/motion1-frame3.jpg" alt="Motion Graphic Frame 3" />`
+          ],
     };
 
     var projects = {
