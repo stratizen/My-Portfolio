@@ -15,11 +15,11 @@
     }
 
     :root {
-      --bg: #060909;
-      --card-bg: #0c1111;
+      --bg: #f7f7f7;
+      --card-bg: #186a5a58;
       --accent: #00aa91;
-      --text: #e8e8e8;
-      --muted: #556c68;
+      --text: #00aa91;
+      --muted: #;
       --font-display: 'Syne', sans-serif;
       --font-sans: 'Plus Jakarta Sans', sans-serif;
     }
@@ -44,6 +44,8 @@
       pointer-events: none;
     }
 
+    
+
     /* NAV BAR */
     .nav {
       position: fixed;
@@ -61,9 +63,9 @@
     }
 
     .nav__logo a {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-weight: 800;
-      color: #fff;
+      color: #f7f7f7;
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -96,7 +98,7 @@
 
     .nav__cta {
       text-decoration: none;
-      color: #fff;
+      color: #212122;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.1em;
@@ -148,7 +150,7 @@
     }
 
     .mobile-menu a {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: 2rem;
       font-weight: 700;
       color: var(--text);
@@ -169,7 +171,7 @@
     }
 
     .section__title {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 900;
       line-height: 1;
@@ -233,7 +235,7 @@
     }
 
     .timeline-year {
-      font-family: var(--font-display);
+      font-family: var(--font-san serif);
       font-size: 1.1rem;
       font-weight: 800;
       color: var(--accent);
@@ -242,10 +244,10 @@
     }
 
     .timeline-role {
-      font-family: var(--font-display);
+      font-family: var(--font-san serif);
       font-size: 1.5rem;
       font-weight: 800;
-      color: #fff;
+      color: #111716;
       margin-bottom: 4px;
     }
 
@@ -259,7 +261,7 @@
 
     .timeline-desc {
       font-size: 14px;
-      color: #99aba7;
+      color: #111716;
       line-height: 1.7;
     }
 
@@ -328,10 +330,10 @@
     </div>
     
     <ul class="nav__links">
-      <li><a href="projects.html">Work</a></li>
+      <li><a href="selectedwork.html">Selected Work</a></li>
       <li><a href="experience.html" class="active">Experience</a></li>
       <li><a href="resume.html">Resume</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
 
     <a href="contact.html" class="nav__cta">Email Me</a>
@@ -341,10 +343,10 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="projects.html" onclick="closeMobile()">Work</a></li>
+      <li><a href="selectedwork.html" onclick="closeMobile()">Selected Work</a></li>
       <li><a href="experience.html" onclick="closeMobile()">Experience</a></li>
       <li><a href="resume.html" onclick="closeMobile()">Resume</a></li>
-      <li><a href="contact.html" onclick="closeMobile()">Contact</a></li>
+      <li><a href="about.html" onclick="closeMobile()">About</a></li>
     </ul>
   </div>
 
@@ -406,7 +408,7 @@
         <a href="https://github.com/yourusername" target="_blank">GitHub</a>
         <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
       </div>
-      <p class="footer__copy">&copy; 2026 Ced Designs. Crafted with Interactive Kinetic Frameworks.</p>
+      <p class="footer__copy">&copy; 2026 Ced Designs.</p>
     </div>
   </footer>
 

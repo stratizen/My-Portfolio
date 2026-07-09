@@ -1,242 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Ced Designs</title>
-    <link rel="stylesheet" href="style.css"> <!-- Assumes your existing stylesheet -->
-</head>
-<body>
-  <style> 
-  /* ==========================================================================
-   Navigation Alignment Fix
-   ========================================================================== */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Ced Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
 
- /* Ensure the header distributes the logo and links to opposite sides */
- .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 2rem;
-    background-color: transparent; /* Or match your homepage background */
+  /* ==========================================================================
+     Tokens
+     ========================================================================== */
+  :root{
+    --bg:        #faf8f4;   /* off-white */
+    --surface:   #ffffff;
+    --ink:       #14231f;   /* deep teal-black, used for body/headline text */
+    --ink-soft:  #4a5a56;
+    --teal-900:  #0b4f4b;
+    --teal-700:  #0f766e;
+    --teal-500:  #17a596;
+    --teal-100:  #e5f2f0;
+    --line:      #dbe6e3;
+
+    --font-display: 'Fraunces', serif;
+    --font-body:    'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono:    'IBM Plex Mono', monospace;
   }
 
-  /* Force the list items to align horizontally instead of stacking vertically */
- .nav-links {
-    display: flex;
-    list-style: none; /* Removes standard bullet points */
-    margin: 0;
-    padding: 0;
-    gap: 2rem; /* Even spacing between navigation choices */
- }
+  *{ box-sizing:border-box; }
 
- /* Style the individual link items */
- .nav-links li {
-    display: inline-block;
- }
+  html{ scroll-behavior:smooth; }
 
- .nav-links a {
-    text-decoration: none;
-    color: #2d3748;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: color 0.2s ease;
- }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-sans);
+  }
 
- /* Clean logo layout placement */
- .logo a {
-    font-weight: 700;
-    font-size: 1.25rem;
-    text-decoration: none;
-    color: #1a202c;
- }
+  /* ==========================================================================
+     Navigation
+     ========================================================================== */
+  .navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1.5rem 2.5rem;
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+  }
 
- /* ==========================================================================
-   Ced Designs - About Page Styles
-   ========================================================================== */
+  .logo a{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.3rem;
+    text-decoration:none;
+    color:var(--teal-900);
+    letter-spacing:-0.01em;
+  }
 
-/* Layout Container */
-.about-container {
-    max-width: 900px;
-    margin: 6rem auto;
-    padding: 0 2rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #2d3748;
-    line-height: 1.7;
-}
+  .nav-links{
+    display:flex;
+    list-style:none;
+    margin:0;
+    padding:0;
+    gap:2.25rem;
+  }
 
-/* Intro Header */
-.about-intro {
-    text-align: center;
-    margin-bottom: 4rem;
-}
+  .nav-links li{ display:inline-block; }
 
-.about-intro h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: #1a202c;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #1a202c 0%, #4a5568 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+  .nav-links a{
+    position:relative;
+    text-decoration:none;
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    font-weight:500;
+    padding-bottom:4px;
+  }
 
-.about-intro .subtitle {
-    font-size: 1.25rem;
-    color: #718096;
-    font-weight: 400;
-}
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:0;
+    width:0;
+    height:2px;
+    background:var(--teal-500);
+    transition:width 0.25s ease;
+  }
 
-/* Subtle Divider */
-.section-divider {
-    border: 0;
-    height: 1px;
-    background: #e2e8f0;
-    margin: 3rem auto;
-    width: 60%;
-}
+  .nav-links a:hover{ color:var(--teal-900); }
+  .nav-links a:hover::after{ width:100%; }
 
-/* Content Blocks Grid/Stack */
-.about-content {
-    display: flex;
-    flex-direction: column;
-    gap: 3.5rem;
-    margin-top: 4rem;
-}
+  .nav-links a.active{
+    color:var(--teal-700);
+    font-weight:600;
+  }
+  .nav-links a.active::after{
+    width:100%;
+    background:var(--teal-700);
+  }
 
-/* Individual Q&A Blocks */
-.about-block {
-    background: #ffffff;
-    padding: 2.5rem;
-    border-radius: 12px;
-    border: 1px solid #edf2f7;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+  /* ==========================================================================
+     Hero
+     ========================================================================== */
+  .about-hero{
+    max-width:900px;
+    margin:0 auto;
+    padding:6rem 2rem 4rem;
+  }
 
-/* Soft hover interaction to feel tactile and modern */
-.about-block:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.04);
-    border-color: #cbd5e0;
-}
+  .hero-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:0.6rem;
+    font-family:var(--font-mono);
+    font-size:0.8rem;
+    color:var(--teal-700);
+    background:var(--teal-100);
+    padding:0.35rem 0.75rem;
+    border-radius:100px;
+    margin-bottom:2rem;
+  }
 
-.about-block h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1a202c;
-    margin-bottom: 1rem;
-    position: relative;
-    display: inline-block;
-}
+  .hero-tag::before{
+    content:'';
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--teal-500);
+    box-shadow:0 0 0 3px rgba(23,165,150,0.18);
+  }
 
-/* Minimal accent line under the questions */
-.about-block h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 30px;
-    height: 2px;
-    background: #4a5568;
-    transition: width 0.3s ease;
-}
+  .about-hero h1{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(2.75rem, 6vw, 4.5rem);
+    line-height:1.05;
+    letter-spacing:-0.02em;
+    color:var(--teal-900);
+    margin:0 0 1.25rem;
+  }
 
-.about-block:hover h2::after {
-    width: 50px;
-    background: #3182ce; /* Smooth accent color pop on hover */
-}
+  .about-hero h1 em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--teal-700);
+  }
 
-.about-block p {
-    font-size: 1.05rem;
-    color: #4a5568;
-    text-align: justify;
-}
+  .about-hero .subtitle{
+    font-size:1.15rem;
+    color:var(--ink-soft);
+    max-width:36rem;
+    line-height:1.6;
+  }
 
-/* Active Navigation State Link styling */
-.nav-links a.active {
-    color: #3182ce !important;
-    font-weight: 600;
-}
+  /* ==========================================================================
+     Build log — signature element
+     A commented "log" thread ties the Q&A to Ced's own code + design identity.
+     ========================================================================== */
+  .about-log{
+    max-width:900px;
+    margin:0 auto;
+    padding:0 2rem 7rem;
+    position:relative;
+  }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .about-container {
-        margin: 4rem auto;
-    }
-    
-    .about-intro h1 {
-        font-size: 2.5rem;
-    }
-    
-    .about-block {
-        padding: 1.75rem;
-    }
-}
+  .log-thread{
+    position:relative;
+    padding-left:2.75rem;
+  }
 
-  </style>
-  
+  .log-thread::before{
+    content:'';
+    position:absolute;
+    left:6px; top:0.6rem; bottom:0.6rem;
+    width:1px;
+    background:linear-gradient(to bottom, var(--teal-500), var(--line) 92%);
+  }
 
-    <!-- Navigation Bar -->
-    <header>
-        <nav class="navbar">
-            <div class="logo"><a href="index.html">Ced Designs</a></div>
-            <ul class="nav-links">
-                <li><a href="index.html">Work</a></li>
-                <li><a href="about.html" class="active">About</a></li>
-                <li><a href="experience.html">Experience</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="resume.html">Resume</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  .log-entry{
+    position:relative;
+    padding:0 0 3.25rem;
+  }
+  .log-entry:last-child{ padding-bottom:0; }
 
-    <!-- About Section -->
-    <main class="about-container">
-        <section class="about-intro">
-            <h1>Nice to meet you.</h1>
-            <p class="subtitle">Discover the story, philosophy, and drive behind Ced Designs.</p>
-        </section>
+  .log-entry::before{
+    content:'';
+    position:absolute;
+    left:-2.75rem;
+    top:0.45rem;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--teal-500);
+    transition:background 0.25s ease, transform 0.25s ease;
+  }
 
-        <hr class="section-divider">
+  .log-entry:hover::before{
+    background:var(--teal-500);
+    transform:scale(1.15);
+  }
 
-        <section class="about-content">
-            <!-- Question 1 -->
-            <div class="about-block">
-                <h2>Who are you?</h2>
-                <p> I am a passionate designer and developer dedicated to crafting digital experiences that seamlessly blend functionality with aesthetic precision. Blending technical engineering principles with creative problem-solving, I build interfaces that don't just look good, but feel intuitive to navigate.</p>
-            </div>
+  .log-meta{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--teal-700);
+    margin-bottom:0.6rem;
+    letter-spacing:0.01em;
+  }
 
-            <!-- Question 2 -->
-            <div class="about-block">
-                <h2>What does Ced Designs do?</h2>
-                <p>Ced Designs is a digital creative studio specializing in full-stack UI/UX design, web development, and interactive systems. From conceptualizing user journeys to deploying robust, clean front-end frameworks, I transform complex technical requirements into elegant, high-performing digital realities.</p>
-            </div>
+  .log-meta .comment{ color:#9aa8a4; }
 
-            <!-- Question 3 -->
-            <div class="about-block">
-                <h2>Why did you start it?</h2>
-                <p>I founded Ced Designs to bridge the gap between rigorous technical development and human-centered design. Too often, powerful systems feel rigid or frustrating to use. I wanted to create a space where data-driven logic and creative visual storytelling coexist to elevate user experiences.</p>
-            </div>
+  .log-entry h2{
+    font-family:var(--font-display);
+    font-size:1.65rem;
+    font-weight:500;
+    color:var(--ink);
+    margin:0 0 0.85rem;
+  }
 
-            <!-- Question 4 -->
-            <div class="about-block">
-                <h2>How do you approach design?</h2>
-                <p>My approach is iterative, structured, and deeply empathetic. I treat design like a system: understanding user needs, mapping out clean frameworks, and rigorously testing details. It’s about stripping away unnecessary noise to let the core purpose of a project shine through brilliantly.</p>
-            </div>
+  .log-entry p{
+    font-size:1.03rem;
+    color:var(--ink-soft);
+    line-height:1.75;
+    max-width:38rem;
+  }
 
-            <!-- Question 5 -->
-            <div class="about-block">
-                <h2>Why should someone work with you?</h2>
-                <p>When you work with me, you get someone who speaks both the language of code and the language of design. I don't just deliver mockups—I understand how those decisions impact system architecture and overall performance. If you want a collaborative partner who values clean execution, structured milestones, and striking visuals, let's build something remarkable together.</p>
-            </div>
-        </section>
-    </main>
+  /* Closing card */
+  .about-cta{
+    max-width:900px;
+    margin:0 auto;
+    padding:0 2rem 6rem;
+  }
 
-    <footer>
-        <p>&copy; 2026 Ced Designs. All rights reserved.</p>
-    </footer>
+  .cta-card{
+    background:var(--teal-900);
+    color:var(--bg);
+    border-radius:16px;
+    padding:3rem;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .cta-card::before{
+    content:'';
+    position:absolute;
+    right:-60px; top:-60px;
+    width:220px; height:220px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(23,165,150,0.35), transparent 70%);
+  }
+
+  .cta-card h2{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-style:italic;
+    font-size:2rem;
+    margin:0 0 1rem;
+    position:relative;
+  }
+
+  .cta-card p{
+    color:#cfe3e0;
+    font-size:1.05rem;
+    line-height:1.7;
+    max-width:34rem;
+    margin:0 0 2rem;
+    position:relative;
+  }
+
+  .cta-card a{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    background:var(--teal-500);
+    color:var(--teal-900);
+    text-decoration:none;
+    font-weight:600;
+    font-size:0.95rem;
+    padding:0.85rem 1.5rem;
+    border-radius:100px;
+    transition:transform 0.2s ease, background 0.2s ease;
+  }
+
+  .cta-card a:hover{
+    background:#5fd7c9;
+    transform:translateY(-2px);
+  }
+
+  footer{
+    text-align:center;
+    padding:2rem;
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+  }
+
+  /* ==========================================================================
+     Responsive
+     ========================================================================== */
+  @media (max-width:640px){
+    .navbar{ padding:1.25rem 1.25rem; flex-wrap:wrap; gap:0.75rem; }
+    .nav-links{ gap:1.25rem; flex-wrap:wrap; }
+    .about-hero{ padding:4rem 1.25rem 3rem; }
+    .about-log{ padding:0 1.25rem 4rem; }
+    .log-thread{ padding-left:2.1rem; }
+    .log-entry::before{ left:-2.1rem; }
+    .cta-card{ padding:2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; scroll-behavior:auto !important; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <div class="logo"><a href="index.html">Ced Designs</a></div>
+      
+      <ul class="nav-links">
+
+        <li><a href="selectedwork.html">Selected work</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+
+      </ul>
+
+      <a href="contact.html" class="nav__cta">Email Me</a>
+    <button class="nav__burger" id="burger">&#9776;</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="about-hero">
+      <span class="hero-tag">currently designing &amp; building</span>
+      <h1>Nice to meet you, <em>I'm Ced.</em></h1>
+      <p class="subtitle">A running log of who I am, what I build, and why — kept the way I keep everything else: structured, honest, and a little bit teal.</p>
+    </section>
+
+    <section class="about-log">
+      <div class="log-thread">
+
+        <div class="log-entry">
+          <div class="log-meta"><span class="comment">// 01</span> identity</div>
+          <h2>Who are you?</h2>
+          <p>I'm a designer and developer who builds digital experiences where functionality and aesthetic precision aren't a trade-off. I pair engineering discipline with creative problem-solving to make interfaces that don't just look considered — they feel obvious to use.</p>
+        </div>
+
+        <div class="log-entry">
+          <div class="log-meta"><span class="comment">// 02</span> practice</div>
+          <h2>What does Ced Designs do?</h2>
+          <p>Ced Designs is a one-person studio working across UI/UX design, front-end development, and interactive systems. I take a project from early user journeys through to a clean, deployed build — so the thinking behind an interface and the code running it stay in sync.</p>
+        </div>
+
+        <div class="log-entry">
+          <div class="log-meta"><span class="comment">// 03</span> origin</div>
+          <h2>Why did you start it?</h2>
+          <p>I started Ced Designs to close the gap between rigorous engineering and human-centered design — two things too often treated as opposites. Powerful systems shouldn't feel rigid to use. I wanted a practice where logic and visual storytelling are built together, from the first sketch.</p>
+        </div>
+
+        <div class="log-entry">
+          <div class="log-meta"><span class="comment">// 04</span> method</div>
+          <h2>How do you approach design?</h2>
+          <p>Iteratively, and a little relentlessly. I treat design like a system: understand what people actually need, map a clean structure around it, then test the details until they hold up. Most of the work is quietly removing noise so the real purpose of a project can come through.</p>
+        </div>
+
+        <div class="log-entry">
+          <div class="log-meta"><span class="comment">// 05</span> collaboration</div>
+          <h2>Why work with you?</h2>
+          <p>Because you get someone fluent in both code and design — I don't hand off mockups without understanding what they cost in system architecture and performance. If you want a partner who values clean execution, honest milestones, and work that actually looks like something, let's talk.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="about-cta">
+      <div class="cta-card">
+        <h2>Let's build something remarkable.</h2>
+        <p>Open to new collaborations, freelance projects, and the occasional ambitious idea scribbled on a napkin.</p>
+        <a href="contact.html">Get in touch →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Ced Designs. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>

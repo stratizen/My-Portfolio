@@ -16,7 +16,7 @@
 
     :root {
       --bg: #ffffff; /* Deep slate teal-black background */
-      --card-bg: #0c1111;
+      --card-bg: #333333;
       --accent: #00aa91; /* Signature Teal */
       --text: #e8e8e8;
       --muted: #556c68;
@@ -57,7 +57,7 @@
       padding: 24px 6%;
       background: rgba(6, 9, 9, 0.85);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0, 170, 145, 0.1);
+      border-bottom: none;
       z-index: 100;
     }
 
@@ -276,7 +276,7 @@
     }
 
     .project-card__body h3 {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: 1.4rem;
       font-weight: 800;
       margin-bottom: 12px;
@@ -292,7 +292,7 @@
     }
 
     .project-card__body p span {
-      font-weight: 700;
+      font-weight: 500;
       color: var(--accent);
       text-transform: uppercase;
       font-size: 10px;
@@ -695,10 +695,10 @@
     </div>
     
     <ul class="nav__links">
-      <li><a href="projects.html" class="active">Work</a></li>
+      <li><a href="selectedwork.html" class="active">Selected Work</a></li>
       <li><a href="experience.html">Experience</a></li>
       <li><a href="resume.html">Resume</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      
       <li><a href="about.html">About</a></li>
       
     </ul>
@@ -710,10 +710,10 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="projects.html" onclick="closeMobile()">Work</a></li>
+      <li><a href="selectedwork.html" onclick="closeMobile()">Work</a></li>
       <li><a href="experience.html" onclick="closeMobile()">Experience</a></li>
       <li><a href="resume.html" onclick="closeMobile()">Resume</a></li>
-      <li><a href="contact.html" onclick="closeMobile()">Contact</a></li>
+     
       <li><a href="about.html" onclick="closeMobile()">About</a></li>
 
     </ul>
@@ -722,14 +722,18 @@
   <!-- MAIN PROJECTS SECTION -->
   <section class="section projects">
     <div class="container">
-      <h2 class="section__title">Poster &amp; Design <span>Collections</span></h2>
+      <h2 class="section__title"><span>Check out the Collections</span></h2>
       
       <div class="projects__grid">
 
         <!-- CARD 1: GRAPHICS & POSTERS (p1) -->
         <div class="project-card" onclick="openModal('p1')">
           <div class="project-card__img">
-           <img src="images/poster1-main.jpg" alt="" />
+            <svg viewBox="0 0 400 500">
+              <rect width="100%" height="100%" fill="#090e0e"/>
+              <circle cx="200" cy="250" r="130" fill="none" stroke="#00aa91" stroke-width="8" stroke-dasharray="10 15"/>
+            </svg>    
+            <img src="images/poster1-main.jpg" alt="" />
             <div class="overlay">
               <span class="overlay__label">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -742,17 +746,18 @@
             <p><span>Problem</span> Standard graphical layouts struggle to maintain balanced visual weights across print formats.</p>
             <p><span>Solution</span> Created visual layouts utilizing Swiss grid principles, optical alignments, and stark typographic ratios.</p>
             <p><span>Result</span> A curated series of Swiss Typographic posters exhibited in international design galleries.</p>
-            <div class="project-card__tags">
-              <span class="tag">Poster Art</span>
-              <span class="tag">Typography</span>
-              <span class="tag">Swiss Design</span>
-            </div>
+            
           </div>
         </div>
 
         <!-- CARD 2: MOTION GRAPHIC (p2) -->
         <div class="project-card" onclick="openModal('p2')">
           <div class="project-card__img">
+            <svg viewBox="0 0 400 500">
+              <rect width="100%" height="100%" fill="#050808"/>
+              <polygon points="200,80 340,380 60,380" fill="none" stroke="#00aa91" stroke-width="4" opacity="0.3"/>
+              <polygon points="200,120 310,360 90,360" fill="none" stroke="#00aa91" stroke-width="2"/>
+            </svg>
             <img src="images/motion1-main.jpg" alt="" />
             <div class="overlay">
               <span class="overlay__label">
@@ -766,18 +771,19 @@
             <p><span>Problem</span> Static illustrations and graphics often fail to tell a brand's narrative dynamically.</p>
             <p><span>Solution</span> Programmed kinetic micro-interaction states, custom easing paths, and sequential narrative frames.</p>
             <p><span>Result</span> Built immersive storytelling vectors boosting brand session retention averages significantly.</p>
-            <div class="project-card__tags">
-              <span class="tag">Motion Design</span>
-              <span class="tag">Kinetic Type</span>
-              <span class="tag">SVG Animation</span>
-            </div>
+            
           </div>
         </div>
 
         <!-- CARD 3: 3D (p3) -->
         <div class="project-card" onclick="openModal('p3')">
           <div class="project-card__img">
-           <img src="images/3d-main.jpg" alt="" />
+            <svg viewBox="0 0 400 500">
+              <rect width="100%" height="100%" fill="#070a0a"/>
+              <path d="M100 150 Q 200 400 300 150" fill="none" stroke="#00aa91" stroke-width="3"/>
+              <path d="M100 350 Q 200 100 300 350" fill="none" stroke="#00aa91" stroke-width="1" stroke-dasharray="4 4"/>
+            </svg>  
+            <img src="images/3d-main.jpg" alt="" />
             <div class="overlay">
               <span class="overlay__label">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -791,10 +797,7 @@
             <p><span>Solution</span> Sculpted mathematical web-optimized polygons combined with hardware-accelerated vertex shaders.</p>
             <p><span>Result</span> Rendered smooth, latency-free interactive models that react in real-time to user navigation.</p>
             <div class="project-card__tags">
-              <span class="tag">WebGL</span>
-              <span class="tag">Three.js</span>
-              <span class="tag">3D Modeling</span>
-            </div>
+             
           </div>
         </div>
 
@@ -862,8 +865,8 @@
           <div class="modal__meta-box">
             <div class="modal__section">
               <h4>Specifications</h4>
-              <p style="font-size: 13px; margin-bottom: 12px; color: #fff;">Medium: Screenprint &amp; Digital</p>
-              <p style="font-size: 13px; color: #fff;">Dimensions: 50 x 70 cm</p>
+              <p style="font-size: 0px; margin-bottom: 12px; color: #fff;">Medium: Screenprint &amp; Digital</p>
+              <p style="font-size: 0px; color: #fff;">Dimensions: 50 x 70 cm</p>
             </div>
             <div class="modal__section" style="margin-bottom:0;">
               <h4>Tech Stack</h4>
@@ -884,7 +887,7 @@
         <a href="https://github.com/yourusername" target="_blank">GitHub</a>
         <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
       </div>
-      <p class="footer__copy">&copy; 2026 Ced Designs. Crafted with Interactive Kinetic Frameworks.</p>
+      <p class="footer__copy">&copy; 2026 Ced Designs.</p>
     </div>
   </footer>
 

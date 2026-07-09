@@ -15,7 +15,7 @@
     }
 
     :root {
-      --bg: #060909;
+      --bg: #f7f7f7;
       --card-bg: #0c1111;
       --accent: #00aa91;
       --text: #e8e8e8;
@@ -61,7 +61,7 @@
     }
 
     .nav__logo a {
-      font-family: var(--font-display);
+      font-family: var(--font-signature);
       font-weight: 800;
       color: #fff;
       text-decoration: none;
@@ -182,7 +182,7 @@
     }
 
     .resume-header h2 {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 900;
       line-height: 1;
@@ -195,9 +195,9 @@
 
     /* ACTIONS & CV EXCHANGE CONTAINER */
     .action-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
       margin-bottom: 40px;
     }
 
@@ -210,7 +210,7 @@
     }
 
     .action-box h3 {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: 1.2rem;
       font-weight: 800;
       margin-bottom: 12px;
@@ -233,7 +233,7 @@
       text-decoration: none;
       padding: 14px 28px;
       border-radius: 50px;
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.1em;
@@ -282,7 +282,7 @@
     }
 
     .cv-meta h1 {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: 2.2rem;
       font-weight: 900;
       color: #fff;
@@ -302,7 +302,7 @@
     }
 
     .cv-body-section h4 {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -346,7 +346,7 @@
     }
 
     .custom-modal-box h3 {
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: 1.8rem;
       color: #fff;
       margin-bottom: 12px;
@@ -365,7 +365,7 @@
       border: none;
       padding: 12px 30px;
       border-radius: 50px;
-      font-family: var(--font-display);
+      font-family: var(--font-sans);
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.1em;
@@ -437,10 +437,10 @@
     </div>
     
     <ul class="nav__links">
-      <li><a href="projects.html">Work</a></li>
+      <li><a href="selectedwork.html">Selected Work</a></li>
       <li><a href="experience.html">Experience</a></li>
       <li><a href="resume.html" class="active">Resume</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
 
     <a href="contact.html" class="nav__cta">Email Me</a>
@@ -450,17 +450,17 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="projects.html" onclick="closeMobile()">Work</a></li>
+      <li><a href="selectedwork.html" onclick="closeMobile()">Selected Work</a></li>
       <li><a href="experience.html" onclick="closeMobile()">Experience</a></li>
       <li><a href="resume.html" onclick="closeMobile()">Resume</a></li>
-      <li><a href="contact.html" onclick="closeMobile()">Contact</a></li>
+      <li><a href="about.html" onclick="closeMobile()">About</a></li>
     </ul>
   </div>
 
   <!-- MAIN RESUME SECTION -->
   <section class="resume-section">
     <div class="resume-header">
-      <h2>Curriculum <span>Vitae</span></h2>
+      <h2> <span>Curriculum Vitae</span></h2>
     </div>
 
     <!-- ACTIONS ROW -->
@@ -468,32 +468,25 @@
       
       <!-- DOWNLOAD BOX (Employers/Clients) -->
       <div class="action-box">
-        <h3>Employer &amp; Client Portal</h3>
+        <h3>My Resume</h3>
         <p>Acquire a print-ready version of my career history, technical expertise, and references.</p>
         <!-- Mock Download Trigger for secure container previews -->
-        <button class="cv-btn" onclick="triggerCVDownload()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          Download CV (PDF)
-        </button>
-      </div>
 
-      <!-- UPLOAD BOX (Designer Upload Workspace) -->
-      <div class="action-box">
-        <h3>Designer Workshop</h3>
-        <p>Upload your latest curriculum vitae (.pdf, .doc) to replace the current display card dynamically.</p>
-        <label for="cv-upload" class="cv-btn cv-btn--outline file-input-label">
+        <a href="../assets/cv/Example-CV.pdf"
+         target="_blank"
+         class="btn btn--primary">
+         <label for="cv-upload" class="cv-btn cv-btn--outline file-input-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-          Upload New CV
-        </label>
-        <input type="file" id="cv-upload" accept=".pdf,.doc,.docx" onchange="handleCVUpload(event)"/>
-      </div>
+          View CV (pdf)
+         </label> 
+        </a>
 
     </div>
 
     <!-- INTERACTIVE CV PREVIEW CARD -->
     <div class="cv-preview-card">
       <div class="cv-meta">
-        <h1 id="cv-name">Cedric K.</h1>
+        <h1 id="cv-name">Cedric A.</h1>
         <p id="cv-role">Lead Creative Technologist &amp; Motion Architect</p>
       </div>
 
@@ -530,7 +523,7 @@
         <a href="https://github.com/yourusername" target="_blank">GitHub</a>
         <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
       </div>
-      <p class="footer__copy">&copy; 2026 Ced Designs. Crafted with Interactive Kinetic Frameworks.</p>
+      <p class="footer__copy">&copy; 2026 Ced Designs.</p>
     </div>
   </footer>
 
