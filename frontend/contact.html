@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+
 <style>
 
   /* ==========================================================================
@@ -31,57 +31,78 @@
     --font-mono:    'IBM Plex Mono', monospace;
   }
 
-  *{ box-sizing:border-box; }
+  *, *::before, *::after { 
+      box-sizing: border-box;
+      margin: 0; 
+      padding: 10; 
+    }
 
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--font-sans);
+    width: 100%;
+    height: 100%;
+    background: var(--bg-light);
+    color: var(--text);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
   }
+
+  
 
   /* ==========================================================================
      Navigation
      ========================================================================== */
   .nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:1.25rem 2.5rem;
-    background:var(--bg);
-    border-bottom:1px solid var(--line);
-    position:relative;
+    padding:24px 6%;
+    background:#ffffff;
+    border-bottom:none;
+    z-index: 100;
   }
 
-  .nav__logo a{
-    display:flex;
-    align-items:center;
-    gap:0.6rem;
-    text-decoration:none;
-    color:var(--teal-900);
-    font-family:var(--font-display);
-    font-weight:600;
-    font-size:1.2rem;
+  .nav__logo a{                                         /* the link that takes you to homepage */
+    font-family: var(--font-sans);
+    font-weight: 800;
+    color: #111111;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.05em;
   }
 
-  .nav__logo svg{ color:var(--teal-700); }
+  .nav__logo svg {                                         /* the house logo indicating home*/
+   color:var(--error);
+   transition: transform 0.3s ease; 
+  }        
+  
+  .nav__logo a:hover svg {
+      transform: scale(1.15) rotate(-10deg);
+    }
 
   .nav__links{
-    display:flex;
-    list-style:none;
-    gap:2rem;
-    margin:0;
-    padding:0;
+    display: flex;
+    list-style: none;
+    gap: 32px;
+    margin-left:auto;
+    margin-right:24px;
   }
 
   .nav__links a{
-    position:relative;
-    text-decoration:none;
-    color:var(--ink-soft);
-    font-size:0.95rem;
-    font-weight:500;
-    padding-bottom:4px;
-  }
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: none;
+    transition: color 0.3s ease;
+    }
+
 
   .nav__links a::after{
     content:'';
@@ -92,32 +113,42 @@
     transition:width 0.25s ease;
   }
 
-  .nav__links a:hover{ color:var(--teal-900); }
-  .nav__links a:hover::after{ width:100%; }
-
+  .nav__links a:hover, 
+  .nav__links a.active {
+      color: var(--accent);             /*color when selecting the pages*/
+    }
+ 
+  /*Email button*/
   .nav__cta{
-    text-decoration:none;
-    background:var(--teal-700);
-    color:#fff;
-    font-weight:600;
-    font-size:0.9rem;
-    padding:0.65rem 1.3rem;
-    border-radius:100px;
-    transition:background 0.2s ease, transform 0.2s ease;
+    background-color: #111111;   /*background color of the email pad */
+    text-decoration: none;
+    color: #f7f7f7;              /*email me text color*/
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: none;
+    padding: 10px 24px;
+    border: 1px solid #111111;
+    border-radius: 50px;
+    transition: all 0.3s ease;
   }
 
-  .nav__cta:hover{ background:var(--teal-900); transform:translateY(-1px); }
-  .nav__cta.active{ background:var(--teal-900); }
+  .nav__cta:hover {
+      background: #00aa91;
+      border-color: #00aa91;
+      box-shadow: 0 0 15px rgba(0,170,145,0.2);
+    }
 
-  .nav__burger{
-    display:none;
-    background:none;
-    border:none;
-    font-size:1.5rem;
-    color:var(--teal-900);
-    cursor:pointer;
-  }
+  .nav__burger {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+    }
 
+  /*MOBILE MENU SECTION*/
   .mobile-menu{
     display:none;
     flex-direction:column;
@@ -367,9 +398,10 @@
     </div>
     <ul class="nav__links">
       <li><a href="selectedwork.html">Selected Work</a></li>
+      <li><a href="experience.html">Experience</a></li>
       <li><a href="resume.html">Resume</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="experience.html">Experience</a></li>
+      
     </ul>
     <a href="contact.html" class="nav__cta active">Email Me</a>
     <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>

@@ -16,7 +16,7 @@
       --card-bg: #186a5a58;
       --accent: #00aa91;
       --text: #00aa91;
-      --muted: #;
+      --muted: #111111;
       --font-display: 'Syne', sans-serif;
       --font-sans: 'Plus Jakarta Sans', sans-serif;
     }
@@ -53,30 +53,38 @@
       justify-content: space-between;
       align-items: center;
       padding: 24px 6%;
-      background: rgba(6, 9, 9, 0.85);
+      background: #ffffff;       /*color for the header box*/
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0, 170, 145, 0.1);
+      border-bottom: none;
       z-index: 100;
     }
 
     .nav__logo a {
       font-family: var(--font-sans);
       font-weight: 800;
-      color: #f7f7f7;
+      color: #111111;
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 8px;
+      letter-spacing: 0.05em;
     }
 
-    .nav__logo a svg {
+    .nav__logo a svg {                                          /*the home icon logo color*/
       color: var(--accent);
+      transition: transform 0.3s ease;
+    }
+
+    .nav__logo a:hover svg {                                      /*the hovering effect*/
+      transform: scale(1.15) rotate(-10deg);
     }
 
     .nav__links {
       display: flex;
       list-style: none;
       gap: 32px;
+      margin-left:auto;
+      margin-right:24px;
     }
 
     .nav__links a {
@@ -85,30 +93,33 @@
       font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.1em;
-      text-transform: uppercase;
+      text-transform: none;
       transition: color 0.3s ease;
     }
 
-    .nav__links a:hover, .nav__links a.active {
+    .nav__links a:hover,
+    .nav__links a.active {
       color: var(--accent);
     }
-
+   
+    /* Email Me button*/
     .nav__cta {
+      background-color: #111111;   /*background color of the email pad */
       text-decoration: none;
-      color: #212122;
+      color: #f7f7f7;              /*email me text color*/
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.1em;
-      text-transform: uppercase;
+      text-transform: none;
       padding: 10px 24px;
-      border: 1px solid rgba(0, 170, 145, 0.3);
+      border: 1px solid #111111;
       border-radius: 50px;
       transition: all 0.3s ease;
     }
 
     .nav__cta:hover {
-      background: rgba(0, 170, 145, 0.1);
-      border-color: var(--accent);
+      background: #00aa91;
+      border-color: #00aa91;
       box-shadow: 0 0 15px rgba(0,170,145,0.2);
     }
 

@@ -4,19 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About | Ced Designs</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<style>
 
-  /* ==========================================================================
-     Tokens
-     ========================================================================== */
+<link rel="stylesheet" href="style.css">
+
+<style> 
   :root{
     --bg:        #faf8f4;   /* off-white */
     --surface:   #ffffff;
-    --ink:       #14231f;   /* deep teal-black, used for body/headline text */
+    --ink:       #111111;   /* deep teal-black, used for body/headline text */
     --ink-soft:  #4a5a56;
     --teal-900:  #0b4f4b;
     --teal-700:  #0f766e;
@@ -24,9 +23,9 @@
     --teal-100:  #e5f2f0;
     --line:      #dbe6e3;
 
-    --font-display: 'Fraunces', serif;
-    --font-body:    'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-mono:    'IBM Plex Mono', monospace;
+    --font-display: 'Syne', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    
   }
 
   *{ box-sizing:border-box; }
@@ -34,74 +33,145 @@
   html{ scroll-behavior:smooth; }
 
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--font-sans);
-  }
+     width: 100%;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+    }
 
-  /* ==========================================================================
-     Navigation
-     ========================================================================== */
+  /* Nav bar */
   .navbar{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:1.5rem 2.5rem;
+    padding:24px 6%;
     background:var(--bg);
     border-bottom:1px solid var(--line);
   }
 
   .logo a{
-    font-family:var(--font-display);
-    font-weight:600;
-    font-size:1.3rem;
+    font-family:var(--font-sans);
+    font-weight:800;
     text-decoration:none;
-    color:var(--teal-900);
+    color: #111111;
     letter-spacing:-0.01em;
+  }
+
+  .nav__logo a svg{
+    color: var(--accent);
+    transition: transform 0.3s ease;
+  }
+  
+  .nav__logo a:hover svg{
+    transform: scale(1.15) rotate(-10deg);
   }
 
   .nav-links{
     display:flex;
     list-style:none;
-    margin:0;
-    padding:0;
-    gap:2.25rem;
+    gap: 32px;
+    margin-left:auto;
+    margin-right:24px;;
   }
 
-  .nav-links li{ display:inline-block; }
-
+  
   .nav-links a{
     position:relative;
     text-decoration:none;
-    color:var(--ink-soft);
+    color:var(--ink);
     font-size:0.95rem;
     font-weight:500;
-    padding-bottom:4px;
+    padding-bottom:1px;
   }
 
   .nav-links a::after{
     content:'';
     position:absolute;
-    left:0; bottom:0;
+    left:0;
+    bottom:0;
     width:0;
     height:2px;
     background:var(--teal-500);
     transition:width 0.25s ease;
   }
 
-  .nav-links a:hover{ color:var(--teal-900); }
-  .nav-links a:hover::after{ width:100%; }
-
-  .nav-links a.active{
-    color:var(--teal-700);
-    font-weight:600;
-  }
-  .nav-links a.active::after{
-    width:100%;
-    background:var(--teal-700);
+  nav__links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: none;
+    transition: color 0.3s ease;
   }
 
+  .nav__links a:hover, 
+  .nav__links a.active {
+      color: var(--teal-500);
+    }
+
+
+  /*Email Me button*/  
+  .nav__cta {
+      background-color: #111111;   /*background color of the email pad */
+      text-decoration: none;
+      color: #f7f7f7;              /*email me text color*/
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: none;
+      padding: 10px 24px;
+      border: 1px solid #111111;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .nav__cta:hover {
+      background: #00aa91;
+      border-color: #00aa91;
+      box-shadow: 0 0 15px rgba(0,170,145,0.2);
+    }
+
+  /* MOBILE MENU */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: #030505;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(-100%);
+      transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .mobile-menu.open {
+      transform: translateY(0);
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mobile-menu a {
+      font-family: var(--font-sans);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--accent);
+    }  
   /* ==========================================================================
      Hero
      ========================================================================== */
@@ -324,7 +394,7 @@
       
       <ul class="nav-links">
 
-        <li><a href="selectedwork.html">Selected work</a></li>
+        <li><a href="selectedwork.html">Selected Work</a></li>
         <li><a href="experience.html">Experience</a></li>
         <li><a href="resume.html">Resume</a></li>
         <li><a href="about.html" class="active">About</a></li>
