@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resume — Ced Designs</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <!-- Google Fonts: Poppins -->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     *, *::before, *::after { 
@@ -20,8 +23,8 @@
       --accent: #00aa91;
       --text: #e8e8e8;
       --muted: #556c68;
-      --font-display: 'Syne', sans-serif;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-display: 'Poppins', sans-serif;
+      --font-sans: 'Poppins', sans-serif;
     }
 
     html, body {
@@ -104,7 +107,7 @@
   
     /*Email Me Button*/
     .nav__cta {
-       background-color: #111111;   /*background color of the email pad */
+      background-color: #111111;   /*background color of the email pad */
       text-decoration: none;
       color: #f7f7f7;              /*email me text color*/
       font-size: 12px;
@@ -177,14 +180,13 @@
       padding: 140px 6% 80px;
       z-index: 10;
       max-width: 1000px;
-      margin: 0 auto;
+      margin: 0 ;         /*removing the auto makes it left aligned */
     }
 
     .resume-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      align-items: center; 
       padding-bottom: 30px;
       margin-bottom: 40px;
       flex-wrap: wrap;
@@ -213,7 +215,7 @@
 
     .action-box {
       background: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(220, 21, 21, 0);
       padding: 30px;
       border-radius: 16px;
       text-align: center;

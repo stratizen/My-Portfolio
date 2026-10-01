@@ -1,1120 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Projects — Ced Designs</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  
-  <style>
-    *, *::before, *::after { 
-      box-sizing: border-box;
-      margin: 0; 
-      padding: 10; 
-    }
-
-    :root {
-      --bg: #ffffff; /* Deep slate teal-black background */
-      --card-bg: #333333;
-      --accent: #00aa91; /* Signature Teal */
-      --text: #e8e8e8;
-      --muted: #556c68;
-      --font-display: 'Syne', sans-serif;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      background: var(--bg-light);
-      color: var(--text);
-      font-family: var(--font-sans);
-      overflow-x: hidden;
-    }
-
-    /* GRID BACKGROUND */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-      background-size: 80px 80px;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* NAV BAR - Cleaned up to match homepage design */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 6%;
-      background:#ffffff;            /* background color of the header*/
-      backdrop-filter: blur(12px);
-      border-bottom: none;
-      z-index: 100;
-    }
-
-    .nav__logo a {
-      font-family: var(--font-sans);
-      font-weight: 800;
-      color: #111111;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      letter-spacing: 0.05em;
-    }
-
-    .nav__logo a svg {
-      color: var(--accent);
-      transition: transform 0.3s ease;
-    }
-
-    .nav__logo a:hover svg {
-      transform: scale(1.15) rotate(-10deg);
-    }
-
-    .nav__links {
-      display: flex;
-      list-style: none;
-      gap: 32px;
-      margin-left:auto;
-      margin-right:24px;
-    }
-
-    .nav__links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: none;
-      transition: color 0.3s ease;
-    }
-
-    .nav__links a:hover, 
-    .nav__links a.active {
-      color: var(--accent);             /*color when selecting the pages*/
-    }
-   
-  /*Email me BUTTON*/
-    .nav__cta {
-      background-color: #111111;   /*background color of the email pad */
-      text-decoration: none;
-      color: #f7f7f7;              /*email me text color*/
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: none;
-      padding: 10px 24px;
-      border: 1px solid #111111;
-      border-radius: 50px;
-      transition: all 0.3s ease;
-    }
-
-    .nav__cta:hover {
-      background: #00aa91;
-      border-color: #00aa91;
-      box-shadow: 0 0 15px rgba(0,170,145,0.2);
-    }
-
-    .nav__burger {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text);
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    /* MOBILE MENU */
-    .mobile-menu {
-      position: fixed;
-      inset: 0;
-      background: #030505;
-      z-index: 99;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: translateY(-100%);
-      transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-    }
-
-    .mobile-menu.open {
-      transform: translateY(0);
-    }
-
-    .mobile-menu ul {
-      list-style: none;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .mobile-menu a {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .mobile-menu a:hover {
-      color: var(--accent);
-    }
-
-    /* PROJECTS GRID */
-    .projects {
-      position: relative;
-      padding: 140px 6% 80px;
-      z-index: 10;
-    }
-
-    .section__title {
-      font-family: var(--font-sans);
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      margin-bottom: 48px;
-    }
-
-    .section__title span {
-      color: var(--accent);
-    }
-
-    .projects__grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 40px;
-    }
-
-    /* CARD CLICKABLE CURSOR & HOVER TRICKS */
-    .project-card {
-      background: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      border-radius: 16px;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-      transition: border-color 0.3s, transform 0.3s ease;
-    }
-
-    .project-card:hover {
-      border-color: rgba(0, 170, 145, 0.25);
-      transform: translateY(-4px);
-    }
-
-    .project-card__img {
-      position: relative;
-      aspect-ratio: 4 / 5;
-      overflow: hidden;
-      background: #0d1212;
-    }
-
-    /* Actual visual graphic / vector */
-    .project-card__img svg, 
-    .project-card__img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .project-card:hover .project-card__img svg,
-    .project-card:hover .project-card__img img {
-      transform: scale(1.05);
-    }
-
-    /* View overlay on hover */
-    .project-card__img .overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(3, 5, 5, 0.75);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      backdrop-filter: blur(4px);
-      transition: opacity 0.4s ease;
-    }
-
-    .project-card:hover .project-card__img .overlay {
-      opacity: 1;
-    }
-
-    .overlay__label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      border: 1px solid rgba(0, 170, 145, 0.5);
-      background: rgba(0, 170, 145, 0.05);
-      padding: 12px 24px;
-      border-radius: 50px;
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .project-card:hover .overlay__label {
-      transform: scale(1.05);
-      background: rgba(0, 170, 145, 0.15);
-    }
-
-    .project-card__body {
-      padding: 24px;
-    }
-
-    .project-card__body h3 {
-      font-family: var(--font-sans);
-      font-size: 1.4rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: #fff;
-      letter-spacing: -0.01em;
-    }
-
-    .project-card__body p {
-      font-size: 13px;
-      color: #99aba7;
-      line-height: 1.6;
-      margin-bottom: 10px;
-    }
-
-    .project-card__body p span {
-      font-weight: 500;
-      color: var(--accent);
-      text-transform: uppercase;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      display: inline-block;
-      width: 65px;
-    }
-
-    .project-card__tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .tag {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      color: #b0c4c0;
-      padding: 6px 14px;
-      border-radius: 50px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-
-    .tag--glow {
-      border-color: rgba(0, 170, 145, 0.15);
-      color: var(--accent);
-      background: rgba(0, 170, 145, 0.02);
-    }
-
-    /* ── HIGH PERFORMANCE SLIDER PROJECT MODAL ── */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(3, 5, 5, 0.94);
-      backdrop-filter: blur(15px);
-      z-index: 200;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      opacity: 0;
-      transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-      opacity: 1;
-    }
-
-    .modal {
-      background: #070b0b;
-      border: 1px solid rgba(0, 170, 145, 0.15);
-      box-shadow: 0 0 60px rgba(0, 170, 145, 0.1);
-      border-radius: 20px;
-      width: 100%;
-      max-width: 900px;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      transform: translateY(40px) scale(0.96);
-      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .modal-backdrop.open .modal {
-      transform: translateY(0) scale(1);
-    }
-
-    /* Close button */
-    .modal__close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 10;
-    }
-
-    .modal__close button {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--text);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      font-size: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-    }
-
-    .modal__close button:hover {
-      background: rgba(0, 170, 145, 0.1);
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: rotate(90deg);
-    }
-
-    /* Image Gallery & Slider System */
-    .modal__gallery {
-      padding: 40px 40px 10px;
-    }
-
-    .gallery__viewport {
-      width: 100%;
-      height: 420px;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #020404;
-      position: relative;
-      perspective: 1000px;
-    }
-
-    /* Interactive Tiltable & Sliding Container */
-    .gallery__track {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform-style: preserve-3d;
-      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .gallery__slide {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      visibility: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: translate3d(0, 0, -100px);
-      transition: opacity 0.5s, transform 0.5s, visibility 0.5s;
-      z-index: 1;
-    }
-
-    .gallery__slide.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translate3d(0, 0, 0);
-      z-index: 2;
-    }
-
-    .gallery__slide img,
-    .gallery__slide svg {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-      transition: transform 0.1s ease-out; /* Smooth hover trailing */
-    }
-
-    /* Nav arrows on main image */
-    .gallery__arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(6, 9, 9, 0.75);
-      border: 1px solid rgba(0, 170, 145, 0.2);
-      color: var(--text);
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      z-index: 10;
-    }
-
-    .gallery__arrow:hover {
-      background: var(--accent);
-      color: #030505;
-      border-color: var(--accent);
-      box-shadow: 0 0 15px rgba(0, 170, 145, 0.4);
-    }
-
-    .gallery__arrow.prev { left: 24px; }
-    .gallery__arrow.next { right: 24px; }
-
-    /* Thumbnail strip */
-    .gallery__thumbs {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .gallery__thumb {
-      width: 80px;
-      height: 100px;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.05);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background: #0a0d0d;
-      opacity: 0.5;
-    }
-
-    .gallery__thumb:hover {
-      opacity: 0.8;
-      transform: translateY(-2px);
-    }
-
-    .gallery__thumb.active {
-      border-color: var(--accent);
-      opacity: 1;
-      box-shadow: 0 0 10px rgba(0, 170, 145, 0.3);
-    }
-
-    .gallery__thumb svg,
-    .gallery__thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Modal body */
-    .modal__body {
-      padding: 30px 40px 40px;
-    }
-
-    .modal__header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 30px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding-bottom: 20px;
-    }
-
-    .modal__title {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.02em;
-    }
-
-    .modal__links {
-      display: flex;
-      gap: 12px;
-    }
-
-    .modal__link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 22px;
-      border-radius: 50px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-
-    .modal__link--live {
-      background: var(--accent);
-      color: #030505;
-      border: 1px solid var(--accent);
-    }
-
-    .modal__link--live:hover {
-      box-shadow: 0 0 15px rgba(0, 170, 145, 0.35);
-      opacity: 0.9;
-    }
-
-    .modal__link--github {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .modal__link--github:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .modal__grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 40px;
-    }
-
-    .modal__section {
-      margin-bottom: 24px;
-    }
-
-    .modal__section h4 {
-      font-family: var(--font-display);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-
-    .modal__section p {
-      font-size: 14px;
-      color: #99aba7;
-      line-height: 1.8;
-    }
-
-    .modal__meta-box {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 24px;
-      border-radius: 12px;
-      height: fit-content;
-    }
-
-    .modal__tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    /* Scrollbar styling for modal */
-    .modal::-webkit-scrollbar { width: 6px; }
-    .modal::-webkit-scrollbar-track { background: transparent; }
-    .modal::-webkit-scrollbar-thumb { background: rgba(0, 170, 145, 0.3); border-radius: 3px; }
-
-    /* FOOTER */
-    .footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 40px 6%;
-      z-index: 10;
-      position: relative;
-    }
-
-    .footer__inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer__links {
-      display: flex;
-      gap: 24px;
-    }
-
-    .footer__links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      transition: color 0.3s;
-    }
-
-    .footer__links a:hover {
-      color: var(--accent);
-    }
-
-    .footer__copy {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    /* RESPONSIVENESS */
-    @media (max-width: 768px) {
-      .nav__links, .nav__cta { display: none; }
-      .nav__burger { display: block; }
-      .modal__grid { grid-template-columns: 1fr; gap: 20px; }
-      .modal__gallery { padding: 30px 16px 10px; }
-      .gallery__viewport { height: 300px; }
-      .modal__body { padding: 20px 20px 30px; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- BACKGROUND ARCHITECTURE -->
-  <div class="grid-bg"></div>
-
-  <!-- NAVIGATION -->
-  <nav class="nav">
-    <div class="nav__logo">
-      <a href="index.html">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>CED DESIGNS</span>
-      </a>
-    </div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Projects — Ced Designs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    /*Google fonts*/
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <ul class="nav__links">
-      <li><a href="selectedwork.html" class="active">Selected Work</a></li>
-      <li><a href="experience.html">Experience</a></li>
-      <li><a href="resume.html">Resume</a></li>
-      
-      <li><a href="about.html">About</a></li>
-      
-    </ul>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #090a0f;
+            color: #f3f4f6;
+            cursor: default;
+            overflow-x: hidden;
+        }
 
-    <a href="contact.html" class="nav__cta">Email Me</a>
-    <button class="nav__burger" id="burger">&#9776;</button>
-  </nav>
+        .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <ul>
-      <li><a href="selectedwork.html" onclick="closeMobile()">Work</a></li>
-      <li><a href="experience.html" onclick="closeMobile()">Experience</a></li>
-      <li><a href="resume.html" onclick="closeMobile()">Resume</a></li>
-     
-      <li><a href="about.html" onclick="closeMobile()">About</a></li>
+        /* Subtle animated background grid */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
 
-    </ul>
-  </div>
-
-  <!-- MAIN PROJECTS SECTION -->
-  <section class="section projects">
-    <div class="container">
-      <h2 class="section__title"><span>Check out the Collections</span></h2>
-      
-      <div class="projects__grid">
-
-        <!-- CARD 1: GRAPHICS & POSTERS (p1) -->
-        <div class="project-card" onclick="openModal('p1')">
-          <div class="project-card__img">
-            <svg viewBox="0 0 400 500">
-              <rect width="100%" height="100%" fill="#090e0e"/>
-              <circle cx="200" cy="250" r="130" fill="none" stroke="#00aa91" stroke-width="8" stroke-dasharray="10 15"/>
-            </svg>    
-            <img src="images/poster1-main.jpg" alt="" />
-            <div class="overlay">
-              <span class="overlay__label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                View Poster Series
-              </span>
-            </div>
-          </div>
-          <div class="project-card__body">
-            <h3>Graphic / Posters</h3>
-            <p><span>Problem</span> Standard graphical layouts struggle to maintain balanced visual weights across print formats.</p>
-            <p><span>Solution</span> Created visual layouts utilizing Swiss grid principles, optical alignments, and stark typographic ratios.</p>
-            <p><span>Result</span> A curated series of Swiss Typographic posters exhibited in international design galleries.</p>
-            
-          </div>
-        </div>
-
-        <!-- CARD 2: MOTION GRAPHIC (p2) -->
-        <div class="project-card" onclick="openModal('p2')">
-          <div class="project-card__img">
-            <svg viewBox="0 0 400 500">
-              <rect width="100%" height="100%" fill="#050808"/>
-              <polygon points="200,80 340,380 60,380" fill="none" stroke="#00aa91" stroke-width="4" opacity="0.3"/>
-              <polygon points="200,120 310,360 90,360" fill="none" stroke="#00aa91" stroke-width="2"/>
-            </svg>
-            <img src="images/motion1-main.jpg" alt="" />
-            <div class="overlay">
-              <span class="overlay__label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                View Motion Pieces
-              </span>
-            </div>
-          </div>
-          <div class="project-card__body">
-            <h3>Motion Graphic</h3>
-            <p><span>Problem</span> Static illustrations and graphics often fail to tell a brand's narrative dynamically.</p>
-            <p><span>Solution</span> Programmed kinetic micro-interaction states, custom easing paths, and sequential narrative frames.</p>
-            <p><span>Result</span> Built immersive storytelling vectors boosting brand session retention averages significantly.</p>
-            
-          </div>
-        </div>
-
-        <!-- CARD 3: 3D (p3) -->
-        <div class="project-card" onclick="openModal('p3')">
-          <div class="project-card__img">
-            <svg viewBox="0 0 400 500">
-              <rect width="100%" height="100%" fill="#070a0a"/>
-              <path d="M100 150 Q 200 400 300 150" fill="none" stroke="#00aa91" stroke-width="3"/>
-              <path d="M100 350 Q 200 100 300 350" fill="none" stroke="#00aa91" stroke-width="1" stroke-dasharray="4 4"/>
-            </svg>  
-            <img src="images/3d-main.jpg" alt="" />
-            <div class="overlay">
-              <span class="overlay__label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                View 3D Assets
-              </span>
-            </div>
-          </div>
-          <div class="project-card__body">
-            <h3>3D</h3>
-            <p><span>Problem</span> Traditional flat interfaces do not offer sensory depth or tactile engagement.</p>
-            <p><span>Solution</span> Sculpted mathematical web-optimized polygons combined with hardware-accelerated vertex shaders.</p>
-            <p><span>Result</span> Rendered smooth, latency-free interactive models that react in real-time to user navigation.</p>
-            <div class="project-card__tags">
-             
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== PROJECT MODAL ===== -->
-  <div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
-    <div class="modal" id="modal">
-
-      <div class="modal__close">
-        <button onclick="closeModal()" title="Close">&#x2715;</button>
-      </div>
-
-      <!-- Image/Poster Gallery with Interactive Parallax Canvas Track -->
-      <div class="modal__gallery">
-        <div class="gallery__viewport" id="galleryViewport">
-          
-          <div class="gallery__track" id="galleryTrack">
-            <!-- Slides are dynamically generated by JS for absolute precision -->
-          </div>
-
-          <!-- Slider Arrow Controls -->
-          <button class="gallery__arrow prev" id="prevBtn" onclick="prevImage()">&#8592;</button>
-          <button class="gallery__arrow next" id="nextBtn" onclick="nextImage()">&#8594;</button>
-        </div>
+        /* Custom Cursor styling */
         
-        <!-- Interactive Navigation Thumbnails -->
-        <div class="gallery__thumbs" id="galleryThumbs"></div>
-      </div>
 
-      <!-- Project Info Grid -->
-      <div class="modal__body">
-        <div class="modal__header">
-          <h2 class="modal__title" id="modalTitle">Project Title</h2>
-          <div class="modal__links">
-            <a href="https://behance.net" class="modal__link modal__link--live" id="modalLive" target="_blank">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6M10 14L21 3" stroke-linecap="round"/></svg>
-              Live Project
-            </a>
-            <a href="https://github.com" class="modal__link modal__link--github" id="modalGithub" target="_blank">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-              Source Code
-            </a>
-          </div>
-        </div>
-
-        <div class="modal__grid">
-          <div>
-            <div class="modal__section">
-              <h4>Problem</h4>
-              <p id="modalProblem"></p>
-            </div>
-            <div class="modal__section">
-              <h4>Solution</h4>
-              <p id="modalSolution"></p>
-            </div>
-            <div class="modal__section">
-              <h4>Result</h4>
-              <p id="modalResult"></p>
-            </div>
-          </div>
-
-          <div class="modal__meta-box">
-            <div class="modal__section">
-              <h4>Specifications</h4>
-              <p style="font-size: 0px; margin-bottom: 12px; color: #fff;">Medium: Screenprint &amp; Digital</p>
-              <p style="font-size: 0px; color: #fff;">Dimensions: 50 x 70 cm</p>
-            </div>
-            <div class="modal__section" style="margin-bottom:0;">
-              <h4>Tech Stack</h4>
-              <div class="modal__tags" id="modalTags"></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__links">
-        <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
-        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
-        <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
-      </div>
-      <p class="footer__copy">&copy; 2026 Ced Designs.</p>
-    </div>
-  </footer>
-
-  <!-- GSAP ENGINE -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-  <script>
-    /* ================================================
-       MOCK POSTER GRAPHICS SYSTEM (INLINE SVG)
-       Allows immediate high-fidelity rendering
-       ================================================ */
-    const posterSVGs = {
-      p1: [
-       `<img src="images/p1-image.jpeg"   alt="Poster 1" />`,
-       `<img src="images/p1-image2.jpeg" alt="Poster 1 Detail" />`,
-       `<img src="images/p1-image3.jpeg" alt="Poster 1 Mockup" />`
-       ],
-      p2: [
-         `<img src="images/motion1-main.jpg"   alt="Motion Graphic 1" />`,
-         `<img src="images/motion1-frame2.jpg" alt="Motion Graphic Frame 2" />`,
-         `<img src="images/motion1-frame3.jpg" alt="Motion Graphic Frame 3" />`
-         ],
         
-      p3: [
-         `<img src="images/motion1-main.jpg"   alt="Motion Graphic 1" />`,
-         `<img src="images/motion1-frame2.jpg" alt="Motion Graphic Frame 2" />`,
-         `<img src="images/motion1-frame3.jpg" alt="Motion Graphic Frame 3" />`
-          ],
-    };
 
-    var projects = {
-      p1: {
-        title: 'Graphic / Posters',
-        problem: 'Traditional layout compositions lose visual weight and balance when scaling into modular digital screens.',
-        solution: 'Drafted responsive vector compositions scaling Swiss grids and high-impact typographic alignment elements.',
-        result: 'Exhibited internationally, proving highly memorable across physical poster installations and digital portfolios.',
-        tags: ['Swiss Typography', 'Layout Art', 'Grids'],
-        liveUrl: 'https://behance.net',
-        githubUrl: 'https://github.com',
-        images: posterSVGs.p1
-      },
-      p2: {
-        title: 'p2- Motion Graphic',
-        problem: 'Static graphics struggle to keep high attention spans in fast-paced social feeds.',
-        solution: 'Developed dynamic kinetic typographies, fluid CSS-ease motion frameworks, and SVG-track paths.',
-        result: 'Achieved over 45% lift in viewer dwell-time across commercial launch showreels.',
-        tags: ['GSAP Animation', 'Kinetic Text', 'After Effects'],
-        liveUrl: 'https://behance.net',
-        githubUrl: 'https://github.com',
-        images: posterSVGs.p2
-      },
-      p3: {
-        title: 'p3- 3D',
-        problem: 'Flat websites miss the visual tactile feel that luxury design campaigns often require.',
-        solution: 'Created custom low-polygon interactive meshes inside WebGL environments driven by hardware shaders.',
-        result: 'Formed high-performance, real-time responsive shapes rendering elegantly on both mobile and desktop viewports.',
-        tags: ['Three.js', 'WebGL Shaders', '3D Modeling'],
-        liveUrl: 'https://behance.net',
-        githubUrl: 'https://github.com',
-        images: posterSVGs.p3
-      }
-    };
+        /* Hover Preview Mode for Custom Cursor */
+        .cursor-preview {
+            width: 220px !important;
+            height: 160px !important;
+            border-radius: 16px !important;
+            background: rgba(15, 23, 42, 0.85) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.3) !important;
+            overflow: hidden;
+        }
 
-    /* ================================================
-       SLIDING MODAL LOGIC + DYNAMIC HOVER TILT
-       ================================================ */
-    var currentImages = [];
-    var currentIndex  = 0;
+        /* Glassmorphism Card Style */
+        .project-card {
+            background: rgba(18, 22, 34, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-    const track = document.getElementById('galleryTrack');
-    const thumbsEl = document.getElementById('galleryThumbs');
-    const viewport = document.getElementById('galleryViewport');
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(99, 102, 241, 0.25);
+        }
 
-    function openModal(id) {
-      var p = projects[id];
-      if (!p) return;
+        /* Custom SVG preview graphics inside cursor */
+        .preview-graphic {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            filter: blur(3px) brightness(1.1); /* Blurry illustration effect */
+            transform: scale(1.05);
+            transition: filter 0.3s ease;
+        }
 
-      document.getElementById('modalTitle').textContent = p.title;
-      document.getElementById('modalProblem').textContent = p.problem;
-      document.getElementById('modalSolution').textContent = p.solution;
-      document.getElementById('modalResult').textContent = p.result;
-      document.getElementById('modalLive').href = p.liveUrl;
-      document.getElementById('modalGithub').href = p.githubUrl;
+        /* Glowing keyframe animations */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.08); }
+        }
 
-      // Render Tags
-      var tagsEl = document.getElementById('modalTags');
-      tagsEl.innerHTML = '';
-      p.tags.forEach(function(t) {
-        var span = document.createElement('span');
-        span.className = 'tag tag--glow';
-        span.textContent = t;
-        tagsEl.appendChild(span);
-      });
+        .glow-bg {
+            animation: pulseGlow 6s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-grid-pattern min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
 
-      // Prepare Dynamic Poster Slides
-      currentImages = p.images || [];
-      currentIndex  = 0;
-      buildInteractiveGallery();
+    <div id-="cursor-wrapper">
+        <div id="custom-cursor" class="cursor-default flex items-center justify-center">
+            <!-- Dynamic Preview Content populated via JavaScript -->
+            <div id="cursor-content" class="w-full h-full opacity-0 transition-opacity duration-300"></div>
+        </div>
+    </div>
 
-      // Launch Modal Frame
-      document.getElementById('modalBackdrop').style.display = 'flex';
-      setTimeout(() => {
-        document.getElementById('modalBackdrop').classList.add('open');
-      }, 20);
-      document.body.style.overflow = 'hidden';
-    }
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-[#090a0f]/80 border-b border-white/5 px-6 lg:px-16 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" class="font-heading text-xl font-bold tracking-wider text-white flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-indigo-500 inline-block animate-ping"></span>
+                ALEX.DEV
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+                <a href="#" class="hover:text-white transition-colors">Home</a>
+                <a href="#" class="text-indigo-400 font-semibold flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Work
+                </a>
+                <a href="#" class="hover:text-white transition-colors">Services</a>
+                <a href="#" class="hover:text-white transition-colors">About</a>
+            </nav>
 
-    function buildInteractiveGallery() {
-      track.innerHTML = '';
-      thumbsEl.innerHTML = '';
+            <a href="#contact" class="px-5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-full bg-white/5 hover:bg-indigo-600/20 text-white border border-white/10 hover:border-indigo-500/50 transition-all duration-300">
+                Get in Touch
+            </a>
+        </div>
+    </header>
 
-      if (currentImages.length === 0) return;
+    <main class="max-w-7xl mx-auto px-6 lg:px-16 pt-16 pb-24 w-full flex-grow">
+        <!-- Hero Header -->
+        <div class="relative mb-20 text-center md:text-left">
+            <div class="absolute -top-10 -left-10 w-72 h-72 bg-indigo-600/15 rounded-full blur-3xl glow-bg pointer-events-none"></div>
+            <div class="absolute top-0 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl glow-bg pointer-events-none" style="animation-delay: 2s;"></div>
 
-      // Populate Main Slides with GSAP structures
-      currentImages.forEach(function(svgCode, i) {
-        var slide = document.createElement('div');
-        slide.className = 'gallery__slide' + (i === 0 ? ' active' : '');
-        slide.innerHTML = svgCode;
-        track.appendChild(slide);
+            <span class="px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 uppercase inline-block mb-4">
+                Selected Projects
+            </span>
+            <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6">
+                Crafting Digital <br class="hidden sm:inline"/>
+                <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    Experiences & Systems
+                </span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl font-normal leading-relaxed">
+                Explore a showcase of graphic design, predictive ML models, cybersecurity audit frameworks, and interactive network visualizers. Hover over any card for a peek into the design.
+            </p>
+        </div>
 
-        // Add corresponding Thumbnail Card
-        var thumb = document.createElement('div');
-        thumb.className = 'gallery__thumb' + (i === 0 ? ' active' : '');
-        thumb.innerHTML = svgCode;
-        thumb.addEventListener('click', function() { setImage(i); });
-        thumbsEl.appendChild(thumb);
-      });
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Card 1: Neon Poster Design -->
+            <div class="project-card rounded-2xl p-8 relative group overflow-hidden" data-preview="poster">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-xs font-mono text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">01 / GRAPHICS</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-indigo-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-heading text-2xl font-bold text-white group-hover:text-indigo-300 transition-colors">Cyberpunk Synthwave Poster</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        A vibrant visual branding and poster series incorporating neon typography, retro grids, and high-contrast color palettes.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-white/5 flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                    <span>#Photoshop</span> • <span>#Illustrator</span> • <span>#BrandIdentity</span>
+                </div>
+            </div>
 
-      setupHoverTilt();
-    }
+            <!-- Card 2: E-Waste Predictor -->
+            <div class="project-card rounded-2xl p-8 relative group overflow-hidden" data-preview="ewaste">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">02 / AI & SUSTAINABILITY</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-emerald-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-heading text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors">E-Waste Generation Predictor</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Machine learning model forecasting electronic waste generation trends using linear regression and dynamic charts.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-white/5 flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                    <span>#Python</span> • <span>#ScikitLearn</span> • <span>#DataVis</span>
+                </div>
+            </div>
 
-    function setImage(index) {
-      if (index === currentIndex) return;
+            <!-- Card 3: IS Audit Dashboard -->
+            <div class="project-card rounded-2xl p-8 relative group overflow-hidden" data-preview="audit">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">03 / CYBERSECURITY</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-amber-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-heading text-2xl font-bold text-white group-hover:text-amber-300 transition-colors">IS Audit & Compliance Suite</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        An enterprise security audit dashboard evaluating compliance frameworks, vulnerability risks, and threat metrics.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-white/5 flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                    <span>#React</span> • <span>#ISO27001</span> • <span>#RiskMgmt</span>
+                </div>
+            </div>
 
-      var slides = document.querySelectorAll('.gallery__slide');
-      var thumbs = document.querySelectorAll('.gallery__thumb');
+            <!-- Card 4: Network Topology Visualizer -->
+            <div class="project-card rounded-2xl p-8 relative group overflow-hidden" data-preview="network">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-xs font-mono text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">04 / NETWORKING</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-cyan-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-heading text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors">Network Topology Visualizer</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Interactive node graph rendering real-time network traffic routing, latency maps, and live packet inspection.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-white/5 flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                    <span>#D3.js</span> • <span>#WebSockets</span> • <span>#Topology</span>
+                </div>
+            </div>
 
-      // sliding transitions with GSAP 
-      var prevSlide = slides[currentIndex];
-      var nextSlide = slides[index];
+        </div>
+    </main>
 
-      slides.forEach(s => s.classList.remove('active'));
-      thumbs.forEach(t => t.classList.remove('active'));
+    <footer class="border-t border-white/5 py-8 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>© 2026 Alex Dev Portfolio. Built with Tailwind CSS & Custom Canvas Elements.</p>
+            <div class="flex gap-6 text-gray-400">
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-github text-base"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-linkedin text-base"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-twitter text-base"></i></a>
+            </div>
+        </div>
+    </footer>
 
-      nextSlide.classList.add('active');
-      thumbs[index].classList.add('active');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('custom-cursor');
+            const cursorContent = document.getElementById('cursor-content');
+            const cards = document.querySelectorAll('.project-card');
 
-      gsap.fromTo(nextSlide, 
-        { opacity: 0, scale: 0.9, x: index > currentIndex ? 100 : -100 },
-        { opacity: 1, scale: 1, x: 0, duration: 0.5, ease: "power3.out" }
-      );
+            // SVG Illustrations tailored for blurry dynamic preview
+            const previewIllustrations = {
+                poster: `
+                    <div class="preview-graphic bg-gradient-to-tr from-pink-600 via-purple-700 to-indigo-900 p-4">
+                        <svg class="w-24 h-24 text-pink-300 drop-shadow-[0_0_15px_rgba(244,114,182,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            <circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,0.4)" stroke-dasharray="2 2"></circle>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute bottom-2 left-3 text-[10px] font-mono text-pink-200 tracking-wider uppercase font-bold">PREVIEW: POSTER</span>
+                    </div>
+                `,
+                ewaste: `
+                    <div class="preview-graphic bg-gradient-to-tr from-emerald-900 via-teal-800 to-slate-900 p-4">
+                        <svg class="w-24 h-24 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 3v18h18"></path>
+                            <path d="M18 17l-5-5-4 4-4-5"></path>
+                            <circle cx="18" cy="17" r="2" fill="currentColor"></circle>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute bottom-2 left-3 text-[10px] font-mono text-emerald-200 tracking-wider uppercase font-bold">PREVIEW: ML GRAPH</span>
+                    </div>
+                `,
+                audit: `
+                    <div class="preview-graphic bg-gradient-to-tr from-amber-900 via-orange-950 to-stone-900 p-4">
+                        <svg class="w-24 h-24 text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute bottom-2 left-3 text-[10px] font-mono text-amber-200 tracking-wider uppercase font-bold">PREVIEW: SECURITY</span>
+                    </div>
+                `,
+                network: `
+                    <div class="preview-graphic bg-gradient-to-tr from-cyan-900 via-blue-950 to-slate-900 p-4">
+                        <svg class="w-24 h-24 text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="2" width="6" height="6" rx="1"></rect>
+                            <rect x="16" y="2" width="6" height="6" rx="1"></rect>
+                            <rect x="9" y="16" width="6" height="6" rx="1"></rect>
+                            <path d="M5 8v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8"></path>
+                            <path d="M12 13v3"></path>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute bottom-2 left-3 text-[10px] font-mono text-cyan-200 tracking-wider uppercase font-bold">PREVIEW: TOPOLOGY</span>
+                    </div>
+                `
+            };
 
-      currentIndex = index;
-    }
+            // Smooth cursor tracking variables
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let cursorX = mouseX;
+            let cursorY = mouseY;
 
-    function prevImage() {
-      var newIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-      setImage(newIndex);
-    }
+            // Track mouse movement
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
 
-    function nextImage() {
-      var newIndex = (currentIndex + 1) % currentImages.length;
-      setImage(newIndex);
-    }
+            // Smooth RAF animation loop for cursor tracking
+            function render() {
+                cursorX += (mouseX - cursorX) * 0.2;
+                cursorY += (mouseY - cursorY) * 0.2;
+                cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
 
-    function closeModal() {
-      document.getElementById('modalBackdrop').classList.remove('open');
-      setTimeout(() => {
-        document.getElementById('modalBackdrop').style.display = 'none';
-      }, 400);
-      document.body.style.overflow = '';
-    }
+            // Card hover handlers for activating blurry preview bubble
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const previewType = card.getAttribute('data-preview');
+                    if (previewIllustrations[previewType]) {
+                        cursorContent.innerHTML = previewIllustrations[previewType];
+                        cursor.classList.remove('cursor-default');
+                        cursor.classList.add('cursor-preview');
+                        cursorContent.style.opacity = '1';
+                    }
+                });
 
-    function handleBackdropClick(e) {
-      if (e.target === document.getElementById('modalBackdrop')) closeModal();
-    }
-
-    // Keyboard controls
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowLeft' && document.getElementById('modalBackdrop').classList.contains('open')) prevImage();
-      if (e.key === 'ArrowRight' && document.getElementById('modalBackdrop').classList.contains('open')) nextImage();
-    });
-
-    /* ================================================
-       HOVER PARALLAX / TILT SYSTEM FOR HIGH END LOOK
-       ================================================ */
-    function setupHoverTilt() {
-      viewport.addEventListener('mousemove', function(e) {
-        var rect = viewport.getBoundingClientRect();
-        var x = e.clientX - rect.left - rect.width/2;
-        var y = e.clientY - rect.top - rect.height/2;
-
-        // Subtle 3D tilting factors
-        var tiltX = (y / (rect.height/2)) * -12;
-        var tiltY = (x / (rect.width/2)) * 12;
-
-        gsap.to(track, {
-          rotateX: tiltX,
-          rotateY: tiltY,
-          duration: 0.3,
-          ease: "power2.out",
-          transformPerspective: 1000
+                card.addEventListener('mouseleave', () => {
+                    cursorContent.style.opacity = '0';
+                    cursor.classList.remove('cursor-preview');
+                    cursor.classList.add('cursor-default');
+                    setTimeout(() => {
+                        if (!cursor.classList.contains('cursor-preview')) {
+                            cursorContent.innerHTML = '';
+                        }
+                    }, 300);
+                });
+            });
         });
-      });
-
-      viewport.addEventListener('mouseleave', function() {
-        gsap.to(track, {
-          rotateX: 0,
-          rotateY: 0,
-          duration: 0.6,
-          ease: "power3.out"
-        });
-      });
-    }
-
-    // Mobile Hamburger
-    const burger = document.getElementById('burger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-    function closeMobile() { mobileMenu.classList.remove('open'); }
-  </script>
-
+    </script>
 </body>
 </html>
