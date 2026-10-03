@@ -8,108 +8,134 @@
   <!-- Google Fonts: Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
-     *{ box-sizing:border-box; }
 
 
-    :root {
-      --bg: #f7f7f7;
-      --card-bg: #186a5a58;
-      --accent: #00aa91;
-      --text: #00aa91;
-      --muted: #111111;
+
+   :root {
+      --bg:        #faf8f4;   /* off-white */
+      --surface:   #ffffff;
+      --ink:       #111111;   /* deep teal-black, used for body/headline text */
+      --ink-soft:  #4a5a56;
+      --teal-900:  #0b4f4b;
+      --teal-700:  #0f766e;
+      --teal-500:  #17a596;
+      --teal-100:  #e5f2f0;
+      --line:      #dbe6e3;
+
       --font-display: 'Poppins', sans-serif;
       --font-sans: 'Poppins', sans-serif;
+      --font-mono: 'Poppins', sans-serif;
+      --font-poppins: 'Poppins', sans-serif;
     }
 
-    html, body {
+    * { 
+      box-sizing: border-box; 
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
       width: 100%;
       height: 100%;
       background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-sans);
+      color: var(--ink);
+      font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
+      margin: 0;
+      text-align: left;
     }
 
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(218, 29, 29, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-      background-size: 80px 80px;
-      z-index: 1;
-      pointer-events: none;
-    }
 
-    
 
-    /* NAV BAR */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+    /* STANDARD NAVBAR (Exact Match to About / Selected Work) */
+    .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 24px 6%;
-      background: #ffffff;       /*color for the header box*/
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(12px);
-      border-bottom: none;
+
       z-index: 100;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
     }
 
-    .nav__logo a {
-      font-family: var(--font-sans);
+    .logo a {
+      font-family: 'Poppins', sans-serif;
       font-weight: 800;
-      color: #111111;
+
       text-decoration: none;
-      display: flex;
+      color: #111111;
+      letter-spacing: -0.01em;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
-      letter-spacing: 0.05em;
+      
     }
 
-    .nav__logo a svg {                                          /*the home icon logo color*/
-      color: var(--accent);
+    .logo a svg {
+      color: var(--teal-500);
       transition: transform 0.3s ease;
     }
-
-    .nav__logo a:hover svg {                                      /*the hovering effect*/
+    
+    .logo a:hover svg {
       transform: scale(1.15) rotate(-10deg);
     }
 
-    .nav__links {
+    .nav-links {
       display: flex;
       list-style: none;
       gap: 32px;
-      margin-left:auto;
-      margin-right:24px;
+      margin-left: auto;
+      margin-right: 24px;
+      padding-left: 0;
     }
 
-    .nav__links a {
-      color: var(--muted);
+    .nav-links a {
+      position: relative;
       text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: none;
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding-bottom: 1px;
       transition: color 0.3s ease;
+      font-family: 'Poppins', sans-serif;
     }
 
-    .nav__links a:hover,
-    .nav__links a.active {
-      color: var(--accent);
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--teal-500);
+      transition: width 0.25s ease;
     }
-   
-    /* Email Me button*/
+
+    .nav-links a:hover, 
+    .nav-links a.active {
+      color: var(--teal-500);
+    }
+
+    /* Email Me Button */
     .nav__cta {
-      background-color: #111111;   /*background color of the email pad */
+      background-color: #111111;
       text-decoration: none;
-      color: #f7f7f7;              /*email me text color*/
+      color: #f7f7f7;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.1em;
@@ -118,19 +144,20 @@
       border: 1px solid #111111;
       border-radius: 50px;
       transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
     }
 
     .nav__cta:hover {
       background: #00aa91;
       border-color: #00aa91;
-      box-shadow: 0 0 15px rgba(0,170,145,0.2);
+      box-shadow: 0 0 15px rgba(0, 170, 145, 0.2);
     }
 
     .nav__burger {
       display: none;
       background: none;
       border: none;
-      color: var(--text);
+      color: var(--ink);
       font-size: 24px;
       cursor: pointer;
     }
@@ -143,7 +170,8 @@
       z-index: 99;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+      padding-left: 6%;
       transform: translateY(-100%);
       transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
     }
@@ -154,24 +182,25 @@
 
     .mobile-menu ul {
       list-style: none;
-      text-align: center;
+      text-align: left;
       display: flex;
       flex-direction: column;
       gap: 24px;
+      padding-left: 0;
     }
 
     .mobile-menu a {
-      font-family: var(--font-sans);
+      font-family: 'Poppins', sans-serif;
       font-size: 2rem;
       font-weight: 700;
-      color: var(--text);
+      color: var(--bg);
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
     .mobile-menu a:hover {
-      color: var(--accent);
+      color: var(--teal-500);
     }
 
     /* EXPERIENCE SECTION */
@@ -179,109 +208,124 @@
       position: relative;
       padding: 140px 6% 80px;
       z-index: 10;
+      max-width: 900px;
+      margin: 0;
+      text-align: left;
     }
 
     .section__title {
-      font-family: var(--font-sans);
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      margin-bottom: 48px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.75rem, 6vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--teal-900);
+      margin: 0 0 48px;
+      text-align: left;
     }
 
     .section__title span {
-      color: var(--accent);
+      font-style: italic;
+      font-weight: 500;
+      color: var(--teal-700);
     }
 
     /* TIMELINE STYLES */
     .timeline {
       position: relative;
       max-width: 900px;
-      margin: 0 auto;
+      margin: 0;
       padding: 20px 0;
+      text-align: left;
     }
 
     .timeline::before {
       content: '';
       position: absolute;
-      left: 31px;
+      left: 11px;
       top: 0;
       bottom: 0;
       width: 2px;
-      background: rgba(0, 170, 145, 0.15);
+      background: var(--line);
     }
 
     .timeline-item {
       position: relative;
       margin-bottom: 50px;
-      padding-left: 80px;
+      padding-left: 45px;
+      text-align: left;
     }
 
     .timeline-dot {
       position: absolute;
-      left: 20px;
+      left: 0px;
       top: 5px;
       width: 24px;
       height: 24px;
       border-radius: 50%;
       background: var(--bg);
-      border: 3px solid var(--accent);
+      border: 3px solid var(--teal-500);
       z-index: 2;
-      box-shadow: 0 0 10px rgba(0, 170, 145, 0.4);
+      box-shadow: 0 0 10px rgba(23, 165, 150, 0.2);
     }
 
     .timeline-content {
-      background: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      background: var(--surface);
+      border: 1px solid var(--line);
       padding: 30px;
       border-radius: 16px;
-      transition: border-color 0.3s, transform 0.3s;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+      text-align: left;
     }
 
     .timeline-item:hover .timeline-content {
-      border-color: rgba(0, 170, 145, 0.3);
+      border-color: var(--teal-500);
       transform: translateY(-2px);
     }
 
     .timeline-year {
-      font-family: var(--font-san serif);
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--accent);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--teal-700);
       margin-bottom: 6px;
       display: inline-block;
     }
 
     .timeline-role {
-      font-family: var(--font-san serif);
+      font-family: 'Poppins', sans-serif;
       font-size: 1.5rem;
-      font-weight: 800;
-      color: #111716;
-      margin-bottom: 4px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 4px;
     }
 
     .timeline-company {
+      font-family: 'Poppins', sans-serif;
       font-size: 13px;
-      color: var(--muted);
+      color: var(--ink-soft);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 16px;
+      font-weight: 500;
     }
 
     .timeline-desc {
-      font-size: 14px;
-      color: #111716;
-      line-height: 1.7;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: var(--ink-soft);
+      line-height: 1.75;
+      margin: 0;
     }
 
     /* FOOTER */
-    .footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 40px 6%;
-      z-index: 10;
-      position: relative;
+    footer {
+      text-align: left;
+      padding: 2rem 6%;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      border-top: 1px solid var(--line);
+      font-family: 'Poppins', sans-serif;
     }
 
     .footer__inner {
@@ -298,58 +342,60 @@
     }
 
     .footer__links a {
-      color: var(--muted);
+      color: var(--ink-soft);
       text-decoration: none;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.05em;
-      transition: color 0.3s;
+      transition: color 0.3s ease;
+      font-family: 'Poppins', sans-serif;
     }
 
     .footer__links a:hover {
-      color: var(--accent);
+      color: var(--teal-500);
     }
 
     .footer__copy {
       font-size: 12px;
-      color: var(--muted);
+      color: var(--ink-soft);
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
-      .nav__links, .nav__cta { display: none; }
+      .navbar { padding: 1.25rem 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
+      .nav-links, .nav__cta { display: none; }
       .nav__burger { display: block; }
-      .experience { padding: 100px 4% 60px; }
-      .timeline::before { left: 16px; }
-      .timeline-item { padding-left: 45px; }
-      .timeline-dot { left: 5px; }
+      .experience { padding: 100px 1.25rem 60px; }
+      footer { padding: 2rem 1.25rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="grid-bg"></div>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>CED DESIGNS</span>
+        </a>
+      </div>
+      
+      <ul class="nav-links">
+        <li><a href="selectedwork.html">Selected Work</a></li>
+        <li><a href="experience.html" class="active">Experience</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
 
-  <!-- NAVIGATION -->
-  <nav class="nav">
-    <div class="nav__logo">
-      <a href="index.html">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>CED DESIGNS</span>
-      </a>
-    </div>
-    
-    <ul class="nav__links">
-      <li><a href="selectedwork.html">Selected Work</a></li>
-      <li><a href="experience.html" class="active">Experience</a></li>
-      <li><a href="resume.html">Resume</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-
-    <a href="contact.html" class="nav__cta">Email Me</a>
-    <button class="nav__burger" id="burger">&#9776;</button>
-  </nav>
+      <a href="contact.html" class="nav__cta">Email Me</a>
+      <button class="nav__burger" id="burger">&#9776;</button>
+    </nav>
+  </header>
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
@@ -362,9 +408,9 @@
   </div>
 
   <!-- MAIN EXPERIENCE SECTION -->
-  <section class="section experience">
-    <div class="container">
-      <h2 class="section__title">Professional <span>Experience</span></h2>
+  <main>
+    <section class="section experience">
+      <h1 class="section__title">Professional <span>Experience</span></h1>
       
       <div class="timeline">
 
@@ -373,7 +419,7 @@
           <div class="timeline-dot"></div>
           <div class="timeline-content">
             <span class="timeline-year">2024 — Present</span>
-            <h3 class="timeline-role">Lead Creative Technologist</h3>
+            <h2 class="timeline-role">Lead Creative Technologist</h2>
             <div class="timeline-company">Aura Interactive Studios</div>
             <p class="timeline-desc">
               Directing creative layouts, WebGL shaders, and typography systems. Managing spatial UI design guidelines for modern mobile and browser viewports. Facilitating responsive interface transformations across team sprints.
@@ -386,7 +432,7 @@
           <div class="timeline-dot"></div>
           <div class="timeline-content">
             <span class="timeline-year">2021 — 2024</span>
-            <h3 class="timeline-role">Senior Graphic &amp; Motion Designer</h3>
+            <h2 class="timeline-role">Senior Graphic &amp; Motion Designer</h2>
             <div class="timeline-company">Nexus Branding Agency</div>
             <p class="timeline-desc">
               Produced award-winning print and poster designs (Swiss grids, optical composition tracks). Scripted vector kinetics and brand reveal sequences using GSAP and After Effects modules.
@@ -399,7 +445,7 @@
           <div class="timeline-dot"></div>
           <div class="timeline-content">
             <span class="timeline-year">2019 — 2021</span>
-            <h3 class="timeline-role">Junior Interactive Designer</h3>
+            <h2 class="timeline-role">Junior Interactive Designer</h2>
             <div class="timeline-company">Vortex Labs</div>
             <p class="timeline-desc">
               Drafted brand mockups, responsive vector layouts, and static poster guidelines. Transitioned assets successfully from raw visual templates into high-performance web assets.
@@ -408,25 +454,27 @@
         </div>
 
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer__inner">
+  <footer>
+    <div class="footer__inner">
       <div class="footer__links">
         <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
         <a href="https://github.com/yourusername" target="_blank">GitHub</a>
         <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
       </div>
-      <p class="footer__copy">&copy; 2026 Ced Designs.</p>
+      <p class="footer__copy">&copy; 2026 Ced Designs. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobileMenu');
-    burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    if (burger) {
+      burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    }
     function closeMobile() { mobileMenu.classList.remove('open'); }
   </script>
 

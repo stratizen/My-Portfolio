@@ -1,125 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>About | Ced Designs</title>
- <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Ced Designs</title>
   
- <!-- Google Fonts: Poppins -->
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
- <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 
- <style> 
-  :root{
-    --bg:        #faf8f4;   /* off-white */
-    --surface:   #ffffff;
-    --ink:       #111111;   /* deep teal-black, used for body/headline text */
-    --ink-soft:  #4a5a56;
-    --teal-900:  #0b4f4b;
-    --teal-700:  #0f766e;
-    --teal-500:  #17a596;
-    --teal-100:  #e5f2f0;
-    --line:      #dbe6e3;
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    --font-display: 'Poppins', sans-serif;
-    --font-sans: 'Poppins', sans-serif;
-    
-  }
+  <style> 
+    :root{
+      --bg:        #faf8f4;   /* off-white */
+      --surface:   #ffffff;
+      --ink:       #111111;   /* deep teal-black, used for body/headline text */
+      --ink-soft:  #4a5a56;
+      --teal-900:  #0b4f4b;
+      --teal-700:  #0f766e;
+      --teal-500:  #17a596;
+      --teal-100:  #e5f2f0;
+      --line:      #dbe6e3;
 
-  *{ box-sizing:border-box; }
-
-  html{ scroll-behavior:smooth; }
-
-  body{
-     width: 100%;
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-sans);
-      overflow-x: hidden;
+      
+      --font-sans: 'Poppins', sans-serif;
+     
+      --font-family: 'Poppins', sans-serif;
     }
 
-  /* Nav bar */
-  .navbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:24px 6%;
-    background:var(--bg);
-    border-bottom:1px solid var(--line);
-  }
+    *{ 
+      box-sizing: border-box; 
+      font-family: var(--font-sans);
+    }
 
-  .logo a{
-    font-family:var(--font-sans);
-    font-weight:800;
-    text-decoration:none;
-    color: #111111;
-    letter-spacing:-0.01em;
-  }
+    html{ scroll-behavior:smooth; }
 
-  .nav__logo a svg{
-    color: var(--accent);
-    transition: transform 0.3s ease;
-  }
-  
-  .nav__logo a:hover svg{
-    transform: scale(1.15) rotate(-10deg);
-  }
+    body{
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      text-align: left;
+    }
 
-  .nav-links{
-    display:flex;
-    list-style:none;
-    gap: 32px;
-    margin-left:auto;
-    margin-right:24px;;
-  }
+    /* Nav bar */
+    .navbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:24px 6%;
+      background:rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom:1px solid rgba(0, 0, 0, 0.05);
+    }
 
-  
-  .nav-links a{
-    position:relative;
-    text-decoration:none;
-    color:var(--ink);
-    font-size:0.95rem;
-    font-weight:500;
-    padding-bottom:1px;
-  }
+    .logo a{
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      text-decoration: none;
+      color: #111111;
+      letter-spacing: -0.01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-  .nav-links a::after{
-    content:'';
-    position:absolute;
-    left:0;
-    bottom:0;
-    width:0;
-    height:2px;
-    background:var(--teal-500);
-    transition:width 0.25s ease;
-  }
+    .logo a svg{
+      color: var(--teal-500);
+      transition: transform 0.3s ease;
+    }
+    
+    .logo a:hover svg{
+      transform: scale(1.15) rotate(-10deg);
+    }
 
-  nav__links a {
-    color: var(--ink);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: none;
-    transition: color 0.3s ease;
-  }
+    .nav-links{
+      display:flex;
+      list-style:none;
+      gap: 32px;
+      margin-left:auto;
+      margin-right:24px;
+      padding-left: 0;
+    }
 
-  .nav__links a:hover, 
-  .nav__links a.active {
+    .nav-links a{
+      position:relative;
+      text-decoration:none;
+      color:var(--ink);
+      font-size:0.95rem;
+      font-weight:500;
+      padding-bottom:1px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after{
+      content:'';
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:0;
+      height:2px;
+      background:var(--teal-500);
+      transition:width 0.25s ease;
+    }
+
+    .nav-links a:hover, 
+    .nav-links a.active {
       color: var(--teal-500);
     }
 
-
-  /*Email Me button*/  
-  .nav__cta {
-      background-color: #111111;   /*background color of the email pad */
+    /* Email Me button */  
+    .nav__cta {
+      background-color: #111111;
       text-decoration: none;
-      color: #f7f7f7;              /*email me text color*/
+      color: #f7f7f7;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.1em;
@@ -136,7 +138,7 @@
       box-shadow: 0 0 15px rgba(0,170,145,0.2);
     }
 
-  /* MOBILE MENU */
+    /* MOBILE MENU */
     .mobile-menu {
       position: fixed;
       inset: 0;
@@ -144,7 +146,8 @@
       z-index: 99;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+      padding-left: 6%;
       transform: translateY(-100%);
       transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
     }
@@ -155,245 +158,294 @@
 
     .mobile-menu ul {
       list-style: none;
-      text-align: center;
+      text-align: left;
       display: flex;
       flex-direction: column;
       gap: 24px;
+      padding-left: 0;
     }
 
     .mobile-menu a {
-      font-family: var(--font-sans);
+      font-family: 'Poppins', sans-serif;
       font-size: 2rem;
       font-weight: 700;
-      color: var(--text);
+      color: var(--bg);
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
     .mobile-menu a:hover {
-      color: var(--accent);
-    }  
-  /* ==========================================================================
-     Hero
-     ========================================================================== */
-  .about-hero{
-    max-width:900px;
-    margin:0 auto;
-    padding:6rem 2rem 4rem;
-  }
+      color: var(--teal-500);
+    }   
 
-  .hero-tag{
-    display:inline-flex;
-    align-items:center;
-    gap:0.6rem;
-    font-family:var(--font-mono);
-    font-size:0.8rem;
-    color:var(--teal-700);
-    background:var(--teal-100);
-    padding:0.35rem 0.75rem;
-    border-radius:100px;
-    margin-bottom:2rem;
-  }
+    /* Hero */
+    .about-hero{
+      max-width: 900px;
+      margin: 0;
+      padding: 6rem 6% 4rem;
+      text-align: left;
+    }
 
-  .hero-tag::before{
-    content:'';
-    width:6px; height:6px;
-    border-radius:50%;
-    background:var(--teal-500);
-    box-shadow:0 0 0 3px rgba(23,165,150,0.18);
-  }
+    .hero-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:0.6rem;
+      font-family:'Poppins', sans-serif;
+      font-size:0.8rem;
+      font-weight: 500;
+      color:var(--teal-700);
+      background:var(--teal-100);
+      padding:0.35rem 0.75rem;
+      border-radius:100px;
+      margin-bottom:2rem;
+    }
 
-  .about-hero h1{
-    font-family:var(--font-display);
-    font-weight:400;
-    font-size:clamp(2.75rem, 6vw, 4.5rem);
-    line-height:1.05;
-    letter-spacing:-0.02em;
-    color:var(--teal-900);
-    margin:0 0 1.25rem;
-  }
+    .hero-tag::before{
+      content:'';
+      width:6px; height:6px;
+      border-radius:50%;
+      background:var(--teal-500);
+      box-shadow:0 0 0 3px rgba(23,165,150,0.18);
+    }
 
-  .about-hero h1 em{
-    font-style:italic;
-    font-weight:500;
-    color:var(--teal-700);
-  }
+    .about-hero h1{
+      font-family: 'Poppins', sans-serif;
+      font-weight:400;
+      font-size:clamp(2.75rem, 6vw, 4.5rem);
+      line-height:1.05;
+      letter-spacing:-0.02em;
+      color:var(--teal-900);
+      margin:0 0 1.25rem;
+      text-align: left;
+    }
 
-  .about-hero .subtitle{
-    font-size:1.15rem;
-    color:var(--ink-soft);
-    max-width:36rem;
-    line-height:1.6;
-  }
+    .about-hero h1 em{
+      font-style:italic;
+      font-weight:500;
+      color:var(--teal-700);
+    }
 
-  /* ==========================================================================
-     Build log — signature element
-     A commented "log" thread ties the Q&A to Ced's own code + design identity.
-     ========================================================================== */
-  .about-log{
-    max-width:900px;
-    margin:0 auto;
-    padding:0 2rem 7rem;
-    position:relative;
-  }
+    .about-hero .subtitle{
+      font-size:1.15rem;
+      color:var(--ink-soft);
+      max-width:36rem;
+      line-height:1.6;
+      text-align: left;
+    }
 
-  .log-thread{
-    position:relative;
-    padding-left:2.75rem;
-  }
+    /* Build log */
+    .about-log{
+      max-width:900px;
+      margin:0;
+      padding:0 6% 7rem;
+      position:relative;
+      text-align: left;
+    }
 
-  .log-thread::before{
-    content:'';
-    position:absolute;
-    left:6px; top:0.6rem; bottom:0.6rem;
-    width:1px;
-    background:linear-gradient(to bottom, var(--teal-500), var(--line) 92%);
-  }
+    .log-thread{
+      position:relative;
+      padding-left:2.75rem;
+    }
 
-  .log-entry{
-    position:relative;
-    padding:0 0 3.25rem;
-  }
-  .log-entry:last-child{ padding-bottom:0; }
+    .log-thread::before{
+      content:'';
+      position:absolute;
+      left:6px; top:0.6rem; bottom:0.6rem;
+      width:1px;
+      background:linear-gradient(to bottom, var(--teal-500), var(--line) 92%);
+    }
 
-  .log-entry::before{
-    content:'';
-    position:absolute;
-    left:-2.75rem;
-    top:0.45rem;
-    width:11px; height:11px;
-    border-radius:50%;
-    background:var(--bg);
-    border:2px solid var(--teal-500);
-    transition:background 0.25s ease, transform 0.25s ease;
-  }
+    .log-entry{
+      position:relative;
+      padding:0 0 3.25rem;
+      text-align: left;
+    }
+    .log-entry:last-child{ padding-bottom:0; }
 
-  .log-entry:hover::before{
-    background:var(--teal-500);
-    transform:scale(1.15);
-  }
+    .log-entry::before{
+      content:'';
+      position:absolute;
+      left:-2.75rem;
+      top:0.45rem;
+      width:11px; height:11px;
+      border-radius:50%;
+      background:var(--bg);
+      border:2px solid var(--teal-500);
+      transition:background 0.25s ease, transform 0.25s ease;
+    }
 
-  .log-meta{
-    font-family:var(--font-mono);
-    font-size:0.78rem;
-    color:var(--teal-700);
-    margin-bottom:0.6rem;
-    letter-spacing:0.01em;
-  }
+    .log-entry:hover::before{
+      background:var(--teal-500);
+      transform:scale(1.15);
+    }
 
-  .log-meta .comment{ color:#9aa8a4; }
+    .log-meta{
+      font-family:'Poppins', sans-serif;
+      font-size:0.78rem;
+      font-weight: 500;
+      color:var(--teal-700);
+      margin-bottom:0.6rem;
+      letter-spacing:0.01em;
+      text-align: left;
+    }
 
-  .log-entry h2{
-    font-family:var(--font-display);
-    font-size:1.65rem;
-    font-weight:500;
-    color:var(--ink);
-    margin:0 0 0.85rem;
-  }
+    .log-meta .comment{ color:#9aa8a4; }
 
-  .log-entry p{
-    font-size:1.03rem;
-    color:var(--ink-soft);
-    line-height:1.75;
-    max-width:38rem;
-  }
+    .log-entry h2{
+      font-family:'Poppins', sans-serif;
+      font-size:1.65rem;
+      font-weight:500;
+      color:var(--ink);
+      margin:0 0 0.85rem;
+      text-align: left;
+    }
 
-  /* Closing card */
-  .about-cta{
-    max-width:900px;
-    margin:0 auto;
-    padding:0 2rem 6rem;
-  }
+    .log-entry p{
+      font-size:1.03rem;
+      color:var(--ink-soft);
+      line-height:1.75;
+      max-width:38rem;
+      text-align: left;
+    }
 
-  .cta-card{
-    background:var(--teal-900);
-    color:var(--bg);
-    border-radius:16px;
-    padding:3rem;
-    position:relative;
-    overflow:hidden;
-  }
+    /* Closing card */
+    .about-cta{
+      max-width:900px;
+      margin:0;
+      padding:0 6% 6rem;
+      text-align: left;
+    }
 
-  .cta-card::before{
-    content:'';
-    position:absolute;
-    right:-60px; top:-60px;
-    width:220px; height:220px;
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(23,165,150,0.35), transparent 70%);
-  }
+    .cta-card{
+      background:var(--teal-900);
+      color:var(--bg);
+      border-radius:16px;
+      padding:3rem;
+      position:relative;
+      overflow:hidden;
+      text-align: left;
+    }
 
-  .cta-card h2{
-    font-family:var(--font-display);
-    font-weight:500;
-    font-style:italic;
-    font-size:2rem;
-    margin:0 0 1rem;
-    position:relative;
-  }
+    .cta-card::before{
+      content:'';
+      position:absolute;
+      right:-60px; top:-60px;
+      width:220px; height:220px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(23,165,150,0.35), transparent 70%);
+    }
 
-  .cta-card p{
-    color:#cfe3e0;
-    font-size:1.05rem;
-    line-height:1.7;
-    max-width:34rem;
-    margin:0 0 2rem;
-    position:relative;
-  }
+    .cta-card h2{
+      font-family:'Poppins', sans-serif;
+      font-weight:500;
+      font-style:italic;
+      font-size:2rem;
+      margin:0 0 1rem;
+      position:relative;
+      text-align: left;
+    }
 
-  .cta-card a{
-    position:relative;
-    display:inline-flex;
-    align-items:center;
-    gap:0.5rem;
-    background:var(--teal-500);
-    color:var(--teal-900);
-    text-decoration:none;
-    font-weight:600;
-    font-size:0.95rem;
-    padding:0.85rem 1.5rem;
-    border-radius:100px;
-    transition:transform 0.2s ease, background 0.2s ease;
-  }
+    .cta-card p{
+      color:#cfe3e0;
+      font-size:1.05rem;
+      line-height:1.7;
+      max-width:34rem;
+      margin:0 0 2rem;
+      position:relative;
+      text-align: left;
+    }
 
-  .cta-card a:hover{
-    background:#5fd7c9;
-    transform:translateY(-2px);
-  }
+    .cta-card a{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      gap:0.5rem;
+      background:var(--teal-500);
+      color:var(--teal-900);
+      text-decoration:none;
+      font-weight:600;
+      font-size:0.95rem;
+      padding:0.85rem 1.5rem;
+      border-radius:100px;
+      transition:transform 0.2s ease, background 0.2s ease;
+    }
 
-  footer{
-    text-align:center;
-    padding:2rem;
-    font-size:0.85rem;
-    color:var(--ink-soft);
-    border-top:1px solid var(--line);
-  }
+    .cta-card a:hover{
+      background:#5fd7c9;
+      transform:translateY(-2px);
+    }
 
-  /* ==========================================================================
-     Responsive
-     ========================================================================== */
-  @media (max-width:640px){
-    .navbar{ padding:1.25rem 1.25rem; flex-wrap:wrap; gap:0.75rem; }
-    .nav-links{ gap:1.25rem; flex-wrap:wrap; }
-    .about-hero{ padding:4rem 1.25rem 3rem; }
-    .about-log{ padding:0 1.25rem 4rem; }
-    .log-thread{ padding-left:2.1rem; }
-    .log-entry::before{ left:-2.1rem; }
-    .cta-card{ padding:2rem; }
-  }
+    /* FOOTER */
+    .footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 40px 6%;
+      position: relative;
+      z-index: 10;
+      background: #ffffff;
+    }
 
-  @media (prefers-reduced-motion: reduce){
-    *{ transition:none !important; scroll-behavior:auto !important; }
-  }
- </style>
+    .footer__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer__links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer__links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .footer__links a:hover {
+      color: #00aa91;
+    }
+
+    .footer__copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Responsive */
+    @media (max-width:640px){
+      .navbar{ padding:1.25rem 1.25rem; flex-wrap:wrap; gap:0.75rem; }
+      .nav-links{ gap:1.25rem; flex-wrap:wrap; }
+      .about-hero{ padding:4rem 1.25rem 3rem; }
+      .about-log{ padding:0 1.25rem 4rem; }
+      .about-cta{ padding:0 1.25rem 4rem; }
+      .log-thread{ padding-left:2.1rem; }
+      .log-entry::before{ left:-2.1rem; }
+      .cta-card{ padding:2rem; }
+      footer{ padding:2rem 1.25rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; scroll-behavior:auto !important; }
+    }
+  </style>
 </head>
 
 <body>
 
   <header>
     <nav class="navbar">
-      <div class="logo"><a href="index.html">Ced Designs</a></div>
+      <div class="logo">
+        <a href="index.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>CED DESIGNS</span>
+        </a>
+      </div>
       
       <ul class="nav-links">
 
@@ -405,11 +457,11 @@
       </ul>
 
       <a href="contact.html" class="nav__cta">Email Me</a>
-    <button class="nav__burger" id="burger">&#9776;</button>
+      <button class="nav__burger" id="burger" style="display:none;">&#9776;</button>
     </nav>
- </header>
+  </header>
  
- <main> 
+  <main> 
     <section class="about-hero">
       <span class="hero-tag">currently designing &amp; building</span>
       <h1>Nice to meet you, <em>I'm Ced.</em></h1>
@@ -461,8 +513,16 @@
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 Ced Designs. All rights reserved.</p>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__links">
+        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+      </div>
+      <p class="footer__copy">&copy; 2026 Ced Designs.</p>
+    </div>
   </footer>
 
 </body>

@@ -98,9 +98,9 @@
 </body>
 </html>
 
-<!-- From --
+<!-- From -->
  
-/*<!-- CARD 1: GRAPHICS & POSTERS (p1) --
+/*<!-- CARD 1: GRAPHICS & POSTERS (p1) -->
         /*<div class="project-card" onclick="openModal('p1')">
           <div class="project-card__img">
             <svg viewBox="0 0 400 500">
@@ -1246,4 +1246,351 @@
   </script>
 
 </body>
-</html>*/
+</html>*/-->
+ 
+/*This is the neon page*/
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Portfolio - Interactive Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090a0f;
+            color: #f3f4f6;
+            cursor: default;
+            overflow-x: hidden;
+        }
+
+        .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Subtle animated background grid */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Custom Cursor styling */
+        #custom-cursor {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease, opacity 0.3s ease, background 0.3s ease, border 0.3s ease, transform 0.08s ease-out;
+            will-change: transform, width, height;
+        }
+
+        /* Default Cursor Dot */
+        .cursor-default {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hover Preview Mode for Custom Cursor */
+        .cursor-preview {
+            width: 220px !important;
+            height: 160px !important;
+            border-radius: 16px !important;
+            background: rgba(15, 23, 42, 0.85) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.3) !important;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism Card Style */
+        .project-card {
+            background: rgba(24, 73, 220, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(99, 102, 241, 0.25);
+        }
+
+        /* Custom SVG preview graphics inside cursor */
+        .preview-graphic {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            filter: blur(3px) brightness(1.1); /* Blurry illustration effect */
+            transform: scale(1.05);
+            transition: filter 0.3s ease;
+        }
+
+        /* Glowing keyframe animations */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.08); }
+        }
+
+        .glow-bg {
+            animation: pulseGlow 6s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-grid-pattern min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <div id-="cursor-wrapper">
+        <div id="custom-cursor" class="cursor-default flex items-center justify-center">
+            <!-- Dynamic Preview Content populated via JavaScript -->
+            <div id="cursor-content" class="w-full h-full opacity-0 transition-opacity duration-300"></div>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-[#090a0f]/80 border-b border-white/5 px-6 lg:px-16 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" class="font-heading text-xl font-bold tracking-wider text-white flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-indigo-500 inline-block animate-ping"></span>
+                ALEX.DEV
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+                <a href="#" class="hover:text-white transition-colors">Home</a>
+                <a href="#" class="text-indigo-400 font-semibold flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Work
+                </a>
+                <a href="#" class="hover:text-white transition-colors">Services</a>
+                <a href="#" class="hover:text-white transition-colors">About</a>
+            </nav>
+
+            <a href="#contact" class="px-5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-full bg-white/5 hover:bg-indigo-600/20 text-white border border-white/10 hover:border-indigo-500/50 transition-all duration-300">
+                Get in Touch
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-16 pt-16 pb-24 w-full flex-grow">
+        <!-- Hero Header -->
+        <div class="relative mb-20 text-center md:text-left">
+            <div class="absolute -top-10 -left-10 w-72 h-72 bg-indigo-600/15 rounded-full blur-3xl glow-bg pointer-events-none"></div>
+            <div class="absolute top-0 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl glow-bg pointer-events-none" style="animation-delay: 2s;"></div>
+
+            <span class="px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 uppercase inline-block mb-4">
+                Selected Projects
+            </span>
+            <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6">
+                Crafting Digital <br class="hidden sm:inline"/>
+                <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    Experiences & Systems
+                </span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl font-normal leading-relaxed">
+                Explore a showcase of graphic design, predictive ML models, cybersecurity audit frameworks, and interactive network visualizers. Hover over any card for a peek into the design.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Card 1: Neon Poster Design -->
+            <div class="project-card rounded-2xl p-8 relative group overflow-hidden" data-preview="poster">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-xs font-mono text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">01 / GRAPHICS</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-indigo-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-heading text-2xl font-bold text-white group-hover:text-indigo-300 transition-colors">Cyberpunk Synthwave Poster</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        A vibrant visual branding and poster series incorporating neon typography, retro grids, and high-contrast color palettes.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-white/5 flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                    <span>#Photoshop</span> • <span>#Illustrator</span> • <span>#BrandIdentity</span>
+                </div>
+            </div>
+
+            <!-- Card 2: E-Waste Predictor -->
+            <div class="project-card rounded-2xl p-8 relative group overflow-hidden" data-preview="ewaste">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">02 / AI & SUSTAINABILITY</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-emerald-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-heading text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors">E-Waste Generation Predictor</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Machine learning model forecasting electronic waste generation trends using linear regression and dynamic charts.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-white/5 flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                    <span>#Python</span> • <span>#ScikitLearn</span> • <span>#DataVis</span>
+                </div>
+            </div>
+
+            <!-- Card 3: IS Audit Dashboard -->
+            <div class="project-card rounded-2xl p-8 relative group overflow-hidden" data-preview="audit">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">03 / CYBERSECURITY</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-amber-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-heading text-2xl font-bold text-white group-hover:text-amber-300 transition-colors">IS Audit & Compliance Suite</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        An enterprise security audit dashboard evaluating compliance frameworks, vulnerability risks, and threat metrics.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-white/5 flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                    <span>#React</span> • <span>#ISO27001</span> • <span>#RiskMgmt</span>
+                </div>
+            </div>
+
+            <!-- Card 4: Network Topology Visualizer -->
+            <div class="project-card rounded-2xl p-8 relative group overflow-hidden" data-preview="network">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-xs font-mono text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">04 / NETWORKING</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-cyan-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-heading text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors">Network Topology Visualizer</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Interactive node graph rendering real-time network traffic routing, latency maps, and live packet inspection.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-white/5 flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                    <span>#D3.js</span> • <span>#WebSockets</span> • <span>#Topology</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-8 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>© 2026 Alex Dev Portfolio. Built with Tailwind CSS & Custom Canvas Elements.</p>
+            <div class="flex gap-6 text-gray-400">
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-github text-base"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-linkedin text-base"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-twitter text-base"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('custom-cursor');
+            const cursorContent = document.getElementById('cursor-content');
+            const cards = document.querySelectorAll('.project-card');
+
+            // SVG Illustrations tailored for blurry dynamic preview
+            const previewIllustrations = {
+                poster: `
+                    <div class="preview-graphic bg-gradient-to-tr from-pink-600 via-purple-700 to-indigo-900 p-4">
+                        <svg class="w-24 h-24 text-pink-300 drop-shadow-[0_0_15px_rgba(244,114,182,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            <circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,0.4)" stroke-dasharray="2 2"></circle>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute bottom-2 left-3 text-[10px] font-mono text-pink-200 tracking-wider uppercase font-bold">PREVIEW: POSTER</span>
+                    </div>
+                `,
+                ewaste: `
+                    <div class="preview-graphic bg-gradient-to-tr from-emerald-900 via-teal-800 to-slate-900 p-4">
+                        <svg class="w-24 h-24 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 3v18h18"></path>
+                            <path d="M18 17l-5-5-4 4-4-5"></path>
+                            <circle cx="18" cy="17" r="2" fill="currentColor"></circle>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute bottom-2 left-3 text-[10px] font-mono text-emerald-200 tracking-wider uppercase font-bold">PREVIEW: ML GRAPH</span>
+                    </div>
+                `,
+                audit: `
+                    <div class="preview-graphic bg-gradient-to-tr from-amber-900 via-orange-950 to-stone-900 p-4">
+                        <svg class="w-24 h-24 text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute bottom-2 left-3 text-[10px] font-mono text-amber-200 tracking-wider uppercase font-bold">PREVIEW: SECURITY</span>
+                    </div>
+                `,
+                network: `
+                    <div class="preview-graphic bg-gradient-to-tr from-cyan-900 via-blue-950 to-slate-900 p-4">
+                        <svg class="w-24 h-24 text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="2" width="6" height="6" rx="1"></rect>
+                            <rect x="16" y="2" width="6" height="6" rx="1"></rect>
+                            <rect x="9" y="16" width="6" height="6" rx="1"></rect>
+                            <path d="M5 8v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8"></path>
+                            <path d="M12 13v3"></path>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <span class="absolute bottom-2 left-3 text-[10px] font-mono text-cyan-200 tracking-wider uppercase font-bold">PREVIEW: TOPOLOGY</span>
+                    </div>
+                `
+            };
+
+            // Smooth cursor tracking variables
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let cursorX = mouseX;
+            let cursorY = mouseY;
+
+            // Track mouse movement
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            // Smooth RAF animation loop for cursor tracking
+            function render() {
+                cursorX += (mouseX - cursorX) * 0.2;
+                cursorY += (mouseY - cursorY) * 0.2;
+                cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
+
+            // Card hover handlers for activating blurry preview bubble
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const previewType = card.getAttribute('data-preview');
+                    if (previewIllustrations[previewType]) {
+                        cursorContent.innerHTML = previewIllustrations[previewType];
+                        cursor.classList.remove('cursor-default');
+                        cursor.classList.add('cursor-preview');
+                        cursorContent.style.opacity = '1';
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    cursorContent.style.opacity = '0';
+                    cursor.classList.remove('cursor-preview');
+                    cursor.classList.add('cursor-default');
+                    setTimeout(() => {
+                        if (!cursor.classList.contains('cursor-preview')) {
+                            cursorContent.innerHTML = '';
+                        }
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
