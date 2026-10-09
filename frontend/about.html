@@ -26,11 +26,10 @@
       --teal-500:  #17a596;
       --teal-100:  #e5f2f0;
       --line:      #dbe6e3;
-
-      
-      --font-sans: 'Poppins', sans-serif;
+      --muted:     #64748b;
      
-      --font-family: 'Poppins', sans-serif;
+      --font-sans: 'Poppins', sans-serif;
+
     }
 
     *{ 
@@ -45,7 +44,7 @@
       height: 100%;
       background: var(--bg);
       color: var(--ink);
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       overflow-x: hidden;
       text-align: left;
     }
@@ -63,7 +62,7 @@
     }
 
     .logo a{
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-weight: 800;
       text-decoration: none;
       color: #111111;
@@ -89,6 +88,7 @@
       margin-left:auto;
       margin-right:24px;
       padding-left: 0;
+      
     }
 
     .nav-links a{
@@ -98,6 +98,7 @@
       font-size:0.95rem;
       font-weight:500;
       padding-bottom:1px;
+      font-family: var(--font-sans);
       transition: color 0.3s ease;
     }
 
@@ -166,7 +167,7 @@
     }
 
     .mobile-menu a {
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-size: 2rem;
       font-weight: 700;
       color: var(--bg);
@@ -191,7 +192,7 @@
       display:inline-flex;
       align-items:center;
       gap:0.6rem;
-      font-family:'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-size:0.8rem;
       font-weight: 500;
       color:var(--teal-700);
@@ -210,7 +211,7 @@
     }
 
     .about-hero h1{
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-weight:400;
       font-size:clamp(2.75rem, 6vw, 4.5rem);
       line-height:1.05;
@@ -281,7 +282,7 @@
     }
 
     .log-meta{
-      font-family:'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-size:0.78rem;
       font-weight: 500;
       color:var(--teal-700);
@@ -293,7 +294,7 @@
     .log-meta .comment{ color:#9aa8a4; }
 
     .log-entry h2{
-      font-family:'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-size:1.65rem;
       font-weight:500;
       color:var(--ink);
@@ -337,7 +338,7 @@
     }
 
     .cta-card h2{
-      font-family:'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-weight:500;
       font-style:italic;
       font-size:2rem;
@@ -425,7 +426,7 @@
       .log-thread{ padding-left:2.1rem; }
       .log-entry::before{ left:-2.1rem; }
       .cta-card{ padding:2rem; }
-      footer{ padding:2rem 1.25rem; }
+      .footer{ padding:2rem 1.25rem; }
     }
 
     @media (prefers-reduced-motion: reduce){

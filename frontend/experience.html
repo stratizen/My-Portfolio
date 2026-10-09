@@ -30,15 +30,14 @@
       --teal-100:  #e5f2f0;
       --line:      #dbe6e3;
 
-      --font-display: 'Poppins', sans-serif;
+      
       --font-sans: 'Poppins', sans-serif;
-      --font-mono: 'Poppins', sans-serif;
-      --font-poppins: 'Poppins', sans-serif;
+      
     }
 
     * { 
       box-sizing: border-box; 
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans)
     }
 
     html { scroll-behavior: smooth; }
@@ -48,7 +47,7 @@
       height: 100%;
       background: var(--bg);
       color: var(--ink);
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       overflow-x: hidden;
       margin: 0;
       text-align: left;
@@ -74,7 +73,7 @@
     }
 
     .logo a {
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-weight: 800;
 
       text-decoration: none;
@@ -144,7 +143,7 @@
       border: 1px solid #111111;
       border-radius: 50px;
       transition: all 0.3s ease;
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
     }
 
     .nav__cta:hover {
@@ -190,7 +189,7 @@
     }
 
     .mobile-menu a {
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-size: 2rem;
       font-weight: 700;
       color: var(--bg);
@@ -214,7 +213,7 @@
     }
 
     .section__title {
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-weight: 400;
       font-size: clamp(2.75rem, 6vw, 4.5rem);
       line-height: 1.05;
@@ -284,7 +283,7 @@
     }
 
     .timeline-year {
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-size: 0.9rem;
       font-weight: 600;
       color: var(--teal-700);
@@ -293,7 +292,7 @@
     }
 
     .timeline-role {
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-size: 1.5rem;
       font-weight: 600;
       color: var(--ink);
@@ -301,7 +300,7 @@
     }
 
     .timeline-company {
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-size: 13px;
       color: var(--ink-soft);
       text-transform: uppercase;
@@ -311,7 +310,7 @@
     }
 
     .timeline-desc {
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
       font-size: 1rem;
       color: var(--ink-soft);
       line-height: 1.75;
@@ -319,13 +318,13 @@
     }
 
     /* FOOTER */
-    footer {
+    .footer {
       text-align: left;
       padding: 2rem 6%;
       font-size: 0.85rem;
       color: var(--ink-soft);
-      border-top: 1px solid var(--line);
-      font-family: 'Poppins', sans-serif;
+      
+      font-family: var(--font-sans);
     }
 
     .footer__inner {
@@ -348,7 +347,7 @@
       font-weight: 600;
       letter-spacing: 0.05em;
       transition: color 0.3s ease;
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans);
     }
 
     .footer__links a:hover {
@@ -359,7 +358,7 @@
       font-size: 12px;
       color: var(--ink-soft);
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-sans) ;
     }
 
     /* Responsive */
@@ -418,9 +417,9 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <span class="timeline-year">2024 — Present</span>
-            <h2 class="timeline-role">Lead Creative Technologist</h2>
-            <div class="timeline-company">Aura Interactive Studios</div>
+            <span class="timeline-year">Oct 2022 — Present</span>
+            <h2 class="timeline-role">Free Lance Designer</h2>
+            <div class="timeline-company">SNDBX</div>
             <p class="timeline-desc">
               Directing creative layouts, WebGL shaders, and typography systems. Managing spatial UI design guidelines for modern mobile and browser viewports. Facilitating responsive interface transformations across team sprints.
             </p>
@@ -431,9 +430,9 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <span class="timeline-year">2021 — 2024</span>
-            <h2 class="timeline-role">Senior Graphic &amp; Motion Designer</h2>
-            <div class="timeline-company">Nexus Branding Agency</div>
+            <span class="timeline-year">June 2022 — August 2022</span>
+            <h2 class="timeline-role"> Designer </h2>
+            <div class="timeline-company">Redberyl Kenya</div>
             <p class="timeline-desc">
               Produced award-winning print and poster designs (Swiss grids, optical composition tracks). Scripted vector kinetics and brand reveal sequences using GSAP and After Effects modules.
             </p>
@@ -444,9 +443,9 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <span class="timeline-year">2019 — 2021</span>
-            <h2 class="timeline-role">Junior Interactive Designer</h2>
-            <div class="timeline-company">Vortex Labs</div>
+            <span class="timeline-year">January 2020 - May 2022</span>
+            <h2 class="timeline-role">Freelance Designer</h2>
+            <div class="timeline-company">Upwork Connects</div>
             <p class="timeline-desc">
               Drafted brand mockups, responsive vector layouts, and static poster guidelines. Transitioned assets successfully from raw visual templates into high-performance web assets.
             </p>
