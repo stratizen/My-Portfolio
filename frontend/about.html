@@ -154,9 +154,9 @@
     .nav__burger.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 
     /* ── MOBILE DROPDOWN ── */
-    .mobile-menu{
+    .mobile-menu {
       position: fixed;
-      top: 73px;             /* sits just below the fixed navbar */
+      top: 73px;
       left: 0; right: 0;
       background: #ffffff;
       z-index: 150;
@@ -167,23 +167,14 @@
       transition: max-height 0.4s cubic-bezier(0.77,0,0.175,1);
     }
 
-    .mobile-menu.open{
-      max-height: 400px;
-    }
+    .mobile-menu.open { max-height: 400px; }
 
-    .mobile-menu ul{
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+    .mobile-menu ul { list-style: none; padding: 0; margin: 0; }
 
-    .mobile-menu ul li{
-      border-bottom: 1px solid var(--line);
-    }
+    .mobile-menu ul li { border-bottom: 1px solid var(--line); }
+    .mobile-menu ul li:last-child { border-bottom: none; }
 
-    .mobile-menu ul li:last-child{ border-bottom: none; }
-
-    .mobile-menu a{
+    .mobile-menu a {
       display: block;
       padding: 18px 6%;
       font-size: 1rem;
@@ -193,7 +184,7 @@
       transition: color 0.2s, background 0.2s;
     }
 
-    .mobile-menu a:hover{
+    .mobile-menu a:hover {
       color: var(--teal-500);
       background: var(--teal-100);
     }
